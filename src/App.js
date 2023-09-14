@@ -1,11 +1,11 @@
 import logo from "./img/logo.png";
 import sprite from "./img/icon/sprite.svg";
-import pList01 from "./img/playlist01.png"
-import pList02 from "./img/playlist01.png"
-import pList03 from "./img/playlist01.png"
+
 import "./App.css";
-import "./components/AudioPlayer.css"
-import {Player} from "./components/AudioPlayer.js"
+import "./components/AudioPlayer.css";
+import {Player} from "./components/AudioPlayer.js";
+import {Sidebar} from "./components/SideBar.js";
+import { Search } from "./components/Search";
 
 function App() {
   return (
@@ -43,18 +43,8 @@ function App() {
               </div>
             </nav>
             <div className="main__centerblock centerblock">
-              <div className="centerblock__search search">
-                <svg className="search__svg">
-                  <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
-                  <use href={`${sprite}#icon-search`} />
-                </svg>
-                <input
-                  className="search__text"
-                  type="search"
-                  placeholder="Поиск"
-                  name="search"
-                />
-              </div>
+              <Search/>
+             
               <h2 className="centerblock__h2">Треки</h2>
               <div className="centerblock__filter filter">
                 <div className="filter__title">Искать по:</div>
@@ -686,48 +676,10 @@ function App() {
                 </div>
               </div>
             </div>
-            <div className="main__sidebar sidebar">
-              <div className="sidebar__personal">
-                <p className="sidebar__personal-name">Sergey.Ivanov</p>
-                <div className="sidebar__icon">
-                  <svg alt="logout">
-                    <use xlinkHref="img/icon/sprite.svg#logout"></use>
-                    <use href={`${sprite}#icon-logout`} />
-                  </svg>
-                </div>
-              </div>
-              <div className="sidebar__block">
-                <div className="sidebar__list">
-                  <div className="sidebar__item">
-                    <a className="sidebar__link" href="#">
-                      <img
-                        className="sidebar__img"
-                        src={pList01}
-                        alt="day's playlist"
-                      />
-                    </a>
-                  </div>
-                  <div className="sidebar__item">
-                    <a className="sidebar__link" href="#">
-                      <img
-                        className="sidebar__img"
-                        src={pList02}
-                        alt="day's playlist"
-                      />
-                    </a>
-                  </div>
-                  <div className="sidebar__item">
-                    <a className="sidebar__link" href="#">
-                      <img
-                        className="sidebar__img"
-                        src={pList03}
-                        alt="day's playlist"
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+            <Sidebar/>
+
+            
           </main>
 
           <Player/>
