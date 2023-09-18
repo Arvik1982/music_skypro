@@ -2,6 +2,7 @@ import sprite from "../img/icon/sprite.svg"
 import "../components/AudioPlayer.css"
 
 export function Player(){
+ 
     return(
 <div className="bar">
             <div className="bar__content">
