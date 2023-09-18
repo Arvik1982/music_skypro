@@ -3,6 +3,10 @@ import "../components/ContentBlock.css"
 import Skeleton from 'react-loading-skeleton'
 import React, { useState } from 'react';
 
+
+    
+
+
 export function Content() {
 
   const [contentVisible, setContentVisible] = useState(false);
@@ -12,6 +16,9 @@ export function Content() {
 
   return( 
     <div className="centerblock__content ">
+      <div className="skeleton">
+      <h1 className={`${contentVisible ? "display_no" : "display_yes"}`}>{"загрузка...."|| <Skeleton />}</h1>
+      </div>
       <div className={`${contentVisible ? "display_yes" : "display_no"}`}>
             <div className="content__title playlist-title">
             
