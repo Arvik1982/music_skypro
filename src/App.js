@@ -7,7 +7,7 @@ import { Nav } from "./components/NavMenu.js";
 import { Filter } from "./components/FilterBlock";
 import { Content } from "./components/ContentBlock";
 import { Footer } from "./components/FooterBlock";
-
+import Skeleton from 'react-loading-skeleton'
 function App() {
   return (
     <div className="App">
@@ -19,7 +19,8 @@ function App() {
               <Search />
               <h2 className="centerblock__h2">Треки</h2>
               <Filter />
-              <Content />
+
+              <Content>  </Content>
             </div>
             <Sidebar />
           </main>

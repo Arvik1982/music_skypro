@@ -34,3 +34,9 @@
     flex-direction: column;
     overflow-y: auto;
   }
+  .display_no{
+    display: none;
+  }
+  .display_yes{
+    display: block;
+  }

@@ -7,8 +7,8 @@ export function Nav() {
   const [menuVisible, setVisible] = useState(false);
 
   const menuClick =()=>{
-    setVisible(!menuVisible);
-   console.log(menuVisible) 
+  setVisible(!menuVisible);
+  console.log(menuVisible) 
   }
   
    return(
