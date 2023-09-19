@@ -1,13 +1,28 @@
 import sprite from "../img/icon/sprite.svg"
 import "../components/AudioPlayer.css"
+import React, { useState } from 'react';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-export function Player(){
- 
+export function Player(props){
+  const [contentVisible, setContentVisible] = useState(false);
+  setTimeout(() => {
+    setContentVisible(true);
+  }, 4000);
+
     return(
 <div className="bar">
+
+
+
+
+
             <div className="bar__content">
               <div className="bar__player-progress"></div>
-              <div className="bar__player-block">
+              <div className= "bar__content bar__player-block">
+
+
+      
                 <div className="bar__player player">
                   <div className="player__controls">
                     <div className="player__btn-prev">
@@ -42,24 +57,37 @@ export function Player(){
                     </div>
                   </div>
 
+
+  
                   <div className="player__track-play track-play">
-                    <div className="track-play__contain">
-                      <div className="track-play__image">
-                        <svg className="track-play__svg" alt="music">
-                          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                          <use href={`${sprite}#icon-note`} />
-                        </svg>
-                      </div>
+                  <div className= "track-play__contain">
+                  
+                  <div className="track-play__image">
+                  {contentVisible ? <svg className="track-play__svg" alt="music">
+                        <use href={`${sprite}#icon-note`} />
+                        </svg> :  <Skeleton className="skeleton_player_img" />}
+
+
+                  
+                        
+                    </div>
+                    
+                      
                       <div className="track-play__author">
-                        <a className="track-play__author-link" href="http://">
-                          Ты та...
-                        </a>
-                      </div>
-                      <div className="track-play__album">
-                        <a className="track-play__album-link" href="http://">
-                          Баста
-                        </a>
-                      </div>
+                      <a className="track-play__author-link" href="http://">
+                      {contentVisible ? <span>Ты та...</span> :  <Skeleton className="skeleton_player_icon" />}
+                        
+                      </a>
+                    </div>
+
+                    <div className="track-play__album">
+                      <a className="track-play__album-link" href="http://">
+                      {contentVisible ? <span>Баста</span> :  <Skeleton className="skeleton_player_icon" />}
+                        
+                      </a>
+                    </div>
+                                  
+                      
                     </div>
                     <div className="track-play__like-dis">
                       <div className="track-play__like _btn-icon">
@@ -95,6 +123,7 @@ export function Player(){
                     </div>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>)

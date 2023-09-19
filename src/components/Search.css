@@ -70,3 +70,15 @@
     font-size: 16px;
     line-height: 24px;
   }
+  .skeleton_search_icon{
+    margin-left: 15px;
+    width: 30px;
+    height: 30px;
+    background-color: gray
+  }
+  .skeleton_search{
+    margin-left: 15px;
+    width: 300px;
+    height: 30px;
+    background-color: gray
+  }

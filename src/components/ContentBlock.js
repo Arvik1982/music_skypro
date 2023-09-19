@@ -21,9 +21,7 @@ export function Content(props) {
       </div>
       <div className={`${contentVisible ? "display_yes" : "display_no"}`}>
         <div className="content__title playlist-title">
-          <div className="playlist-title__col col01">
-            {"Трек" || <Skeleton />}
-          </div>
+          <div className="playlist-title__col col01">Трек</div>
           <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
           <div className="playlist-title__col col03">АЛЬБОМ</div>
           <div className="playlist-title__col col04">
@@ -39,7 +37,7 @@ export function Content(props) {
                 <div className="track__title-image">
                   <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                    <use href={`${sprite}#icon-note` || <Skeleton />} />
+                    <use href={`${sprite}#icon-note`} />
                   </svg>
                 </div>
                 <div className="track__title-text">

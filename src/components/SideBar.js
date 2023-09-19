@@ -18,41 +18,42 @@ export function Sidebar() {
     return(
         <div className="main__sidebar sidebar">
               <div className="sidebar__personal">
-                <p className="sidebar__personal-name">{contentVisible ? <span> Sergey.Ivanov </span>:<Skeleton />}</p>
+                <p className="sidebar__personal-name">{contentVisible ? <span> Sergey.Ivanov </span>:<Skeleton className="skeleton_sidebar" />}</p>
                 <div className="sidebar__icon">
-                  <svg alt="logout">
-                    <use xlinkHref="img/icon/sprite.svg#logout"></use>
-                    <use href={`${sprite}#icon-logout`} />
+                <svg alt="logout">
+                  <use href={`${sprite}#icon-logout`} />
                   </svg>
+                  
                 </div>
               </div>
               <div className="sidebar__block">
                 <div className="sidebar__list">
                   <div className="sidebar__item">
                     <a className="sidebar__link" href="#">
-                      <img
+                    {contentVisible ? <img
                         className="sidebar__img"
                         src={pList01}
                         alt="day's playlist"
-                      />
+                      /> :<Skeleton className="skeleton_sidebar-img" />}
+                      
                     </a>
                   </div>
                   <div className="sidebar__item">
                     <a className="sidebar__link" href="#">
-                      <img
+                    {contentVisible ? <img
                         className="sidebar__img"
                         src={pList02}
                         alt="day's playlist"
-                      />
+                      /> :<Skeleton className="skeleton_sidebar-img" />}
                     </a>
                   </div>
                   <div className="sidebar__item">
                     <a className="sidebar__link" href="#">
-                      <img
+                    {contentVisible ? <img
                         className="sidebar__img"
                         src={pList03}
                         alt="day's playlist"
-                      />
+                      /> :<Skeleton className="skeleton_sidebar-img" />}
                     </a>
                   </div>
                 </div>

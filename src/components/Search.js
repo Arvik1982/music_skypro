@@ -11,16 +11,19 @@ export function Search(){
   }, 4000);
 
     return(
+      
     <div className="centerblock__search search">
-    <svg className="search__svg">{contentVisible ? <use href= {`${sprite}#icon-search`}/> : <Skeleton/>}
-    {/* <use xlinkHref="img/icon/sprite.svg#icon-search"></use> */}
-    </svg>
+      {contentVisible ?   <svg className="search__svg">
+    <use href= {`${sprite}#icon-search`}/>
+    </svg> : <Skeleton className="skeleton_search_icon"/>}
+  
+    
   {contentVisible ? <input
     className="search__text"
     type="search"
     placeholder="Поиск"
     name="search"
-  /> :  <Skeleton/>}
+  /> :  <Skeleton className="skeleton_search"/>}
   
   </div>
     )

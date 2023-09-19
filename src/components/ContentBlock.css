@@ -40,4 +40,9 @@
   .display_yes{
     display: block;
   }
- 
+  .skeleton_search_icon{
+    margin-left: 15px;
+    width: 30px;
+    height: 30px;
+    background-color: gray
+  }

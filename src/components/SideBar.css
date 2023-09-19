@@ -78,3 +78,15 @@
     width: 100%;
     height: auto;
   }
+.skeleton_sidebar{
+  margin-left: 15px;
+    width: 300px;
+    height: 30px;
+    background-color: rgb(50, 48, 48)
+}
+.skeleton_sidebar-img{
+  margin-bottom: 10px;
+  width: 250px;
+  height: 150px;
+  background-color: rgb(50, 48, 48)
+}

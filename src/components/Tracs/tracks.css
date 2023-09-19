@@ -6,3 +6,8 @@
     letter-spacing: -0.8px;
     margin-bottom: 45px;
   }
+  .skeleton_class{
+    height: 50px;
+    background-color: rgb(153, 163, 163);
+    width: 300px;
+  }
