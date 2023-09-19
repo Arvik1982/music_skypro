@@ -3,11 +3,22 @@ import pList02 from "../img/playlist02.png"
 import pList03 from "../img/playlist03.png"
 import sprite from "../img/icon/sprite.svg"
 import "../components/SideBar.css"
+import React, { useState } from 'react';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
+
 export function Sidebar() {
+
+  const [contentVisible, setContentVisible] = useState(false);
+  setTimeout(()=>{
+       setContentVisible(true)
+    },4000)
+
     return(
         <div className="main__sidebar sidebar">
               <div className="sidebar__personal">
-                <p className="sidebar__personal-name">Sergey.Ivanov</p>
+                <p className="sidebar__personal-name">{contentVisible ? <span> Sergey.Ivanov </span>:<Skeleton />}</p>
                 <div className="sidebar__icon">
                   <svg alt="logout">
                     <use xlinkHref="img/icon/sprite.svg#logout"></use>
@@ -46,6 +57,7 @@ export function Sidebar() {
                   </div>
                 </div>
               </div>
+              
             </div>
     )
     

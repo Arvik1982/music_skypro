@@ -8,6 +8,8 @@ import { Filter } from "./components/FilterBlock";
 import { Content } from "./components/ContentBlock";
 import { Footer } from "./components/FooterBlock";
 import Skeleton from 'react-loading-skeleton'
+import { Tracks } from "./components/Tracs/tracs";
+
 function App() {
   return (
     <div className="App">
@@ -17,10 +19,52 @@ function App() {
             <Nav />
             <div className="main__centerblock centerblock">
               <Search />
-              <h2 className="centerblock__h2">Треки</h2>
+              <Tracks/>
               <Filter />
 
-              <Content>  </Content>
+              <Content name= <div className="loading_skelet">
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element_small"></div>
+                </div>/> 
+                <Content name= <div className="loading_skelet">
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element_small"></div>
+                </div>/> 
+                <Content name= <div className="loading_skelet">
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element_small"></div>
+                </div>/> 
+                <Content name= <div className="loading_skelet">
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element_small"></div>
+                </div>/> 
+                <Content name= <div className="loading_skelet">
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element_small"></div>
+                </div>/> 
+                <Content name= <div className="loading_skelet">
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element_small"></div>
+                </div>/> 
+                <Content name= <div className="loading_skelet">
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element"></div>
+                <div className="loading_skelet_element_small"></div>
+                </div>/> 
+
             </div>
             <Sidebar />
           </main>

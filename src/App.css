@@ -18,6 +18,37 @@ a:visited {
   cursor: pointer;
 }
 
+
+.loading_skelet{
+  margin-bottom: 10px;
+  gap: 5px;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  border-color: rgb(157, 158, 156);
+  background-color: rgb(15, 15, 15);
+}
+
+.loading_skelet_element{
+  margin-right: 10px;
+  width: 100%;
+  height: 100px;
+  display: block;
+  border-color: rgb(40, 46, 41);
+  background-color: rgb(91, 89, 88);
+}
+
+.loading_skelet_element_small{
+  margin-right: 10px;
+  width: 30%;
+  height: 100px;
+  display: block;
+  border-color: rgb(40, 46, 41);
+  background-color: rgb(91, 89, 88);
+}
+
+
 button,
 ._btn {
   cursor: pointer;
@@ -108,14 +139,7 @@ body {
 
 
 
-.centerblock__h2 {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 64px;
-  line-height: 72px;
-  letter-spacing: -0.8px;
-  margin-bottom: 45px;
-}
+
 
 
 
