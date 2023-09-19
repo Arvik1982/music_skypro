@@ -46,3 +46,19 @@
     height: 30px;
     background-color: gray
   }
+  .square{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(228, 221, 221);
+  }
+  .skeleton_line{
+    width: 250px;
+    height: 30px;
+    background-color: gray
+  }
+  .skeleton_line-mini{
+    margin-top: 20px;
+    width: 50px;
+    height: 25px;
+    background-color: gray
+  }

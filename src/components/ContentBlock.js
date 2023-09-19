@@ -12,14 +12,14 @@ export function Content(props) {
 
   return (
     <div className="centerblock__content ">
-      <div className="skeleton">
+      {/* <div className="skeleton">
         <h1 className={`${contentVisible ? "display_no" : "display_yes"}`}>
           <div>
             <h1>{props.name}</h1>
           </div>
         </h1>
-      </div>
-      <div className={`${contentVisible ? "display_yes" : "display_no"}`}>
+      </div> */}
+      {/* <div className={`${contentVisible ? "display_yes" : "display_no"}`}> */}
         <div className="content__title playlist-title">
           <div className="playlist-title__col col01">Трек</div>
           <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
@@ -35,33 +35,41 @@ export function Content(props) {
             <div className="playlist__track track">
               <div className="track__title">
                 <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Guilt <span className="track__title-span"></span>
+
+                  {contentVisible ? <span>Guilt</span> :  <Skeleton className="skeleton_line" />}
+                   <span className="track__title-span"></span>
+                    
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Nero
+                {contentVisible ? <span>Nero</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Welcome Reality
+                {contentVisible ? <span>Welcome Reality</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">4:44</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">4:44</span> :  <Skeleton className="display_no" />}
+                
               </div>
             </div>
           </div>
@@ -69,34 +77,39 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Elektro <span className="track__title-span"></span>
+                  {contentVisible ? <span>Elektro</span> :  <Skeleton className="skeleton_line" />} 
+                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Dynoro, Outwork, Mr. Gee
+                {contentVisible ? <span>Dynoro, Outwork, Mr. Gee</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Elektro
+                {contentVisible ? <span>Elektro</span> :  <Skeleton className="skeleton_line" />}
+                  
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">2:22</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">2:22</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -104,34 +117,42 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    I’m Fire <span className="track__title-span"></span>
+
+                  {contentVisible ? <span>I’m Fire </span> :  <Skeleton className="skeleton_line" />}
+                 
+                    <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Ali Bakgor
+                {contentVisible ? <span>Ali Bakgor </span> :  <Skeleton className="skeleton_line" />}
+                 
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  I’m Fire
+                {contentVisible ? <span>I’m Fire </span> :  <Skeleton className="skeleton_line" />}
+                 
+                 
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">2:22</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">2:44</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -139,35 +160,42 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Non Stop
+                  {contentVisible ? <span>Non Stop </span> :  <Skeleton className="skeleton_line" />}
+                 
+                    
                     <span className="track__title-span">(Remix)</span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Стоункат, Psychopath
+                {contentVisible ? <span>Стоункат, Psychopath</span> :  <Skeleton className="skeleton_line" />}
+                 
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Non Stop
+                {contentVisible ? <span>Non Stop </span> :  <Skeleton className="skeleton_line" />}
+                 
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">4:12</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">4:12</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -175,35 +203,42 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Run Run
+                  {contentVisible ? <span>Run Run </span> :  <Skeleton className="skeleton_line" />}
+                 
+                    
                     <span className="track__title-span">(feat. AR/CO)</span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Jaded, Will Clarke, AR/CO
+                {contentVisible ? <span>Jaded, Will Clarke, AR/CO </span> :  <Skeleton className="skeleton_line" />}
+                 
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Run Run
+                {contentVisible ? <span>Run Run</span> :  <Skeleton className="skeleton_line" />}
+                 
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">2:54</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">2:54</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -211,35 +246,42 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Eyes on Fire
+                  {contentVisible ? <span>Eyes on Fire</span> :  <Skeleton className="skeleton_line" />}
+                 
+                    
                     <span className="track__title-span">(Zeds Dead Remix)</span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Blue Foundation, Zeds Dead
+                {contentVisible ? <span>Blue Foundation, Zeds Dead </span> :  <Skeleton className="skeleton_line" />}
+                 
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Eyes on Fire
+                {contentVisible ? <span>Eyes on Fire</span> :  <Skeleton className="skeleton_line" />}
+                 
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">5:20</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">5:20</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -247,15 +289,16 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Mucho Bien
+                  {contentVisible ? <span>Mucho Bien</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span">
                       (Hi Profile Remix)
                     </span>
@@ -264,20 +307,23 @@ export function Content(props) {
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  HYBIT, Mr. Black, Offer Nissim, Hi Profile
+                {contentVisible ? <span>HYBIT, Mr. Black, Offer Nissim, Hi Profile</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Mucho Bien
+                {contentVisible ? <span>Mucho Bien</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">3:41</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">3:41</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -285,35 +331,39 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Knives n Cherries
+                  {contentVisible ? <span>Knives n Cherries</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  minthaze
+                {contentVisible ? <span>minthaze</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Captivating
+                {contentVisible ? <span>Captivating</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">1:48</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">1:48</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -321,210 +371,234 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Knives n Cherries
+                  {contentVisible ? <span>Knives n Cherries</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  minthaze
+                {contentVisible ? <span>minthaze</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Captivating
+                {contentVisible ? <span>Captivating</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">1:48</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">1:48</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Knives n Cherries
+                  {contentVisible ? <span>Knives n Cherries</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  minthaze
+                {contentVisible ? <span>minthaze</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Captivating
+                {contentVisible ? <span>Captivating</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">1:48</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">4:44</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Knives n Cherries
+                  {contentVisible ? <span>Knives n Cherries</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  minthaze
+                {contentVisible ? <span>minthaze</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Captivating
+                {contentVisible ? <span> Captivating</span> :  <Skeleton className="skeleton_line" />}
+                 
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">1:48</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">9:44</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Knives n Cherries
+                  {contentVisible ? <span>Knives n Cherries</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  minthaze
+                {contentVisible ? <span>minthaze</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Captivating
+                {contentVisible ? <span>Captivating</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">1:48</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">2:40</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Knives n Cherries
+                  {contentVisible ? <span>Knives n Cherries</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  minthaze
+                {contentVisible ? <span>minthaze</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Captivating
+                {contentVisible ? <span>Captivating</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">1:48</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">4:44</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Knives n Cherries
+                  {contentVisible ? <span>Knives n Cherries</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  minthaze
+                {contentVisible ? <span>minthaze</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Captivating
+                {contentVisible ? <span>Captivating</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
-                <svg className="track__time-svg" alt="time">
+              {contentVisible ? <svg className="track__time-svg" alt="time">
                   <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                   <use href={`${sprite}#icon-like`} />
-                </svg>
-                <span className="track__time-text">1:48</span>
+                </svg> :  <Skeleton className="skeleton_line-mini" />}
+                  
+                {contentVisible ? <span className="track__time-text">4:54</span> :  <Skeleton className="display_no" />}
               </div>
             </div>
           </div>
@@ -532,27 +606,30 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    How Deep Is Your Love
+                  {contentVisible ? <span>How Deep Is Your Love</span> :  <Skeleton className="skeleton_line" />}
+                    
                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Calvin Harris, Disciples
+                {contentVisible ? <span>Calvin Harris, Disciples</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  How Deep Is Your Love
+                {contentVisible ? <span>How Deep Is Your Love</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
@@ -568,26 +645,29 @@ export function Content(props) {
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
-                <div className="track__title-image">
-                  <svg className="track__title-svg" alt="music">
+              <div className="track__title-image">
+                {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg>
+                  </svg> :  <Skeleton className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">
-                    Morena <span className="track__title-span"></span>
+                  {contentVisible ? <span>Morena</span> :  <Skeleton className="skeleton_line" />}
+                     <span className="track__title-span"></span>
                   </a>
                 </div>
               </div>
               <div className="track__author">
                 <a className="track__author-link" href="http://">
-                  Tom Boxer
+                {contentVisible ? <span>Tom Boxer</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__album">
                 <a className="track__album-link" href="http://">
-                  Soundz Made in Romania
+                {contentVisible ? <span>Soundz Made in Romania</span> :  <Skeleton className="skeleton_line" />}
+                  
                 </a>
               </div>
               <div className="track__time">
@@ -631,7 +711,7 @@ export function Content(props) {
             </div>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }
