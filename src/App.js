@@ -23,7 +23,7 @@ function App() {
               <Filter />
               <Content/>
             </div>
-            <Sidebar />
+            <Sidebar/>
           </main>
           <Player/>
           <Footer />

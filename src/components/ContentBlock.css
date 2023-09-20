@@ -1,4 +1,5 @@
 .centerblock__content {
+  
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -47,9 +48,11 @@
     background-color: gray
   }
   .square{
+    
+    color-scheme: rgb(8, 8, 8);
     width: 50px;
     height: 50px;
-    background-color: rgb(228, 221, 221);
+    background-color: rgb(7, 7, 7);
   }
   .skeleton_line{
     width: 250px;

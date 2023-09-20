@@ -1,6 +1,6 @@
 import sprite from "../img/icon/sprite.svg";
 import "../components/ContentBlock.css";
-import Skeleton from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useState } from "react";
 
@@ -38,7 +38,7 @@ export function Content(props) {
                 {contentVisible ? <svg className="track__title-svg" alt="music">
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                     <use href={`${sprite}#icon-note`} />
-                  </svg> :  <Skeleton className="square" />}
+                  </svg> :  <Skeleton  className="square" />}
                 </div>
                 <div className="track__title-text">
                   <a className="track__title-link" href="http://">

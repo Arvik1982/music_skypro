@@ -12,6 +12,7 @@
     align-items: center;
     margin-bottom: 51px;
     box-sizing: border-box;
+    align-items: baseline;
   }
   .filter__title {
     font-style: normal;
@@ -34,4 +35,39 @@
   .filter__button:not(:last-child) {
     margin-right: 10px;
   }
+
+  .filter_block_performer{
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .filter_block_year{
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .filter_block_style{
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
   
+  .display_no{
+    display: none;
+  }
+  .display_yes{
+    top: 50px;
+    border-radius: 25px;
+    padding-left: 20px;
+    width: 150px;
+    height: fit-content;
+    background: #576d7d;
+    position: absolute;
+    bottom: -90px;
+    left:-5px;
+    /* display: block; */
+    z-index: 100;
+  }

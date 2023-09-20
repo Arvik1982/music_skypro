@@ -33,37 +33,55 @@ setVisible(false)
     <div className="centerblock__filter filter">
     <div className="filter__title">Искать по:</div>
 
+<div className="filter_block_performer filter_performer">
 <div className="filter_performer">
-    <select onClick={filterPerformerClick } className="filter__button button-author _btn-text filter_performer">
-      <option>исполнителю</option>
-      <option>исполнитель1</option>
-      <option>исполнитель2</option>
-      <option>исполнитель3</option>
-      <option>исполнитель4</option>
-    </select>
-  
-  </div>
-  
-<div className="filter_year">
-    <select onClick={filterYearClick} className="filter__button button-year _btn-text filter_year">
-    <option>году выпуска</option>
-      <option>Год Выпуска1</option>
-      <option>Год Выпуска2</option>
-      <option>Год Выпуска3</option>
-      <option>Год Выпуска4</option>
-    </select>
+   <button onClick={filterPerformerClick} className="filter__button button-author _btn-text filter_performer">Исполнителю</button>
+</div>
+<div>
+<ul className={filterPerformerVisible? 'display_yes':'display_no'} > 
+      <li>исполнитель1</li>
+      <li>исполнитель2</li>
+      <li>исполнитель3</li>
+      <li>исполнитель4</li>
+      <li>исполнитель1</li>
+      <li>исполнитель2</li>
+      <li>исполнитель3</li>
+      <li>исполнитель4</li>
+      <li>исполнитель1</li>
+      <li>исполнитель2</li>
+      <li>исполнитель3</li>
+      <li>исполнитель4</li>
+    </ul>
+    </div>
+</div>
 
+
+<div className="filter_block_year">
+<div className="filter_performer">
+    <button onClick={filterYearClick} className="filter__button button-year _btn-text filter_year">году выпуска</button>
+ </div> 
+ <div> 
+    <ul className={filterYearVisible? 'display_yes':'display_no'} >
+      <li>Год Выпуска1</li>
+      <li>Год Выпуска2</li>
+      <li>Год Выпуска3</li>
+      <li>Год Выпуска4</li>
+    </ul>
+    </div> 
     
 </div>
-<div className="filter_style">
-    <select onClick={filterStyleClick} className="filter__button button-genre _btn-text filter_style">
-    <option>жанру</option>
-      <option>Жанр1</option>
-      <option>Жанр2</option>
-      <option>Жанр3</option>
-      <option>Жанр4</option>
-    </select>
-
+<div className="filter_block_style">
+  <div className="filter_style">
+    <button onClick={filterStyleClick} className="filter__button button-genre _btn-text filter_style">жанру</button>
+  </div> 
+  <div>
+    <ul className={filterStyleVisible? 'display_yes':'display_no'} >
+      <li>Жанр1</li>
+      <li>Жанр2</li>
+      <li>Жанр3</li>
+      <li>Жанр4</li>
+    </ul>
+    </div> 
     </div>
   </div>)
     
