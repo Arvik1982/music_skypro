@@ -4,8 +4,8 @@ import pList03 from "../img/playlist03.png"
 import sprite from "../img/icon/sprite.svg"
 import "../components/SideBar.css"
 import React, { useState } from 'react';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 
 export function Sidebar() {
@@ -18,7 +18,7 @@ export function Sidebar() {
     return(
         <div className="main__sidebar sidebar">
               <div className="sidebar__personal">
-                <p className="sidebar__personal-name">{contentVisible ? <span> Sergey.Ivanov </span>:<Skeleton className="skeleton_sidebar" />}</p>
+                <p className="sidebar__personal-name">{contentVisible ? <span> Sergey.Ivanov </span>:<SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_sidebar" /></SkeletonTheme>}</p>
                 <div className="sidebar__icon">
                 <svg alt="logout">
                   <use href={`${sprite}#icon-logout`} />
@@ -34,7 +34,7 @@ export function Sidebar() {
                         className="sidebar__img"
                         src={pList01}
                         alt="day's playlist"
-                      /> :<Skeleton className="skeleton_sidebar-img" />}
+                      /> :<SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_sidebar-img" /></SkeletonTheme>}
                       
                     </a>
                   </div>
@@ -44,7 +44,7 @@ export function Sidebar() {
                         className="sidebar__img"
                         src={pList02}
                         alt="day's playlist"
-                      /> :<Skeleton className="skeleton_sidebar-img" />}
+                      /> :<SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_sidebar-img" /></SkeletonTheme>}
                     </a>
                   </div>
                   <div className="sidebar__item">
@@ -53,7 +53,7 @@ export function Sidebar() {
                         className="sidebar__img"
                         src={pList03}
                         alt="day's playlist"
-                      /> :<Skeleton className="skeleton_sidebar-img" />}
+                      /> :<SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_sidebar-img" /></SkeletonTheme>}
                     </a>
                   </div>
                 </div>

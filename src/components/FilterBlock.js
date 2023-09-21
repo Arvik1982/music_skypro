@@ -39,18 +39,16 @@ setVisible(false)
 </div>
 <div>
 <ul className={filterPerformerVisible? 'display_yes':'display_no'} > 
-      <li>исполнитель1</li>
-      <li>исполнитель2</li>
-      <li>исполнитель3</li>
-      <li>исполнитель4</li>
-      <li>исполнитель1</li>
-      <li>исполнитель2</li>
-      <li>исполнитель3</li>
-      <li>исполнитель4</li>
-      <li>исполнитель1</li>
-      <li>исполнитель2</li>
-      <li>исполнитель3</li>
-      <li>исполнитель4</li>
+      <li><a href="#">исполнитель1</a></li>
+      <li><a href="#">исполнитель2</a></li>
+      <li><a href="#">исполнитель3</a></li>
+      <li><a href="#">исполнитель4</a></li>
+      <li><a href="#">исполнитель5</a></li>
+      <li><a href="#">исполнитель6</a></li>
+      <li><a href="#">исполнитель7</a></li>
+      <li><a href="#">исполнитель5</a></li>
+      <li><a href="#">исполнитель6</a></li>
+      <li><a href="#">исполнитель7</a></li>
     </ul>
     </div>
 </div>
@@ -62,10 +60,11 @@ setVisible(false)
  </div> 
  <div> 
     <ul className={filterYearVisible? 'display_yes':'display_no'} >
-      <li>Год Выпуска1</li>
-      <li>Год Выпуска2</li>
-      <li>Год Выпуска3</li>
-      <li>Год Выпуска4</li>
+    <li><a href="#">Год Выпуска1</a></li>
+    <li><a href="#">Год Выпуска2</a></li>
+    <li><a href="#">Год Выпуска3</a></li>
+    <li><a href="#">Год Выпуска4</a></li>
+    <li><a href="#">Год Выпуска5</a></li>
     </ul>
     </div> 
     
@@ -76,10 +75,10 @@ setVisible(false)
   </div> 
   <div>
     <ul className={filterStyleVisible? 'display_yes':'display_no'} >
-      <li>Жанр1</li>
-      <li>Жанр2</li>
-      <li>Жанр3</li>
-      <li>Жанр4</li>
+    <li><a href="#">Жанр муз1</a></li>
+    <li><a href="#">Жанр муз2</a></li>
+    <li><a href="#">Жанр муз3</a></li>
+    <li><a href="#">Жанр муз4</a></li>
     </ul>
     </div> 
     </div>

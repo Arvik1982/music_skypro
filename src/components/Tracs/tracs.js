@@ -11,5 +11,5 @@ export function Tracks() {
     }, 4000);
 
     return(
-    <h2 className="centerblock__h2">{contentVisible ? <span>Tracks</span> :  <Skeleton className="skeleton_class" />}</h2>)
-}
+    <h2 className="centerblock__h2">{contentVisible ? <span>Tracks</span> : <h3>Загрузка...</h3>}</h2>
+    )}
