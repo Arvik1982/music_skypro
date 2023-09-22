@@ -64,3 +64,9 @@
     height: 25px;
     background-color: #202020
   }
+
+  
+  .main__sidebar {
+    max-width: 418px;
+    padding: 20px 90px 20px 78px;
+  }

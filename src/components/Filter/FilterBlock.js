@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../components/FilterBlock.css"
+import "../Filter/FilterBlock.css"
 export function Filter() {
   
   const [filterPerformerVisible, setVisible] = useState(false);

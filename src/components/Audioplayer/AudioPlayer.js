@@ -1,8 +1,9 @@
-import sprite from "../img/icon/sprite.svg"
-import "../components/AudioPlayer.css"
+import sprite from "./sprite.svg"
+import "../Audioplayer/AudioPlayer.css"
 import React, { useState } from 'react';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { SkeletonTheme } from "react-loading-skeleton";
 
 export function Player(props){
   const [contentVisible, setContentVisible] = useState(false);
@@ -65,7 +66,7 @@ export function Player(props){
                   <div className="track-play__image">
                   {contentVisible ? <svg className="track-play__svg" alt="music">
                         <use href={`${sprite}#icon-note`} />
-                        </svg> :  <Skeleton className="skeleton_player_img" />}
+                        </svg> :  <SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_player_img" /></SkeletonTheme>}
 
 
                   
@@ -75,14 +76,14 @@ export function Player(props){
                       
                       <div className="track-play__author">
                       <a className="track-play__author-link" href="http://">
-                      {contentVisible ? <span>Ты та...</span> :  <Skeleton className="skeleton_player_icon" />}
+                      {contentVisible ? <span>Ты та...</span> :  <SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_player_icon" /></SkeletonTheme>}
                         
                       </a>
                     </div>
 
                     <div className="track-play__album">
                       <a className="track-play__album-link" href="http://">
-                      {contentVisible ? <span>Баста</span> :  <Skeleton className="skeleton_player_icon" />}
+                      {contentVisible ? <span>Баста</span> : <SkeletonTheme baseColor ="#202020" highlightColor="#444"> <Skeleton className="skeleton_player_icon" /></SkeletonTheme>}
                         
                       </a>
                     </div>
