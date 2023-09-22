@@ -1,9 +1,12 @@
 import { useState } from "react";
 import "../Filter/FilterBlock.css"
+import React from "react";
 export function Filter() {
   
-  const [filterPerformerVisible, setVisible] = useState(false);
+  const [activeFilter, setActiveFilter] = useState('');
 
+
+  const [filterPerformerVisible, setVisible] = useState(false);
   const filterPerformerClick =()=>{
   setVisible(!filterPerformerVisible);
   console.log(filterPerformerVisible)
@@ -17,9 +20,9 @@ export function Filter() {
   const filterYearClick =()=>{
   setYearVisible(!filterYearVisible);
   console.log(filterYearVisible)
-setStyleVisible(false)
-setVisible(false)
-}
+  setStyleVisible(false)
+  setVisible(false)
+  }
   
   const [filterStyleVisible, setStyleVisible] = useState(false);
   const filterStyleClick =()=>{
@@ -27,7 +30,7 @@ setVisible(false)
   console.log(filterStyleVisible)
   setVisible(false)
   setYearVisible(false)
-}
+  }
   
     return(
     <div className="centerblock__filter filter">
@@ -35,10 +38,10 @@ setVisible(false)
 
 <div className="filter_block_performer filter_performer">
 <div className="filter_performer">
-   <button onClick={filterPerformerClick} className="filter__button button-author _btn-text filter_performer">Исполнителю</button>
+<button  onClick = {setActiveFilter('author')} className="filter__button button-author _btn-text filter_performer">Исполнителю</button>
 </div>
 <div>
-<ul className={filterPerformerVisible? 'display_yes':'display_no'} > 
+<ul className={activeFilter === "author" ? 'display_yes': 'display_no'} > 
       <li><a href="#">исполнитель1</a></li>
       <li><a href="#">исполнитель2</a></li>
       <li><a href="#">исполнитель3</a></li>

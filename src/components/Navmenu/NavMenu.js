@@ -104,8 +104,7 @@ export function Nav() {
                 </StyledMenuList>
                 </StyledNavMenu>
                 ) : null}
-                
-              
+
             </StyledMainNav>
    ) 
 }

@@ -3,9 +3,43 @@ import "../components/ContentBlock.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useState } from "react";
+import styled from 'styled-components';
 
-
-
+const StyledCentralBlockContent=styled.div`
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-orient: vertical;
+-webkit-box-direction: normal;
+-ms-flex-direction: column;
+flex-direction: column;
+`
+const StyledCentralBlockContentTitle=styled.div`
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-orient: horizontal;
+-webkit-box-direction: normal;
+-ms-flex-direction: row;
+flex-direction: row;
+-webkit-box-align: center;
+-ms-flex-align: center;
+align-items: center;
+-webkit-box-pack: justify;
+-ms-flex-pack: justify;
+justify-content: space-between;
+margin-bottom: 24px;
+`
+const StyledCentralBlockContentPlaylist=styled.div`
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-webkit-box-orient: vertical;
+-webkit-box-direction: normal;
+-ms-flex-direction: column;
+flex-direction: column;
+overflow-y: auto;
+`
 
 export function Content(props) {
   const [contentVisible, setContentVisible] = useState(false);
@@ -17,7 +51,7 @@ export function Content(props) {
 
   return (
 
-    <div className="centerblock__content ">
+    <StyledCentralBlockContent>
       {/* <div className="skeleton">
         <h1 className={`${contentVisible ? "display_no" : "display_yes"}`}>
           <div>
@@ -26,7 +60,7 @@ export function Content(props) {
         </h1>
       </div> */}
       {/* <div className={`${contentVisible ? "display_yes" : "display_no"}`}> */}
-        <div className="content__title playlist-title">
+        <StyledCentralBlockContentTitle className="content__title playlist-title">
           <div className="playlist-title__col col01">Трек</div>
           <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
           <div className="playlist-title__col col03">АЛЬБОМ</div>
@@ -35,8 +69,8 @@ export function Content(props) {
               <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
             </svg>
           </div>
-        </div>
-        <div className="content__playlist playlist">
+        </StyledCentralBlockContentTitle>
+        <StyledCentralBlockContentPlaylist>
           <div className="playlist__item">
             <div className="playlist__track track">
               <div className="track__title">
@@ -726,8 +760,8 @@ export function Content(props) {
               </div>
             </div>
           </div>
-        </div>
+        </StyledCentralBlockContentPlaylist>
       {/* </div> */}
-    </div>
+    </StyledCentralBlockContent>
   );
 }
