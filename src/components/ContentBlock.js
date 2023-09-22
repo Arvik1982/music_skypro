@@ -40,7 +40,15 @@ display: flex;
 flex-direction: column;
 overflow-y: auto;
 `
-
+const StyledPlaylistTitleCol=styled.div`
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+letter-spacing: 2px;
+color: #696969;
+text-transform: uppercase;
+`
 export function Content(props) {
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
@@ -61,14 +69,14 @@ export function Content(props) {
       </div> */}
       {/* <div className={`${contentVisible ? "display_yes" : "display_no"}`}> */}
         <StyledCentralBlockContentTitle className="content__title playlist-title">
-          <div className="playlist-title__col col01">Трек</div>
-          <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
-          <div className="playlist-title__col col03">АЛЬБОМ</div>
-          <div className="playlist-title__col col04">
+          <StyledPlaylistTitleCol className="playlist-title__col col01">Трек</StyledPlaylistTitleCol>
+          <StyledPlaylistTitleCol className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</StyledPlaylistTitleCol>
+          <StyledPlaylistTitleCol className="playlist-title__col col03">АЛЬБОМ</StyledPlaylistTitleCol>
+          <StyledPlaylistTitleCol className="playlist-title__col col04">
             <svg className="playlist-title__svg" alt="time">
               <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
             </svg>
-          </div>
+          </StyledPlaylistTitleCol>
         </StyledCentralBlockContentTitle>
         <StyledCentralBlockContentPlaylist>
           <div className="playlist__item">
