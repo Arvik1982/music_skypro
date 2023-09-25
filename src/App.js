@@ -20,8 +20,8 @@ body{
   padding: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  *:before,
-  *:after {
+  &:before,
+  &:after {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
@@ -31,6 +31,7 @@ body{
     font-family: "StratosSkyeng", sans-serif;
     cursor: pointer;
   }
+ 
 }
 
 `
