@@ -1,30 +1,86 @@
-import sprite from "../img/icon/sprite.svg"
-import "../components/Search.css"
+import sprite from "../img/icon/sprite.svg";
+import "../components/Search.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import React, { useState } from "react";
-export function Search(){
+import styled from "styled-components";
 
+const StyleSearch_centerblockSearch = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #4e4e4e;
+  margin-bottom: 51px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+`;
+const StyleSearch_searchSvg = styled.svg`
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  stroke: #ffffff;
+  fill: transparent;
+`;
+const StyleSearch_searchText = styled.input`
+  -webkit-box-flex: 100;
+  -ms-flex-positive: 100;
+  flex-grow: 100;
+  background-color: transparent;
+  border: none;
+  padding: 13px 10px 14px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+
+  &:-webkit-input-placeholder {
+    background-color: transparent;
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &:-ms-input-placeholder {
+    background-color: transparent;
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &:placeholder {
+    background-color: transparent;
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+
+export function Search() {
   // const [contentVisible, setContentVisible] = useState(false);
   // setTimeout(() => {
   //   setContentVisible(true);
   // }, 4000);
 
-    return(
-      
-    <div className="centerblock__search search">
-      <svg className="search__svg">
-    <use href= {`${sprite}#icon-search`}/>
-    </svg> 
-  
-    
-  <input
-    className="search__text"
-    type="search"
-    placeholder="Поиск"
-    name="search"
-  />
-  
-  </div>
-    )
+  return (
+    <StyleSearch_centerblockSearch className="search">
+      <StyleSearch_searchSvg>
+        <use href={`${sprite}#icon-search`} />
+      </StyleSearch_searchSvg>
+
+      <StyleSearch_searchText type="search" placeholder="Поиск" name="search" />
+    </StyleSearch_centerblockSearch>
+  );
 }

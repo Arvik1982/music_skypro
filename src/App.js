@@ -10,8 +10,36 @@ import { Footer } from "./components/FooterBlock";
 import Skeleton from 'react-loading-skeleton'
 import { Tracks } from "./components/Tracs/tracs";
 import "react-loading-skeleton/dist/skeleton.css";
+
+
+import createGlobalStyle from "styled-components";
+const GlobalStyle = createGlobalStyle`
+
+body{
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  *:before,
+  *:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  a,
+  a:visited {
+    text-decoration: none;
+    font-family: "StratosSkyeng", sans-serif;
+    cursor: pointer;
+  }
+}
+
+`
+
+
 function App() {
   return (
+    <>
+    <GlobalStyle/>
     <div className="App">
       
       <div className="wrapper">
@@ -34,7 +62,8 @@ function App() {
         </div>
       </div>
     </div>
-  );
+    </>
+    );
 }
 
 export default App;
