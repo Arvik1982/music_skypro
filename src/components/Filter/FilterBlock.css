@@ -1,0 +1,88 @@
+.centerblock__filter {
+  gap: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 51px;
+    box-sizing: border-box;
+    align-items: baseline;
+  }
+  .filter__title {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-right: 15px;
+  }
+  
+  .filter__button {
+    background: black;
+    color: white;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+  }
+  .filter__button:focus{
+    background-color:rgb(58, 17, 58);
+  }
+  
+  .filter__button:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  .filter_block_performer{
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .filter_block_year{
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  .filter_block_style{
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .display_no{
+    display: none;
+  }
+  .display_yes{
+    
+    top: 50px;
+    border-radius: 10px;
+    padding-left: 20px;
+    min-width: 150px;
+    height: fit-content;
+    background: #565454;
+    position: absolute;
+    bottom: -90px;
+    left:-5px;
+    /* display: block; */
+    z-index: 100;
+  }
+  .link{
+    color: aliceblue;
+  }
+  .link:hover{
+    text-decoration: underline;
+  }
+  .link:focus{
+    color:rgb(223, 20, 223)
+  }
