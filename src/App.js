@@ -9,13 +9,12 @@ import { Content } from "./components/Content/ContentBlock";
 import { Footer } from "./components/FooterBlock";
 import { Tracks } from "./components/Tracs/tracs";
 import "react-loading-skeleton/dist/skeleton.css";
-import createGlobalStyle from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 import * as S from "./StyleApp.js";
 import {AppRoutes} from'./routs';
 
 
 const GlobalStyle = createGlobalStyle`
-
 
   *{margin: 0;
   padding: 0;
@@ -55,14 +54,14 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-function App() {
+export function App() {
   return (
-    
+   
     
     <div className="App">
-    <AppRoutes/>
-       <GlobalStyle/>
-
+    
+    <GlobalStyle/>
+    <AppRoutes/>  
       <S.Wrapper>
       
         <S.Container>
