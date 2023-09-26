@@ -7,12 +7,12 @@ import { Nav } from "./components/Navmenu/NavMenu.js";
 import { Filter } from "./components/Filter/FilterBlock";
 import { Content } from "./components/Content/ContentBlock";
 import { Footer } from "./components/FooterBlock";
-
 import { Tracks } from "./components/Tracs/tracs";
 import "react-loading-skeleton/dist/skeleton.css";
-
 import createGlobalStyle from "styled-components";
 import * as S from "./StyleApp.js";
+import {AppRoutes} from'./routs';
+
 
 const GlobalStyle = createGlobalStyle`
 
@@ -58,13 +58,20 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     
+    
     <div className="App">
+    <AppRoutes/>
        <GlobalStyle/>
+
       <S.Wrapper>
+      
         <S.Container>
+        
           <S.Main>
+          
             <Nav />
             <S.MainCenterBlock>
+            
               <Search />
               <Tracks />
               <Filter />
@@ -76,6 +83,7 @@ function App() {
           <Footer />
         </S.Container>
       </S.Wrapper>
+      
     </div>
     
   );
