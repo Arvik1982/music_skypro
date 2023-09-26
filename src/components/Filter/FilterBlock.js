@@ -101,17 +101,8 @@ export function Filter() {
       </S.filterBlockYear>
       <S.filterBlockStyle>
         <div className="filter_style">
-          <S.centralBlockFilterButton
-            onClick={() => {
-              S.styleFilterUl.props = "style" && (
-                <S.styleFilterUl props="style" />
-              );
-              console.log(S.styleFilterUl.props);
-            }}
-            className="_btn-text"
-          >
-            жанру
-          </S.centralBlockFilterButton>
+        <S.centralBlockFilterButton onClick={()=>{activeFilter==='style'?setActiveFilter('') :setActiveFilter('style')
+console.log(`click`)}} className="_btn-text">жанру</S.centralBlockFilterButton>
         </div>
 
         {/* <div className="filter_style">
@@ -120,7 +111,7 @@ console.log(`click`)}} className="_btn-text">жанру</S.centralBlockFilterBut
   </div>  */}
 
         <div>
-          <S.styleFilterUl>
+          <S.styleFilterUl isActive = {activeFilter === 'style'}>
             <li>
               <a className="link" href="#">
                 Жанр муз1

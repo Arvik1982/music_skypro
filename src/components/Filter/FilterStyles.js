@@ -78,7 +78,7 @@ color: aliceblue;
 }  
 `;
 export const styleFilterUl = styled.ul`
-display:${(props) => (props === "style" ? "block" : "none")} ;
+display:${props => (props.isActive? "block" : "none")} ;
 top: 50px;
 border-radius: 10px;
 padding-left: 20px;
