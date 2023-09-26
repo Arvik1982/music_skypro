@@ -1,11 +1,7 @@
-import sprite from "../img/icon/sprite.svg";
-import "../components/Search.css";
-import "react-loading-skeleton/dist/skeleton.css";
-import Skeleton from "react-loading-skeleton";
-import React, { useState } from "react";
 import styled from "styled-components";
+// import Skeleton from "react-loading-skeleton";
 
-const StyleSearch_centerblockSearch = styled.div`
+export const centerblockSearch = styled.div`
   width: 100%;
   border-bottom: 1px solid #4e4e4e;
   margin-bottom: 51px;
@@ -20,14 +16,14 @@ const StyleSearch_centerblockSearch = styled.div`
   -ms-flex-align: center;
   align-items: center;
 `;
-const StyleSearch_searchSvg = styled.svg`
+export const searchSvg = styled.svg`
   width: 17px;
   height: 17px;
   margin-right: 5px;
   stroke: #ffffff;
   fill: transparent;
 `;
-const StyleSearch_searchText = styled.input`
+export const searchText = styled.input`
   -webkit-box-flex: 100;
   -ms-flex-positive: 100;
   flex-grow: 100;
@@ -67,20 +63,3 @@ const StyleSearch_searchText = styled.input`
     line-height: 24px;
   }
 `;
-
-export function Search() {
-  // const [contentVisible, setContentVisible] = useState(false);
-  // setTimeout(() => {
-  //   setContentVisible(true);
-  // }, 4000);
-
-  return (
-    <StyleSearch_centerblockSearch className="search">
-      <StyleSearch_searchSvg>
-        <use href={`${sprite}#icon-search`} />
-      </StyleSearch_searchSvg>
-
-      <StyleSearch_searchText type="search" placeholder="Поиск" name="search" />
-    </StyleSearch_centerblockSearch>
-  );
-}

@@ -1,27 +1,29 @@
 import "./App.css";
-import "./components/Audioplayer/AudioPlayer.css";
+// import "./components/Audioplayer/AudioPlayer.css";
 import { Player } from "./components/Audioplayer/AudioPlayer.js";
-import { Sidebar } from "./components/SideBar.js";
-import { Search } from "./components/Search.js";
+import { Sidebar } from "./components/Sidebar/SideBar.js";
+import { Search } from "./components/Search/Search.js";
 import { Nav } from "./components/Navmenu/NavMenu.js";
 import { Filter } from "./components/Filter/FilterBlock";
-import { Content } from "./components/ContentBlock";
+import { Content } from "./components/Content/ContentBlock";
 import { Footer } from "./components/FooterBlock";
-import Skeleton from 'react-loading-skeleton'
+
 import { Tracks } from "./components/Tracs/tracs";
 import "react-loading-skeleton/dist/skeleton.css";
 
-
 import createGlobalStyle from "styled-components";
+import * as S from "./StyleApp.js";
+
 const GlobalStyle = createGlobalStyle`
 
-body{
-  margin: 0;
+
+  *{margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  &:before,
-  &:after {
+  }
+  *&:before,
+  *&:after {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
@@ -31,42 +33,52 @@ body{
     font-family: "StratosSkyeng", sans-serif;
     cursor: pointer;
   }
- 
-}
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    font-family: "StratosSkyeng", sans-serif;
+    color: #ffffff;
+  }
+  ul li {
+    list-style: none;
+  }
+  
+  @font-face {
+    font-family: "StratosSkyeng";
+    src: local("StratosSkyeng"), local("StratosSkyeng"),
+      url("StratosSkyeng.woff2") format("woff2"),
+      url("StratosSkyeng.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+  }
 
-`
-
+`;
 
 function App() {
   return (
-    <>
-    <GlobalStyle/>
+    
     <div className="App">
-      
-      <div className="wrapper">
-      
-      <div className="container">
-      
-        <main className="main">
-        <Nav/>
-          <div className="main__centerblock centerblock">
-         
+       <GlobalStyle/>
+      <S.Wrapper>
+        <S.Container>
+          <S.Main>
+            <Nav />
+            <S.MainCenterBlock>
               <Search />
-              <Tracks/>
+              <Tracks />
               <Filter />
-              <Content/>
-          </div>
-              <Sidebar/>
-          </main>
-          <Player/>
+              <Content />
+            </S.MainCenterBlock>
+            <Sidebar />
+          </S.Main>
+          <Player />
           <Footer />
-        </div>
-      </div>
+        </S.Container>
+      </S.Wrapper>
     </div>
-    </>
-    );
+    
+  );
 }
 
 export default App;
-
-
