@@ -1,4 +1,4 @@
-import {Player} from"../../components/Audioplayer/AudioPlayer"
+import { Player } from"../../components/Audioplayer/AudioPlayer"
 import { Sidebar } from "../../components/Sidebar/SideBar.js";
 import { Search } from "../../components/Search/Search.js";
 import { Nav } from "../../components/Navmenu/NavMenu.js";

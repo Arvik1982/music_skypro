@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { Link } from "react-router-dom";
+
 export const sidebarMain = styled.div`
   max-width: 418px;
   padding: 20px 90px 20px 78px;
@@ -69,7 +71,7 @@ export const sidebarItem = styled.div`
     margin-bottom: 30px;
   }
 `;
-export const sidebarLink = styled.a`
+export const sidebarLink = styled(Link)`
   width: 100%;
   height: 100%;
 `;

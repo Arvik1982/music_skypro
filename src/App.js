@@ -3,6 +3,7 @@
 // import "react-loading-skeleton/dist/skeleton.css";
 import { createGlobalStyle } from 'styled-components';
 import {AppRoutes} from'./routs';
+import { useState } from 'react';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -47,10 +48,11 @@ const GlobalStyle = createGlobalStyle`
 
 
 export function App() {
+  const [user,setUser]=useState(null)
+  
   return (
-      
     <div className="App">
-    <AppRoutes/>  
+    <AppRoutes user = {user}/>  
     <GlobalStyle/>
     </div>
     
