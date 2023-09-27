@@ -94,11 +94,17 @@ export const playerBtnPrevSvg = styled.svg`
 `;
 export const playerBtnPlay = styled(playerButtons)`
   margin-right: 23px;
+
 `;
+
+
 export const playerBtnPlaySvg = styled.svg`
+
   width: 22px;
   height: 20px;
   fill: #d9d9d9;
+
+
 `;
 
 export const playerBtnNext = styled(playerButtons)`
