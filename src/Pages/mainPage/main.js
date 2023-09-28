@@ -10,7 +10,8 @@ import * as S from "../../StyleApp";
 
 import React from "react";
 
-export function MainPage() {
+export function MainPage({setUser}) {
+  console.log(setUser)
     return(
         <S.Wrapper>
       
@@ -18,7 +19,7 @@ export function MainPage() {
         
           <S.Main>
           
-            <Nav />
+            <Nav setUser={setUser} />
             <S.MainCenterBlock>
             
               <Search />

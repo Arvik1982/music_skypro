@@ -4,7 +4,7 @@
 import { createGlobalStyle } from 'styled-components';
 import {AppRoutes} from'./routs';
 import { useState } from 'react';
-
+import { LoginPage } from './Pages/loginPage/login';
 
 const GlobalStyle = createGlobalStyle`
 
@@ -48,11 +48,13 @@ const GlobalStyle = createGlobalStyle`
 
 
 export function App() {
-  const [user,setUser]=useState(false)
-  
+
+ const [user,setUser]=useState(false)
+ 
+
   return (
     <div className="App">
-    <AppRoutes user = {user}/>  
+    <AppRoutes user = {user} setUser={setUser} />
     <GlobalStyle/>
     </div>
     

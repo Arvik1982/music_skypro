@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { AppRoutes } from "../../routs";
+import { useState } from "react";
+import { RegPage } from '../loginPage/registration';
+import {App} from'../../App'
+import { Navigate, Outlet } from "react-router-dom"
+import { Link } from "react-router-dom";
 export const Text__h1 = styled.h1`
 
 color: black;
@@ -35,13 +40,21 @@ right: 0;
 text-align: center;
 top: 70%;
 }
-
 `
-export function LoginPage (){
-    return(
+export const Button_margin = styled(Login_button)`
+
+margin-top: 100px;
+
+}
+`
+
+export function LoginPage ({setUser}){
+ console.log(setUser)
+  return(
     <div>
     <Text__h1>"Страница входа"</Text__h1>
-    <Login_button type="button"> Авторизация </Login_button>
+    <Login_button onClick={()=> setUser(true)}><Link to = '/'> Авторизация</Link> </Login_button>
+    <Button_margin onClick={()=> setUser(true)}> <Link to = '/register'> Регистрация</Link> </Button_margin>
     </div>
 
     )

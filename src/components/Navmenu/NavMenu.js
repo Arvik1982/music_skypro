@@ -4,11 +4,12 @@ import logo from "./logo.png";
 import * as S from "./NavStyle.js";
 import { Link } from "react-router-dom";
 
-export function Nav() {
+export function Nav({setUser}) {
   const [menuVisible, setVisible] = useState(false);
   const menuClick = () => {
     setVisible(!menuVisible);
     console.log(menuVisible);
+    console.log(setUser);
   };
 
   return (
@@ -34,7 +35,7 @@ export function Nav() {
               <S.MenuLink to ="/favorites">Мой плейлист</S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to ="/login">Войти</S.MenuLink>
+              <S.MenuLink to ="/login">{setUser?'ВЫЙТИ':'Войти'}</S.MenuLink>
             </S.MenuItem>
           </S.MenuList>
         </S.NavMenu>
