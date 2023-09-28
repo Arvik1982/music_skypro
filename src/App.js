@@ -48,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
 
 
 export function App() {
-  const [user,setUser]=useState(null)
+  const [user,setUser]=useState(false)
   
   return (
     <div className="App">
