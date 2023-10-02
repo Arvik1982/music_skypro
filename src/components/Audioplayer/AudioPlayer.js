@@ -1,131 +1,131 @@
-import sprite from "./sprite.svg"
-import "../Audioplayer/AudioPlayer.css"
-import React, { useState } from 'react';
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import sprite from "./sprite.svg";
+// import "../Audioplayer/AudioPlayer.css"
+import React, { useState } from "react";
+
+import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 
-export function Player(props){
+import * as S from "./PlayerStyles";
+
+export function Player(props) {
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
     setContentVisible(true);
   }, 4000);
 
-    return(
-<div className="bar">
+  return (
+    <S.bar>
+      <S.barContent>
+        <S.progress></S.progress>
+        <S.playerBlock>
+          <S.barPlayer_player>
+            <S.playerControls>
+              <S.playerBtnPrev>
+                <S.playerBtnPrevSvg alt="prev">
+                  <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
+                  <use href={`${sprite}#icon-prev`} />
+                </S.playerBtnPrevSvg>
+              </S.playerBtnPrev>
+              <S.playerBtnPlay className="_btn">
+                <S.playerBtnPlaySvg alt="play">
+                  <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
+                  <use href={`${sprite}#icon-play`} />
+                </S.playerBtnPlaySvg>
+              </S.playerBtnPlay>
+              <S.playerBtnNext>
+                <S.playerBtnNextSvg alt="next">
+                  <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
+                  <use href={`${sprite}#icon-next`} />
+                </S.playerBtnNextSvg>
+              </S.playerBtnNext>
+              <S.playerBtnRepeat className="_btn-icon">
+                <S.playerBtnRepeatSvg alt="repeat">
+                  <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+                  <use href={`${sprite}#icon-repeat`} />
+                </S.playerBtnRepeatSvg>
+              </S.playerBtnRepeat>
+              <S.playerBtnShuffle className=" _btn-icon">
+                <S.playerBtnShuffleSvg alt="shuffle">
+                  <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+                  <use href={`${sprite}#icon-shuffle`} />
+                </S.playerBtnShuffleSvg>
+              </S.playerBtnShuffle>
+            </S.playerControls>
 
+            <S.playerTrackPlay className="track-play">
+              <S.playerTrackPlayContain>
+                <S.playerTrackPlayImage>
+                  {contentVisible ? (
+                    <S.playerTrackPlaySvg alt="music">
+                      <use href={`${sprite}#icon-note`} />
+                    </S.playerTrackPlaySvg>
+                  ) : (
+                    <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                      <S.skeletonImg />
+                    </SkeletonTheme>
+                  )}
+                </S.playerTrackPlayImage>
 
+                <S.playerTrackPlayAuthor>
+                  <S.playerTrackPlayAuthorLink href="http://">
+                    {contentVisible ? (
+                      <span>Ты та...</span>
+                    ) : (
+                      <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                        <S.skeletonIcon />
+                      </SkeletonTheme>
+                    )}
+                  </S.playerTrackPlayAuthorLink>
+                </S.playerTrackPlayAuthor>
 
-
-
-            <div className="bar__content">
-              <div className="bar__player-progress"></div>
-              <div className= "bar__content bar__player-block">
-
-
-      
-                <div className="bar__player player">
-                  <div className="player__controls">
-                    <div className="player__btn-prev">
-                      <svg className="player__btn-prev-svg" alt="prev">
-                        <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
-                        <use href={`${sprite}#icon-prev`} />
-                      </svg>
-                    </div>
-                    <div className="player__btn-play _btn">
-                      <svg className="player__btn-play-svg" alt="play">
-                        <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
-                        <use href={`${sprite}#icon-play`} />
-                      </svg>
-                    </div>
-                    <div className="player__btn-next">
-                      <svg className="player__btn-next-svg" alt="next">
-                        <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
-                        <use href={`${sprite}#icon-next`} />
-                      </svg>
-                    </div>
-                    <div className="player__btn-repeat _btn-icon">
-                      <svg className="player__btn-repeat-svg" alt="repeat">
-                        <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
-                        <use href={`${sprite}#icon-repeat`} />
-                      </svg>
-                    </div>
-                    <div className="player__btn-shuffle _btn-icon">
-                      <svg className="player__btn-shuffle-svg" alt="shuffle">
-                        <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
-                        <use href={`${sprite}#icon-shuffle`} />
-                      </svg>
-                    </div>
-                  </div>
-
-
-  
-                  <div className="player__track-play track-play">
-                  <div className= "track-play__contain">
-                  
-                  <div className="track-play__image">
-                  {contentVisible ? <svg className="track-play__svg" alt="music">
-                        <use href={`${sprite}#icon-note`} />
-                        </svg> :  <SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_player_img" /></SkeletonTheme>}
-
-
-                  
-                        
-                    </div>
-                    
-                      
-                      <div className="track-play__author">
-                      <a className="track-play__author-link" href="http://">
-                      {contentVisible ? <span>Ты та...</span> :  <SkeletonTheme baseColor ="#202020" highlightColor="#444"><Skeleton className="skeleton_player_icon" /></SkeletonTheme>}
-                        
-                      </a>
-                    </div>
-
-                    <div className="track-play__album">
-                      <a className="track-play__album-link" href="http://">
-                      {contentVisible ? <span>Баста</span> : <SkeletonTheme baseColor ="#202020" highlightColor="#444"> <Skeleton className="skeleton_player_icon" /></SkeletonTheme>}
-                        
-                      </a>
-                    </div>
-                                  
-                      
-                    </div>
-                    <div className="track-play__like-dis">
-                      <div className="track-play__like _btn-icon">
-                        <svg className="track-play__like-svg" alt="like">
-                          <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                          <use href={`${sprite}#icon-like`} />
-                        </svg>
-                      </div>
-                      <div className="track-play__dislike _btn-icon">
-                        <svg className="track-play__dislike-svg" alt="dislike">
-                          <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
-                          <use href={`${sprite}#icon-dislike`} />
-                        </svg>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-                <div className="bar__volume-block volume">
-                  <div className="volume__content">
-                    <div className="volume__image">
-                      <svg className="volume__svg" alt="volume">
-                        <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
-                        <use href={`${sprite}#icon-volume`} />
-                      </svg>
-                    </div>
-                    <div className="volume__progress _btn">
-                      <input
-                        className="volume__progress-line _btn"
-                        type="range"
-                        name="range"
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-          </div>)
-          }
+                <S.playerTrackPlayAlbum>
+                  <S.playerTrackPlayAlbumLink href="http://">
+                    {contentVisible ? (
+                      <span>Баста</span>
+                    ) : (
+                      <SkeletonTheme baseColor="#202020" highlightColor="#444">
+                        {" "}
+                        <S.skeletonIcon />
+                      </SkeletonTheme>
+                    )}
+                  </S.playerTrackPlayAlbumLink>
+                </S.playerTrackPlayAlbum>
+              </S.playerTrackPlayContain>
+              <S.playerTrackPlayLkeDislike>
+                <S.playerTrackPlayLke className=" _btn-icon">
+                  <S.playerTrackPlayLikeSvg alt="like">
+                    <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                    <use href={`${sprite}#icon-like`} />
+                  </S.playerTrackPlayLikeSvg>
+                </S.playerTrackPlayLke>
+                <S.playerTrackPlayDisLke className="_btn-icon">
+                  <S.playerTrackPlayDisLikeSvg alt="dislike">
+                    <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+                    <use href={`${sprite}#icon-dislike`} />
+                  </S.playerTrackPlayDisLikeSvg>
+                </S.playerTrackPlayDisLke>
+              </S.playerTrackPlayLkeDislike>
+            </S.playerTrackPlay>
+          </S.barPlayer_player>
+          <S.playerBarVolBlock className="volume">
+            <S.playerBarVolContent>
+              <S.playerBarVolImg>
+                <S.playerBarVolSvg alt="volume">
+                  <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
+                  <use href={`${sprite}#icon-volume`} />
+                </S.playerBarVolSvg>
+              </S.playerBarVolImg>
+              <S.playerBarVolProgress className="_btn">
+                <S.playerBarVolProgressLine
+                  className="_btn"
+                  type="range"
+                  name="range"
+                />
+              </S.playerBarVolProgress>
+            </S.playerBarVolContent>
+          </S.playerBarVolBlock>
+        </S.playerBlock>
+      </S.barContent>
+    </S.bar>
+  );
+}

@@ -1,7 +1,9 @@
-import "../Tracs/tracks.css";
+// import "../Tracs/tracks.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 import React, { useState } from "react";
+
+import * as S from "./TrackStyle.js";
 
 
 export function Tracks() {
@@ -11,5 +13,5 @@ export function Tracks() {
     }, 4000);
 
     return(
-    <h2 className="centerblock__h2">{contentVisible ? <span>Tracks</span> : <span>Треки</span>}</h2>
+    <S.Centerblock__h2>{contentVisible ? <span>Tracks</span> : <span>Треки</span>}</S.Centerblock__h2>
     )}
