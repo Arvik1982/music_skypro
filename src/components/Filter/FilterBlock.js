@@ -120,7 +120,7 @@ console.log(`click`)}} className="_btn-text">жанру</S.centralBlockFilterBut
   </div>  */}
 
         <div>
-          <S.styleFilterUl isactive ={ activeFilter === "style" }>
+          <S.styleFilterUl isactive ={ activeFilter === "style"? "style": null }>
             <li>
               <S.filterBlockLink href="#">Жанр муз1</S.filterBlockLink>
             </li>

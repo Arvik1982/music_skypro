@@ -79,7 +79,7 @@ color: aliceblue;
 }  
 `;
 export const styleFilterUl = styled.ul`
-display:${(props) =>( props.isactive ? "block" : "none") };
+display:${(props) =>(props.isactive==="style" ? "block" : "none") };
 top: 50px;
 border-radius: 10px;
 padding-left: 20px;
