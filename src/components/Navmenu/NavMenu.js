@@ -4,12 +4,13 @@ import logo from "./logo.png";
 import * as S from "./NavStyle.js";
 import { Link } from "react-router-dom";
 
-export function Nav({setUser}) {
+export function Nav({setUser, setPlayerOn}) {
   const [menuVisible, setVisible] = useState(false);
   const menuClick = () => {
     setVisible(!menuVisible);
     console.log(menuVisible);
     console.log(setUser);
+    console.log(setPlayerOn);
   };
 
   return (

@@ -7,24 +7,20 @@ import { MyListPage } from './Pages/myListPage/favorites';
 import { PlayListPage} from './Pages/playListsPage/category';
 import { Account } from "./Pages/Account/index";
 import { ProtectedRoute } from "./components/protected/index";
-import { useState } from "react";
 
 
-export function AppRoutes ({user, setUser}){
+
+export function AppRoutes ({user2, setUser2,playerOn, setPlayerOn}){
 return(
-
 <Routes>
 <Route  path="*" element ={<ErrPage/>}/>
-
-<Route  path="/login" element ={<LoginPage setUser= {setUser} />}/>
+<Route  path="/login" element ={<LoginPage setUser3= {setUser2} />}/>
 <Route  path="/register" element ={<RegPage/>}/>
-
-
-<Route element ={<ProtectedRoute isAllowed={Boolean(user)}/>}>
+<Route element ={<ProtectedRoute isAllowed={Boolean(user2)}/>}>
 <Route path="/account" element = {<Account/>}/>
 <Route  path="/favorites" element ={<MyListPage/>}/>
 <Route  path="/category/:id" element ={<PlayListPage/>}/>
-<Route  path="/" element ={<MainPage setUser={setUser}/>}/>
+<Route  path="/" element ={<MainPage setUser={setUser2} playerOn={playerOn} setPlayerOn={setPlayerOn}/>}/>
 </Route>
 
 </Routes>

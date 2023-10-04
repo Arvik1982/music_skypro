@@ -48,13 +48,13 @@ margin-top: 100px;
 }
 `
 
-export function LoginPage ({setUser}){
- console.log(setUser)
+export function LoginPage ({setUser3}){
+ console.log(setUser3)
   return(
     <div>
     <Text__h1>"Страница входа"</Text__h1>
-    <Login_button onClick={()=> setUser(true)}><Link to = '/'> Авторизация</Link> </Login_button>
-    <Button_margin onClick={()=> setUser(true)}> <Link to = '/register'> Регистрация</Link> </Button_margin>
+    <Login_button onClick={()=> setUser3(true)}><Link to = '/'> Авторизация</Link> </Login_button>
+    <Button_margin onClick={()=> setUser3(true)}> <Link to = '/register'> Регистрация</Link> </Button_margin>
     </div>
 
     )

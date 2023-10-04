@@ -1,5 +1,5 @@
 import sprite from "./sprite.svg";
-// import "../Audioplayer/AudioPlayer.css"
+
 import React, { useState } from "react";
 
 import "react-loading-skeleton/dist/skeleton.css";
@@ -7,14 +7,16 @@ import { SkeletonTheme } from "react-loading-skeleton";
 
 import * as S from "./PlayerStyles";
 
-export function Player(props) {
+export function Player({playerVisibility, activeTrack}) {
+  
+  
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
     setContentVisible(true);
   }, 4000);
 
   return (
-    <S.bar>
+    <S.bar style={{visibility:`${playerVisibility}`}}>
       <S.barContent>
         <S.progress></S.progress>
         <S.playerBlock>
@@ -69,7 +71,7 @@ export function Player(props) {
                 <S.playerTrackPlayAuthor>
                   <S.playerTrackPlayAuthorLink href="http://">
                     {contentVisible ? (
-                      <span>Ты та...</span>
+                      <span>{activeTrack.name}</span>
                     ) : (
                       <SkeletonTheme baseColor="#202020" highlightColor="#444">
                         <S.skeletonIcon />
@@ -81,7 +83,7 @@ export function Player(props) {
                 <S.playerTrackPlayAlbum>
                   <S.playerTrackPlayAlbumLink href="http://">
                     {contentVisible ? (
-                      <span>Баста</span>
+                      <span>{activeTrack.author}</span>
                     ) : (
                       <SkeletonTheme baseColor="#202020" highlightColor="#444">
                         {" "}

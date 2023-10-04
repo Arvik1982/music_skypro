@@ -101,8 +101,17 @@ export function Filter() {
       </S.filterBlockYear>
       <S.filterBlockStyle>
         <div className="filter_style">
-        <S.centralBlockFilterButton onClick={()=>{activeFilter==='style'?setActiveFilter('') :setActiveFilter('style')
-console.log(`click`)}} className="_btn-text">жанру</S.centralBlockFilterButton>
+          <S.centralBlockFilterButton
+            onClick={() => {
+              activeFilter === "style"
+                ? setActiveFilter("")
+                : setActiveFilter("style");
+              console.log(`click`);
+            }}
+            className="_btn-text"
+          >
+            жанру
+          </S.centralBlockFilterButton>
         </div>
 
         {/* <div className="filter_style">
@@ -111,26 +120,18 @@ console.log(`click`)}} className="_btn-text">жанру</S.centralBlockFilterBut
   </div>  */}
 
         <div>
-          <S.styleFilterUl isActive = {activeFilter === 'style'}>
+          <S.styleFilterUl isactive = {activeFilter === "style"}>
             <li>
-              <S.filterBlockLink href="#">
-                Жанр муз1
-              </S.filterBlockLink>
+              <S.filterBlockLink href="#">Жанр муз1</S.filterBlockLink>
             </li>
             <li>
-              <S.filterBlockLink href="#">
-                Жанр муз2
-              </S.filterBlockLink>
+              <S.filterBlockLink href="#">Жанр муз2</S.filterBlockLink>
             </li>
             <li>
-              <S.filterBlockLink href="#">
-                Жанр муз3
-              </S.filterBlockLink>
+              <S.filterBlockLink href="#">Жанр муз3</S.filterBlockLink>
             </li>
             <li>
-              <S.filterBlockLink href="#">
-                Жанр муз4
-              </S.filterBlockLink>
+              <S.filterBlockLink href="#">Жанр муз4</S.filterBlockLink>
             </li>
           </S.styleFilterUl>
 
