@@ -52,7 +52,7 @@ const [playerOn, setPlayerOn] = useState('hidden');
 
   return (
     <div className="App">
-    <AppRoutes user2 = {user} setUser2={setUser} playerOn={playerOn} setPlayerOn={setPlayerOn} />
+    <AppRoutes user = {user} setUser={setUser} playerOn={playerOn} setPlayerOn={setPlayerOn} />
     <GlobalStyle/>
     </div>
     

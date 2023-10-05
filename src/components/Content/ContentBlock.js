@@ -5,13 +5,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 import React, { useEffect, useState } from "react";
 import * as S from "./ContentStyle.js";
 import { getTracks } from "../../api";
+import { Link } from "react-router-dom";
 
 
-
-
-let tracks =[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'5'},{id:'6'},{id:'7'},{id:'8'},{id:'9'},{id:'101'},{id:'11'},{id:'12'},{id:'13'},{id:'14'},{id:'15'},{id:'16'},{id:'17'},{id:'18'},{id:'19'},{id:'20'},{id:'21'}]
 let errorText=null;
-export function Content({ setActiveTrack,  setPlayerOn}) {
+let href;
+let tracks =[{id:'1'},{id:'2'},{id:'3'},{id:'4'},{id:'5'},{id:'6'},{id:'7'},{id:'8'},{id:'9'},{id:'101'},{id:'11'},{id:'12'},{id:'13'},{id:'14'},{id:'15'},{id:'16'},{id:'17'},{id:'18'},{id:'19'},{id:'20'},{id:'21'}]
+export function Content({activeTrack, setActiveTrack,  setPlayerOn}) {
   
   const [contentVisible, setContentVisible] = useState(false);
 
@@ -27,7 +27,11 @@ export function Content({ setActiveTrack,  setPlayerOn}) {
 
    return (
     <S.CentralBlockContent>
+
+     
+
       <S.CentralBlock_playlistTitle>
+      
         <S.PlaylistTitleCol01>Трек</S.PlaylistTitleCol01>
         <S.PlaylistTitleCol02>ИСПОЛНИТЕЛЬ</S.PlaylistTitleCol02>
         <S.PlaylistTitleCol03>АЛЬБОМ</S.PlaylistTitleCol03>
@@ -43,12 +47,29 @@ export function Content({ setActiveTrack,  setPlayerOn}) {
 
         {tracks.map((track)=>{return(
           <S.Playlist__item  key = {track.id}>{/* block start */}
-          <S.Playlist__track >
-            <S.Track__title onClick={()=>{
+          
+          <S.Playlist__track
+          
+          onClick={ (e)=>{e.stopPropagation()
+                     
             console.log('player load'); 
             setPlayerOn('');
             setActiveTrack(track);
-            }}>
+            }}
+          
+          
+          >
+          
+            <S.Track__title 
+            
+            // onClick={()=>{
+            // console.log('player load'); 
+            // setPlayerOn('');
+            // setActiveTrack(track);
+            // }}
+            
+            >
+              
               <S.Track__titleImage>
                 {contentVisible ? (
                   <S.Track__titleSvg alt="music">
@@ -62,7 +83,7 @@ export function Content({ setActiveTrack,  setPlayerOn}) {
                 )}
               </S.Track__titleImage >
               <S.Track_titleText >
-                <S.Track__titleLink  onClick={()=>console.log('player load ?')} className="trackNameLink" href="http://">
+                <S.Track__titleLink  onClick={()=>{console.log('player load ?'); }} className="trackNameLink" href='http://'>
                   {contentVisible ? (
                     <span>{track.name}</span>
                   ) : (
@@ -128,7 +149,7 @@ export function Content({ setActiveTrack,  setPlayerOn}) {
 
         
       </S.CentralBlockContentPlaylist>
-      {/* </div> */}
+       
     </S.CentralBlockContent>
   );
 }

@@ -17,6 +17,7 @@ export function Sidebar() {
 
   return (
     <S.sidebarMain className="sidebar">
+      
       <S.sidebarPersonal>
         <S.sidebarPersonalName>
           {contentVisible ? (

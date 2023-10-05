@@ -9,6 +9,7 @@ import * as S from "./PlayerStyles";
 
 export function Player({playerVisibility, activeTrack}) {
   
+  console.log(activeTrack)
   
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
@@ -18,10 +19,15 @@ export function Player({playerVisibility, activeTrack}) {
   return (
     <S.bar style={{visibility:`${playerVisibility}`}}>
       <S.barContent>
+      <audio controls src={activeTrack.track_file} style={{marginBottom:'20px'}}>AudioPlayer</audio>
         <S.progress></S.progress>
+        
         <S.playerBlock>
+          
           <S.barPlayer_player>
+          
             <S.playerControls>
+            
               <S.playerBtnPrev>
                 <S.playerBtnPrevSvg alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
