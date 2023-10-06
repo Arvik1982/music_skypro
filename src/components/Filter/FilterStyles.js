@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 export const displayYes = styled.ul`
   top: 50px;
   border-radius: 10px;
@@ -78,7 +79,7 @@ color: aliceblue;
 }  
 `;
 export const styleFilterUl = styled.ul`
-display:${props => (props.isActive? "block" : "none")} ;
+display:${(props) =>(props.isactive==="style" ? "block" : "none") };
 top: 50px;
 border-radius: 10px;
 padding-left: 20px;

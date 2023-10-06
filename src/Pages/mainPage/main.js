@@ -7,11 +7,16 @@ import { Content } from "../../components/Content/ContentBlock";
 import { Footer } from "../../components/FooterBlock";
 import { Tracks } from "../../components/Tracs/tracs";
 import * as S from "../../StyleApp";
+import React, { useState } from "react";
 
-import React from "react";
+export function MainPage({setUser, playerOn, setPlayerOn}) {
 
-export function MainPage({setUser}) {
-  console.log(setUser)
+const [activeTrack, setActiveTrack]=useState([])
+
+
+
+
+
     return(
         <S.Wrapper>
       
@@ -19,17 +24,17 @@ export function MainPage({setUser}) {
         
           <S.Main>
           
-            <Nav setUser={setUser} />
+            <Nav setUser={setUser} setPlayerOn={setPlayerOn} />
             <S.MainCenterBlock>
             
               <Search />
               <Tracks />
               <Filter />
-              <Content />
+              <Content activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
             </S.MainCenterBlock>
             <Sidebar />
           </S.Main>
-          <Player />
+          <Player playerVisibility = {playerOn} activeTrack={activeTrack}  />
           <Footer />
         </S.Container>
       </S.Wrapper>

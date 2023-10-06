@@ -1,10 +1,7 @@
-// import "./App.css";
-// import "./components/Audioplayer/AudioPlayer.css";
-// import "react-loading-skeleton/dist/skeleton.css";
 import { createGlobalStyle } from 'styled-components';
 import {AppRoutes} from'./routs';
 import { useState } from 'react';
-import { LoginPage } from './Pages/loginPage/login';
+
 
 const GlobalStyle = createGlobalStyle`
 
@@ -49,12 +46,13 @@ const GlobalStyle = createGlobalStyle`
 
 export function App() {
 
+const [playerOn, setPlayerOn] = useState('hidden');  
  const [user,setUser]=useState(false)
  
 
   return (
     <div className="App">
-    <AppRoutes user = {user} setUser={setUser} />
+    <AppRoutes user = {user} setUser={setUser} playerOn={playerOn} setPlayerOn={setPlayerOn} />
     <GlobalStyle/>
     </div>
     
