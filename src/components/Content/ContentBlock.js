@@ -50,7 +50,7 @@ export function Content({activeTrack, setActiveTrack,  setPlayerOn}) {
           
           <S.Playlist__track
           
-          onClick={ (e)=>{e.stopPropagation()
+          onClick={ (e)=>{e.preventDefault()
                      
             console.log('player load'); 
             setPlayerOn('');

@@ -1,26 +1,75 @@
 import sprite from "./sprite.svg";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
-
+import '../../img/icon/play.svg'
 import * as S from "./PlayerStyles";
 
 export function Player({playerVisibility, activeTrack}) {
+
+const realPlayer=useRef(null)
+const[playerOn, setPlayerOn]= useState(false)
+const[loopOn, setLoopOn]= useState(false)
+const[volumeOn, setVolumeOn]= useState(0.2)
+const[progressOn, setProgressOn]= useState(0)
+const[trackTime, setTrackTime]= useState(0)
+
+
+// let trackDuration = activeTrack.duration_in_seconds
+
+useEffect(()=>{setTimeout(()=>{
+realPlayer.current.addEventListener('timeupdate', () => {
+setProgressOn(realPlayer.current.currentTime)
+console.log(progressOn)})},1000);
+setTimeout(()=>{realPlayer.current.addEventListener('loadedmetadata',()=>{
+setTrackTime(realPlayer.current.duration)})}, 1)
+},[])
+
+  const clickPlayerStart=()=>{
+   
+    realPlayer.current.play()
+    setPlayerOn(true)
+    console.log(realPlayer)
+    console.log('click')
+  }
+  const clickPlayerStop=()=>{
+    realPlayer.current.pause()
+    setPlayerOn(false)
+  }
+  const clickPlayerLoopOn=()=>{
+    realPlayer.current.loop=true
+     setLoopOn(true)
+  }  
+  const clickPlayerLoopOff=()=>{
+    realPlayer.current.loop=false
+     setLoopOn(false)
+  } 
+
   
-  console.log(activeTrack)
+  
   
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
     setContentVisible(true);
-  }, 4000);
+  }, 500);
 
   return (
     <S.bar style={{visibility:`${playerVisibility}`}}>
       <S.barContent>
-      <audio controls src={activeTrack.track_file} style={{marginBottom:'20px'}}>AudioPlayer</audio>
-        <S.progress></S.progress>
+      <audio hidden id="audio" controls ref={realPlayer} src={activeTrack.track_file} style={{marginBottom:'20px'}}>AudioPlayer</audio>
+        <S.progress 
+        
+        type="range"
+        step={0.1}
+        min={0}
+          
+        onChange={(e)=> {realPlayer.current.currentTime = e.target.value; setProgressOn(e.target.value) }}
+        value={progressOn}
+        max={trackTime}
+        
+        ></S.progress>
         
         <S.playerBlock>
           
@@ -29,32 +78,33 @@ export function Player({playerVisibility, activeTrack}) {
             <S.playerControls>
             
               <S.playerBtnPrev>
-                <S.playerBtnPrevSvg alt="prev">
+                <S.playerBtnPrevSvg onClick={()=>alert('не реализовано')} alt="prev">
                   <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
                   <use href={`${sprite}#icon-prev`} />
                 </S.playerBtnPrevSvg>
               </S.playerBtnPrev>
               <S.playerBtnPlay className="_btn">
-                <S.playerBtnPlaySvg alt="play">
-                  <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
-                  <use href={`${sprite}#icon-play`} />
+                <S.playerBtnPlaySvg onClick={playerOn? clickPlayerStop:clickPlayerStart} alt="play">
+                  {/* <use xlinkHref="img/icon/sprite.svg#icon-play"></use> */}
+                  <use href= {playerOn?`${sprite}#icon-pause`:`${sprite}#icon-play`}                
+                  />
                 </S.playerBtnPlaySvg>
               </S.playerBtnPlay>
               <S.playerBtnNext>
-                <S.playerBtnNextSvg alt="next">
+                <S.playerBtnNextSvg onClick={()=>alert('не реализовано')} alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   <use href={`${sprite}#icon-next`} />
                 </S.playerBtnNextSvg>
               </S.playerBtnNext>
               <S.playerBtnRepeat className="_btn-icon">
-                <S.playerBtnRepeatSvg alt="repeat">
-                  <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
-                  <use href={`${sprite}#icon-repeat`} />
+                <S.playerBtnRepeatSvg onClick={loopOn?clickPlayerLoopOff:clickPlayerLoopOn} alt="repeat">
+                  {/* <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use> */}
+                  <use  href={loopOn?`${sprite}#loopOn`:`${sprite}#icon-repeat`} />
                 </S.playerBtnRepeatSvg>
               </S.playerBtnRepeat>
-              <S.playerBtnShuffle className=" _btn-icon">
-                <S.playerBtnShuffleSvg alt="shuffle">
-                  <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+              <S.playerBtnShuffle  className=" _btn-icon">
+                <S.playerBtnShuffleSvg onClick={()=>alert('не реализовано')} alt="shuffle">
+                  {/* <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use> */}
                   <use href={`${sprite}#icon-shuffle`} />
                 </S.playerBtnShuffleSvg>
               </S.playerBtnShuffle>
@@ -124,7 +174,7 @@ export function Player({playerVisibility, activeTrack}) {
                 </S.playerBarVolSvg>
               </S.playerBarVolImg>
               <S.playerBarVolProgress className="_btn">
-                <S.playerBarVolProgressLine
+                <S.playerBarVolProgressLine onChange={(e)=>{ let volumeRange=(e.target.value)/100;realPlayer.current.volume=volumeRange; setVolumeOn(volumeRange); console.log(volumeOn)}} 
                   className="_btn"
                   type="range"
                   name="range"

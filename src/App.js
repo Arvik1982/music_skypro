@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import {AppRoutes} from'./routs';
-import { useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -43,6 +43,41 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
+const ExampleButtonInput =()=>{
+
+  const refToButton =useRef(null)
+  useEffect(()=>console.log(refToButton))
+
+  const refToInput =useRef(null)
+
+  const clickButton =()=>{
+  refToInput.current.focus()
+  }
+
+return(
+<div>
+<button onClick={clickButton} ref={refToButton}>push</button>
+<input type='text' ref={refToInput}></input>
+</div>  
+
+)
+}
+
+const TextInput =forwardRef((p,ref)=>{
+  return(<input 
+    type='text' ref={ref}
+    >
+    </input>)
+})
+
+const AutoFocusInput =()=>{
+  const inputRef = useRef(null);
+  useEffect(()=>{inputRef.current.focus()},[]);
+  return(
+    <TextInput ref={inputRef}></TextInput>
+  )
+}
+
 
 export function App() {
 
@@ -53,6 +88,8 @@ const [playerOn, setPlayerOn] = useState('hidden');
   return (
     <div className="App">
     <AppRoutes user = {user} setUser={setUser} playerOn={playerOn} setPlayerOn={setPlayerOn} />
+    <ExampleButtonInput/>
+    <AutoFocusInput/>
     <GlobalStyle/>
     </div>
     
