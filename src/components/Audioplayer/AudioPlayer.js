@@ -15,17 +15,22 @@ const[loopOn, setLoopOn]= useState(false)
 const[volumeOn, setVolumeOn]= useState(0.2)
 const[progressOn, setProgressOn]= useState(0)
 const[trackTime, setTrackTime]= useState(0)
-
+const[timePlay, setTimePlay]=useState(0)
 
 // let trackDuration = activeTrack.duration_in_seconds
 
 useEffect(()=>{setTimeout(()=>{
 realPlayer.current.addEventListener('timeupdate', () => {
-setProgressOn(realPlayer.current.currentTime)
-console.log(progressOn)})},1000);
+setProgressOn(realPlayer.current.currentTime);
+})},1000);
 setTimeout(()=>{realPlayer.current.addEventListener('loadedmetadata',()=>{
 setTrackTime(realPlayer.current.duration)})}, 1)
+return ()=>{realPlayer.current.removeEventListener('timeupdate', () => {
+  setProgressOn(realPlayer.current.currentTime)});realPlayer.current.removeEventListener('loadedmetadata', () => {
+    setTrackTime(realPlayer.current.duration)})}
 },[])
+
+
 
   const clickPlayerStart=()=>{
    
@@ -64,7 +69,7 @@ setTrackTime(realPlayer.current.duration)})}, 1)
         type="range"
         step={0.1}
         min={0}
-          
+        
         onChange={(e)=> {realPlayer.current.currentTime = e.target.value; setProgressOn(e.target.value) }}
         value={progressOn}
         max={trackTime}
@@ -72,9 +77,9 @@ setTrackTime(realPlayer.current.duration)})}, 1)
         ></S.progress>
         
         <S.playerBlock>
-          
+        
           <S.barPlayer_player>
-          
+          <div><h2 style={{marginLeft:'20px', color:'gray'}}>{((trackTime-progressOn)/60).toFixed(2)} </h2></div>
             <S.playerControls>
             
               <S.playerBtnPrev>
@@ -83,6 +88,7 @@ setTrackTime(realPlayer.current.duration)})}, 1)
                   <use href={`${sprite}#icon-prev`} />
                 </S.playerBtnPrevSvg>
               </S.playerBtnPrev>
+              
               <S.playerBtnPlay className="_btn">
                 <S.playerBtnPlaySvg onClick={playerOn? clickPlayerStop:clickPlayerStart} alt="play">
                   {/* <use xlinkHref="img/icon/sprite.svg#icon-play"></use> */}
@@ -174,6 +180,7 @@ setTrackTime(realPlayer.current.duration)})}, 1)
                 </S.playerBarVolSvg>
               </S.playerBarVolImg>
               <S.playerBarVolProgress className="_btn">
+              
                 <S.playerBarVolProgressLine onChange={(e)=>{ let volumeRange=(e.target.value)/100;realPlayer.current.volume=volumeRange; setVolumeOn(volumeRange); console.log(volumeOn)}} 
                   className="_btn"
                   type="range"
