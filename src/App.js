@@ -1,7 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
-import {AppRoutes} from'./routs';
-import { forwardRef, useEffect, useRef, useState } from 'react';
-
+import { createGlobalStyle } from "styled-components";
+import { AppRoutes } from "./routs";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -43,56 +42,54 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-// const ExampleButtonInput =()=>{
+// const ExampleButtonInput = () => {
+//   const refToButton = useRef(null);
+//   useEffect(() => console.log(refToButton));
 
-//   const refToButton =useRef(null)
-//   useEffect(()=>console.log(refToButton))
+//   const refToInput = useRef(null);
 
-//   const refToInput =useRef(null)
+//   const clickButton = () => {
+//     refToInput.current.focus();
+//   };
 
-//   const clickButton =()=>{
-//   refToInput.current.focus()
-//   }
+//   return (
+//     <div>
+//       <button onClick={clickButton} ref={refToButton}>
+//         push
+//       </button>
+//       <input type="text" ref={refToInput}></input>
+//     </div>
+//   );
+// };
 
-// return(
-// <div>
-// <button onClick={clickButton} ref={refToButton}>push</button>
-// <input type='text' ref={refToInput}></input>
-// </div>  
+// const TextInput = forwardRef((p, ref) => {
+//   return <input type="text" ref={ref}></input>;
+// });
 
-// )
-// }
-
-// const TextInput =forwardRef((p,ref)=>{
-//   return(<input 
-//     type='text' ref={ref}
-//     >
-//     </input>)
-// })
-
-// const AutoFocusInput =()=>{
+// const AutoFocusInput = () => {
 //   const inputRef = useRef(null);
-//   useEffect(()=>{inputRef.current.focus()},[]);
-//   return(
-//     <TextInput ref={inputRef}></TextInput>
-//   )
-// }
-
+//   useEffect(() => {
+//     inputRef.current.focus();
+//   }, []);
+//   return <TextInput ref={inputRef}></TextInput>;
+// };
 
 export function App() {
-
-const [playerOn, setPlayerOn] = useState('hidden');  
- const [user,setUser]=useState(false)
- 
+  const [playerOn, setPlayerOn] = useState("hidden");
+  const [user, setUser] = useState(false);
 
   return (
     <div className="App">
-    <AppRoutes user = {user} setUser={setUser} playerOn={playerOn} setPlayerOn={setPlayerOn} />
-    {/* <ExampleButtonInput/>
-    <AutoFocusInput/> */}
-    <GlobalStyle/>
+      <AppRoutes
+        user={user}
+        setUser={setUser}
+        playerOn={playerOn}
+        setPlayerOn={setPlayerOn}
+      />
+      {/* <ExampleButtonInput />
+      <AutoFocusInput /> */}
+      <GlobalStyle />
     </div>
-    
   );
 }
 
