@@ -53,7 +53,9 @@ export function LoginPage ({setUser}){
   return(
     <div>
     <Text__h1>"Страница входа"</Text__h1>
-    <Login_button onClick={()=> setUser(true)}><Link to = '/'> Авторизация</Link> </Login_button>
+    <Login_button onClick={()=> setUser(true)}>
+      <Link to = '/'> Авторизация</Link> 
+    </Login_button>
     <Button_margin onClick={()=> setUser(true)}> <Link to = '/register'> Регистрация</Link> </Button_margin>
     </div>
 

@@ -9,7 +9,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import * as S from "./SideBarStyle.js";
 
-export function Sidebar() {
+export function Sidebar({login}) {
+  console.log(login)
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
     setContentVisible(true);
@@ -21,7 +22,7 @@ export function Sidebar() {
       <S.sidebarPersonal>
         <S.sidebarPersonalName>
           {contentVisible ? (
-            <span> Sergey.Ivanov </span>
+            <span> {login} </span>
           ) : (
             <SkeletonTheme baseColor="#202020" highlightColor="#444">
               <S.skeletonSideBar />

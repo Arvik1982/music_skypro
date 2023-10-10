@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import { AppRoutes } from "./routs";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -42,6 +42,9 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
+
+
+
 // const ExampleButtonInput = () => {
 //   const refToButton = useRef(null);
 //   useEffect(() => console.log(refToButton));
@@ -74,18 +77,24 @@ const GlobalStyle = createGlobalStyle`
 //   return <TextInput ref={inputRef}></TextInput>;
 // };
 
+
+let login =false
+
 export function App() {
+  login =localStorage.getItem('name')
   const [playerOn, setPlayerOn] = useState("hidden");
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(login);
+  const [userName, setUserName]=useState(null)
+  const [userPass, setUserPass]=useState(null)
+
+localStorage.setItem('name',user)
+console.log(localStorage.getItem('name'))
 
   return (
     <div className="App">
-      <AppRoutes
-        user={user}
-        setUser={setUser}
-        playerOn={playerOn}
-        setPlayerOn={setPlayerOn}
-      />
+      
+      <AppRoutes  setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
+      
       {/* <ExampleButtonInput />
       <AutoFocusInput /> */}
       <GlobalStyle />

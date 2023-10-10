@@ -9,7 +9,7 @@ import { Tracks } from "../../components/Tracs/tracs";
 import * as S from "../../StyleApp";
 import React, { useState } from "react";
 
-export function MainPage({setUser, playerOn, setPlayerOn}) {
+export function MainPage({setUser, playerOn, setPlayerOn,login}) {
 
 const [activeTrack, setActiveTrack]=useState([])
 
@@ -26,13 +26,12 @@ const [activeTrack, setActiveTrack]=useState([])
           
             <Nav setUser={setUser} setPlayerOn={setPlayerOn} />
             <S.MainCenterBlock>
-            
               <Search />
               <Tracks />
               <Filter />
               <Content activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
             </S.MainCenterBlock>
-            <Sidebar />
+            <Sidebar login={login} />
           </S.Main>
           <Player playerVisibility = {playerOn} activeTrack={activeTrack}  />
           <Footer />
