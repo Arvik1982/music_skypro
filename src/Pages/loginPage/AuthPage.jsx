@@ -3,7 +3,7 @@ import * as S from "./AuthPage.styles";
 import { useEffect, useState } from "react";
 import { login, registration } from "../../api";
 
-export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,setUser }) {
+export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,setUser,user }) {
   const [error, setError] = useState(null);
 
   const [email, setEmail] = useState("");
@@ -20,9 +20,11 @@ export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,
       setPlaceholderPass('заполните поле ввода')
       setPlaceholderUser('заполните поле ввода')}
     else{
-    login(email,password).then((data)=>{console.log(data); localStorage.removeItem('name');setUser(data.username) })
-    alert(`Выполняется вход: ${email} ${password}`);
-    setError("Неизвестная ошибка входа");
+    login(email,password).then((data)=>{console.log(data);
+      setError(data.detail)
+      localStorage.removeItem('name');setUser(true)})
+    // alert(`Выполняется вход: ${email} ${password}`);
+    //setError("Неизвестная ошибка входа");
   }
   };
 
@@ -34,12 +36,16 @@ export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,
       }
     else{
     registration(email,password,email)
-    .then((data)=>{localStorage.removeItem('name');setUser(data.username) })
-    
-    
-
+    .then((data)=>{localStorage.removeItem('name');setUser(true);
+    let errArr=[]
+    errArr.push(data.username,data.email,data.password)
+    let index = errArr.indexOf(undefined)
+    errArr.splice(index,1)
+    console.log(errArr)
+    let errString = errArr.join(' / ')
+    console.log(errString);setError(errString); })
     // alert(`Выполняется регистрация: ${email} ${password}`);
-    
+    // setError("Неизвестная ошибка входа");
   
   }
 
@@ -99,7 +105,7 @@ export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,
                 placeholder={placeholderUser}
                 value={email}
                 onChange={(event) => {
-                  setEmail(event.target.value);
+                setEmail(event.target.value);
                 }}
               />
               <S.ModalInput
@@ -108,7 +114,7 @@ export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,
                 placeholder={placeholderPass}
                 value={password}
                 onChange={(event) => {
-                  setPassword(event.target.value);
+                setPassword(event.target.value);
                 }}
               />
               <S.ModalInput

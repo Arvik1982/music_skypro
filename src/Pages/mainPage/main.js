@@ -31,7 +31,7 @@ const [activeTrack, setActiveTrack]=useState([])
               <Filter />
               <Content activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
             </S.MainCenterBlock>
-            <Sidebar login={login} />
+            <Sidebar />
           </S.Main>
           <Player playerVisibility = {playerOn} activeTrack={activeTrack}  />
           <Footer />

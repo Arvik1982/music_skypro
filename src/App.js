@@ -78,17 +78,17 @@ const GlobalStyle = createGlobalStyle`
 // };
 
 
-let login =false
+
 
 export function App() {
-  login =localStorage.getItem('name')
+  
+  
+
   const [playerOn, setPlayerOn] = useState("hidden");
-  const [user, setUser] = useState(login);
+  const [user, setUser] = useState(false);
   const [userName, setUserName]=useState(null)
   const [userPass, setUserPass]=useState(null)
 
-localStorage.setItem('name',user)
-console.log(localStorage.getItem('name'))
 
   return (
     <div className="App">
