@@ -23,6 +23,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
       return(data)
     }}).then((data)=>{
         
+      
       if (!responseOk){
         
         console.log(data)
