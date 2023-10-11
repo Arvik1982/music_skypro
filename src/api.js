@@ -28,11 +28,8 @@ export async function registration(email,password,username){
     },
 }).catch((error)=>{alert(error.message)})
     
+   return response
    
-        const data = await response.json()
-        if (response.status===400){
-            console.log('400');console.log(data)}
-        return data
     }
  
     export async function login(email,password){
@@ -47,11 +44,8 @@ export async function registration(email,password,username){
             headers:{"content-type": "application/json",
         },
     }).catch((error)=>{alert(error.message)})
-        
        
-            const data = await response.json()
-            if (response.status===400){
-                console.log('400');console.log(data)}
-            return data
+       return response
+
         }
         

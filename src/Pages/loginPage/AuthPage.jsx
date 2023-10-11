@@ -1,54 +1,53 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
 import { useEffect, useState } from "react";
-import { login, registration } from "../../api";
+import { login } from "../../api";
 
-export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,setUser,user }) {
+export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
   const [error, setError] = useState(null);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [placeholderUser, setPlaceholderUser]  =useState('Почта');
-  const [placeholderPass, setPlaceholderPass]  =useState('Пароль');
-  const [placeholderRepeat, setPlaceholderRepeat]  =useState('Повторите пароль')
-  setUserName(email)
-  setUserPass(password)
 
+  let responseOk;
   const handleLogin = async ({ email, password }) => {
-    if (email===""||password===""){
-      setPlaceholderPass('заполните поле ввода')
-      setPlaceholderUser('заполните поле ввода')}
-    else{
-    login(email,password).then((data)=>{console.log(data);
-      setError(data.detail)
-      localStorage.removeItem('name');setUser(true)})
-    // alert(`Выполняется вход: ${email} ${password}`);
-    //setError("Неизвестная ошибка входа");
-  }
+    login(email,password).then((response)=>{if (response.ok){
+      
+      
+      let data = response.json()
+      responseOk=true
+      return(data)
+    }else{
+      let data = response.json()
+      console.log(data)
+      return(data)
+    }}).then((data)=>{
+        
+      if (!responseOk){
+        
+        console.log(data)
+        setError(data.detail)
+      }else{
+      console.log(data)  
+      
+      
+      localStorage.setItem('userName',data.username)
+      setUser(true)
+      // return window.location.href='/'
+      return <Navigate to="/" replace={true}/>
+    }
+      
+      
+    })
+    
+    alert(`Выполняется вход: ${email} ${password}`);
+    
+    
   };
 
   const handleRegister = async () => {
-    if (email===""||password===""||repeatPassword===""){
-      setPlaceholderPass('заполните поле ввода')
-      setPlaceholderUser('заполните поле ввода')
-      setPlaceholderRepeat('заполните поле ввода')
-      }
-    else{
-    registration(email,password,email)
-    .then((data)=>{localStorage.removeItem('name');setUser(true);
-    let errArr=[]
-    errArr.push(data.username,data.email,data.password)
-    let index = errArr.indexOf(undefined)
-    errArr.splice(index,1)
-    console.log(errArr)
-    let errString = errArr.join(' / ')
-    console.log(errString);setError(errString); })
-    // alert(`Выполняется регистрация: ${email} ${password}`);
-    // setError("Неизвестная ошибка входа");
-  
-  }
-
+    alert(`Выполняется регистрация: ${email} ${password}`);
+    setError("Неизвестная ошибка регистрации");
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -70,28 +69,30 @@ export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,
               <S.ModalInput
                 type="text"
                 name="login"
-                placeholder={placeholderUser}
+                placeholder="Почта"
                 value={email}
                 onChange={(event) => {
-                setEmail(event.target.value);
+                  setEmail(event.target.value);
                 }}
               />
               <S.ModalInput
                 type="password"
                 name="password"
-                placeholder={placeholderPass}
+                placeholder="Пароль"
                 value={password}
                 onChange={(event) => {
-                setPassword(event.target.value);
+                  setPassword(event.target.value);
                 }}
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
+            
+              <S.PrimaryButton onClick={() => {handleLogin({ email, password })}}>
                 Войти
               </S.PrimaryButton>
-              <Link to="/register">
+            
+              <Link onClick={()=>setIsLoginMode(false)} to="/login">
                 <S.SecondaryButton>Зарегистрироваться</S.SecondaryButton>
               </Link>
             </S.Buttons>
@@ -102,25 +103,25 @@ export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,
               <S.ModalInput
                 type="text"
                 name="login"
-                placeholder={placeholderUser}
+                placeholder="Почта"
                 value={email}
                 onChange={(event) => {
-                setEmail(event.target.value);
+                  setEmail(event.target.value);
                 }}
               />
               <S.ModalInput
                 type="password"
                 name="password"
-                placeholder={placeholderPass}
+                placeholder="Пароль"
                 value={password}
                 onChange={(event) => {
-                setPassword(event.target.value);
+                  setPassword(event.target.value);
                 }}
               />
               <S.ModalInput
                 type="password"
                 name="repeat-password"
-                placeholder={placeholderRepeat}
+                placeholder="Повторите пароль"
                 value={repeatPassword}
                 onChange={(event) => {
                   setRepeatPassword(event.target.value);
@@ -129,8 +130,7 @@ export default function AuthPage({ isLoginMode = true, setUserName, setUserPass,
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton  onClick={handleRegister}> 
-              <Link to='/'></Link>
+              <S.PrimaryButton onClick={handleRegister}>
                 Зарегистрироваться
               </S.PrimaryButton>
             </S.Buttons>

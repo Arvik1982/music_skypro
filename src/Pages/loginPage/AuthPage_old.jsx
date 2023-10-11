@@ -3,7 +3,7 @@ import * as S from "./AuthPage.styles";
 import { useEffect, useState } from "react";
 import { login, registration } from "../../api";
 
-export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setUser,user, setIsLoginMode }) {
+export default function AuthPage({isLoginMode, setUserName, setUserPass,setUser, setIsLoginMode }) {
   const [error, setError] = useState(null);
   let responseStatus;
   const [email, setEmail] = useState("");
@@ -14,21 +14,46 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
   const [placeholderRepeat, setPlaceholderRepeat]  =useState('Повторите пароль')
   setUserName(email)
   setUserPass(password)
-  
   const handleLogin = async ({ email, password }) => {
+    
     if (email===""||password===""){
       setPlaceholderPass('заполните поле ввода')
       setPlaceholderUser('заполните поле ввода')}
     else{
-    login(email,password).then((data)=>{console.log(data);
-      setError(data.detail)
-      ;})
+    
+    login(email,password).then((response)=>{console.log(response);
+      if (response.status!==200){
+        responseStatus=false
+        let data = response.json()
+        return data}
+      else{ 
+          responseStatus=true
+          let data = response.json()
+          
+          return data}})
+          
+          .then((data)=>{
+            if(responseStatus===false){
+            setError(data.detail)}
+      
+            else{
+              localStorage.setItem('user', data.username)
+              setUser(true)
+              console.log(localStorage.getItem('user'))
+            }
+      
+          })
+
+      
+      
+      
     // alert(`Выполняется вход: ${email} ${password}`);
     //setError("Неизвестная ошибка входа");
   }
   };
 
   const handleRegister = async () => {
+    setUser(false)
     if (email===""||password===""||repeatPassword===""){
       setPlaceholderPass('заполните поле ввода')
       setPlaceholderUser('заполните поле ввода')
@@ -113,11 +138,15 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
-                Войти
-              </S.PrimaryButton>
-              <Link to="/login">
-                <S.SecondaryButton>Зарегистрироваться</S.SecondaryButton>
+              <Link  onClick={() => {handleLogin({ email, password });
+              if(responseStatus===true){
+                setUser(true)
+              }else{setUser(false)}
+              }} to="/">
+              <S.PrimaryButton>войти</S.PrimaryButton>
+              </Link>
+              <Link onClick={responseStatus===true?null:()=>setIsLoginMode(false)} to="/login" >
+                <S.SecondaryButton>Зарегистрироваться!</S.SecondaryButton>
               </Link>
             </S.Buttons>
           </>
@@ -155,7 +184,7 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
               <S.PrimaryButton  onClick={handleRegister}> 
-              <Link to='/registration'></Link>
+              <Link to='/'></Link>
                 Зарегистрироваться
               </S.PrimaryButton>
             </S.Buttons>

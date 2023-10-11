@@ -29,14 +29,14 @@ export function Player({ playerVisibility, activeTrack }) {
         setTrackTime(realPlayer.current.duration);
       });
     }, 1);
-    return () => {
-      realPlayer.current.removeEventListener("timeupdate", () => {
-        setProgressOn(realPlayer.current.currentTime);
-      });
-      realPlayer.current.removeEventListener("loadedmetadata", () => {
-        setTrackTime(realPlayer.current.duration);
-      });
-    };
+    // return () => {
+    //   realPlayer.current.removeEventListener("timeupdate", () => {
+    //     setProgressOn(realPlayer.current.currentTime);
+    //   });
+    //   realPlayer.current.removeEventListener("loadedmetadata", () => {
+    //     setTrackTime(realPlayer.current.duration);
+    //   });
+    // };
   }, []);
 
   const clickPlayerStart = () => {

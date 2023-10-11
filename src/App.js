@@ -83,17 +83,18 @@ const GlobalStyle = createGlobalStyle`
 export function App() {
   
   
-
+  // let localUser=localStorage.getItem('user')
   const [playerOn, setPlayerOn] = useState("hidden");
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
   const [userName, setUserName]=useState(null)
   const [userPass, setUserPass]=useState(null)
-
-
+  const[isLoginMode, setIsLoginMode]=useState(true)
+  
+  
   return (
     <div className="App">
       
-      <AppRoutes  setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
+      <AppRoutes isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
       
       {/* <ExampleButtonInput />
       <AutoFocusInput /> */}

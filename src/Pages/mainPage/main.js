@@ -8,8 +8,9 @@ import { Footer } from "../../components/FooterBlock";
 import { Tracks } from "../../components/Tracs/tracs";
 import * as S from "../../StyleApp";
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 
-export function MainPage({setUser, playerOn, setPlayerOn,login}) {
+export function MainPage({setUser, playerOn, setPlayerOn,user}) {
 
 const [activeTrack, setActiveTrack]=useState([])
 
@@ -31,7 +32,7 @@ const [activeTrack, setActiveTrack]=useState([])
               <Filter />
               <Content activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
             </S.MainCenterBlock>
-            <Sidebar />
+            <Sidebar user={user} />
           </S.Main>
           <Player playerVisibility = {playerOn} activeTrack={activeTrack}  />
           <Footer />
