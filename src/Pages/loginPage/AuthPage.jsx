@@ -1,54 +1,123 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
-import { useEffect, useState } from "react";
-import { login } from "../../api";
+import React, { useEffect, useState } from "react";
+import { login, registration } from "../../api";
 
-export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
-  const [error, setError] = useState(null);
+
+export default function AuthPage({isLoginMode, setIsLoginMode, setUser, user  }) {
+  const [error, setError]=useState(null)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [placeholderUser, setPlaceholderUser]  = useState('Почта');
+  const [placeholderPass, setPlaceholderPass]  = useState('Пароль');
+  const [placeholderRepeat, setPlaceholderRepeat]  = useState('Повторите пароль')
+  const navigate=useNavigate()
+  const [buttonActive, setButtonActive] = useState(false);
+  
 
-  let responseOk;
   const handleLogin = async ({ email, password }) => {
-    login(email,password).then((response)=>{if (response.ok){
-      
-      
+    setButtonActive(true)
+
+    let responseOk=false;
+    
+
+    login(email,password).then((response)=>{
+      setButtonActive(false)
+      console.log(response.status)
+      if (response.ok){
       let data = response.json()
       responseOk=true
-      return(data)
-    }else{
-      let data = response.json()
-      console.log(data)
-      return(data)
-    }}).then((data)=>{
-        
       
+      return(data)
+    }
+    else{
+      let data = response.json()
+      console.log('err')
+      return(data)
+    }})
+    .then((data)=>{       
+
       if (!responseOk){
-        
-        console.log(data)
+
         setError(data.detail)
       }else{
+
+      
       console.log(data)  
-      
-      
       localStorage.setItem('userName',data.username)
-      setUser(true)
-      // return window.location.href='/'
-      return <Navigate to="/" replace={true}/>
-    }
       
+      if(responseOk===true){
+      setTimeout(
+      setUser(true),1000)}
+      navigate("/",{replace:true})
+      alert(`Выполняется вход: ${email} ${password}`);
+      
+
+    }
+ 
       
     })
-    
-    alert(`Выполняется вход: ${email} ${password}`);
+ 
     
     
   };
 
   const handleRegister = async () => {
-    alert(`Выполняется регистрация: ${email} ${password}`);
-    setError("Неизвестная ошибка регистрации");
+    let responseOk=false;
+    setButtonActive(true)
+    if (email===""||password===""||repeatPassword===""){
+      setPlaceholderPass('заполните поле ввода')
+      setPlaceholderUser('заполните поле ввода')
+      setPlaceholderRepeat('заполните поле ввода')
+      setError('не заполнены поля ввода')
+      setButtonActive(false)
+      }
+    else{
+      if(password!==repeatPassword){
+        setError('пароли не совпадают')
+        setButtonActive(false)
+      }else{
+    registration(email,password,email)
+    
+    .then((response)=>{console.log(response.status)
+      setButtonActive(false)
+      if(!response.ok){
+      responseOk=false
+      let data = response.json()
+      return data
+      }
+    responseOk= true;
+    let data = response.json()
+    return data})
+
+    .then((data)=>{
+      console.log(data)
+      if(!responseOk){
+      let errArr=[]
+      errArr.push(data.username,data.email,data.password)
+      let index = errArr.indexOf(undefined)
+      errArr.splice(index,1)
+      console.log(errArr)
+      let errString = errArr.join(' / ')
+      console.log(errString);setError(errString); 
+      setError(errString)
+      }else{
+        setTimeout(
+        setUser(true),1000)
+        console.log('entering...')
+        navigate("/",{replace:true})
+        localStorage.setItem('userName',data.username)
+      }
+      
+    })}
+   
+
+  
+  }
+    
+    // alert(`Выполняется регистрация: ${email} ${password}`);
+    // setError("Неизвестная ошибка регистрации");
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -70,7 +139,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
               <S.ModalInput
                 type="text"
                 name="login"
-                placeholder="Почта"
+              placeholder={placeholderUser}
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -79,20 +148,21 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
               <S.ModalInput
                 type="password"
                 name="password"
-                placeholder="Пароль"
+                placeholder={placeholderPass}
                 value={password}
                 onChange={(event) => {
-                  setPassword(event.target.value);
+                setPassword(event.target.value);
                 }}
               />
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
             
-              <S.PrimaryButton onClick={() => {handleLogin({ email, password })}}>
-                Войти
+              <S.PrimaryButton  disabled={buttonActive} onClick={() => { handleLogin({ email, password });
+              }}>{buttonActive? 'заходим...':'войти' }
+               
               </S.PrimaryButton>
-            
+              
               <Link onClick={()=>setIsLoginMode(false)} to="/login">
                 <S.SecondaryButton>Зарегистрироваться</S.SecondaryButton>
               </Link>
@@ -104,7 +174,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
               <S.ModalInput
                 type="text"
                 name="login"
-                placeholder="Почта"
+                placeholder={placeholderUser}
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -113,7 +183,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
               <S.ModalInput
                 type="password"
                 name="password"
-                placeholder="Пароль"
+                placeholder={placeholderPass}
                 value={password}
                 onChange={(event) => {
                   setPassword(event.target.value);
@@ -122,7 +192,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
               <S.ModalInput
                 type="password"
                 name="repeat-password"
-                placeholder="Повторите пароль"
+                placeholder={placeholderRepeat}
                 value={repeatPassword}
                 onChange={(event) => {
                   setRepeatPassword(event.target.value);
@@ -131,8 +201,8 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser  }) {
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={handleRegister}>
-                Зарегистрироваться
+              <S.PrimaryButton disabled={buttonActive} onClick={handleRegister}>
+              {buttonActive? 'Регистрируемся...':'Зарегистрироваться' }
               </S.PrimaryButton>
             </S.Buttons>
           </>

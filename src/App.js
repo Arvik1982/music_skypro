@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import { AppRoutes } from "./routs";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
-
+export const UserContext = React.createContext(null);
 const GlobalStyle = createGlobalStyle`
 
   *{margin: 0;
@@ -85,17 +85,20 @@ export function App() {
   
   // let localUser=localStorage.getItem('user')
   const [playerOn, setPlayerOn] = useState("hidden");
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
   const [userName, setUserName]=useState(null)
   const [userPass, setUserPass]=useState(null)
   const[isLoginMode, setIsLoginMode]=useState(true)
   
-  
+  let userLoginName= localStorage.getItem('userName')
+  let textName= 'Имя пользователя:'
+  let arrNameUser=[userLoginName,textName]
+
   return (
     <div className="App">
-      
+    <UserContext.Provider value={arrNameUser}>
       <AppRoutes isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
-      
+    </UserContext.Provider> 
       {/* <ExampleButtonInput />
       <AutoFocusInput /> */}
       <GlobalStyle />

@@ -36,7 +36,7 @@ export function Nav({setUser, setPlayerOn}) {
               <S.MenuLink to ="/favorites">Мой плейлист</S.MenuLink>
             </S.MenuItem>
             <S.MenuItem>
-              <S.MenuLink to ="/login">{setUser?'ВЫЙТИ':'Войти'}</S.MenuLink>
+              <S.MenuLink onClick={()=>localStorage.removeItem('userName')} to ="/login">{setUser?'ВЫЙТИ':'Войти'}</S.MenuLink>
             </S.MenuItem>
           </S.MenuList>
         </S.NavMenu>

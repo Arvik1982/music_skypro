@@ -12,7 +12,7 @@ import AuthPageReg from "./Pages/loginPage/registration";
 
 
 export function AppRoutes ({user, setUser,playerOn, setPlayerOn, setUserName, setUserPass, isLoginMode,setIsLoginMode}){
-  
+    console.log(Boolean(user))
 return(
 <Routes>
 <Route  path="*" element ={<ErrPage/>}/>

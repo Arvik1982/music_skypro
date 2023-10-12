@@ -19,6 +19,8 @@ export function Player({ playerVisibility, activeTrack }) {
   // let trackDuration = activeTrack.duration_in_seconds
 
   useEffect(() => {
+
+    if (playerOn){
     setTimeout(() => {
       realPlayer.current.addEventListener("timeupdate", () => {
         setProgressOn(realPlayer.current.currentTime);
@@ -29,15 +31,15 @@ export function Player({ playerVisibility, activeTrack }) {
         setTrackTime(realPlayer.current.duration);
       });
     }, 1);
-    // return () => {
-    //   realPlayer.current.removeEventListener("timeupdate", () => {
-    //     setProgressOn(realPlayer.current.currentTime);
-    //   });
-    //   realPlayer.current.removeEventListener("loadedmetadata", () => {
-    //     setTrackTime(realPlayer.current.duration);
-    //   });
-    // };
-  }, []);
+    return () => {
+      realPlayer.current.removeEventListener("timeupdate", () => {
+        setProgressOn(realPlayer.current.currentTime);
+      });
+      realPlayer.current.removeEventListener("loadedmetadata", () => {
+        setTrackTime(realPlayer.current.duration);
+      });
+    };
+}}, []);
 
   const clickPlayerStart = () => {
     realPlayer.current.play();
