@@ -17,22 +17,22 @@ export function Player({playerVisibility}) {
   
 
   const realPlayer = useRef(null);
-  const [playerOn, setPlayerOn] = useState(true);
+  const [playerOn, setPlayerOn] = useState(false);
   const [loopOn, setLoopOn] = useState(false);
   const [volumeOn, setVolumeOn] = useState(0.2);
   const [progressOn, setProgressOn] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
-  
+  const [trackPlay, setTrackPlay] = useState([]);
 
   let errorText = null;
  
 //redux
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-const allTracksRedux= useSelector(state=>state.track.tracks)
+const allTracksRedux = useSelector(state=>state.track.tracks)
+const nextTracksRedux = useSelector(state=>state.track.next)
 
+let activeTrack=activeTrackRedux;
 
-const activeTrack=activeTrackRedux;
-const [trackPlay, setTrackPlay] = useState(activeTrack);
 
 
 
@@ -41,9 +41,9 @@ const [trackPlay, setTrackPlay] = useState(activeTrack);
 
 useEffect(() => {
   
-    
 
-    if(playerOn){
+
+    if(!playerOn){
     setTimeout(() => {
       realPlayer.current.addEventListener("timeupdate", () => {
         setProgressOn(realPlayer.current.currentTime);
@@ -53,6 +53,7 @@ useEffect(() => {
     setTimeout(() => {
       realPlayer.current.addEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
+        
         // console.log(trackTime)
       });
     }, 1);
@@ -72,7 +73,7 @@ useEffect(() => {
 
 
   const clickPlayerStart = () => {
-    
+   
     realPlayer.current.play();
     setPlayerOn(true);
 
@@ -89,6 +90,13 @@ useEffect(() => {
     realPlayer.current.loop = false;
     setLoopOn(false);
   };
+  const clickNextStart = () => {
+    setTrackPlay(nextTracksRedux)
+    console.log(nextTracksRedux)
+    realPlayer.current.play();
+    setPlayerOn(true);
+
+  };
 
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
@@ -103,9 +111,11 @@ useEffect(() => {
           id="audio"
           controls
           ref={realPlayer}
-          src={
-            //activeTrack
-            trackPlay.track_file}
+          src={trackPlay
+            
+            // activeTrack
+            
+            .track_file}
           style={{ marginBottom: "20px" }}
         >
           AudioPlayer
@@ -156,7 +166,7 @@ useEffect(() => {
               </S.playerBtnPlay>
               <S.playerBtnNext>
                 <S.playerBtnNextSvg
-                  onClick={()=> {}}
+                  onClick={()=> {clickNextStart()}}
                                      //set activetreck - next, click play start                                               //NEXT
                   alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
