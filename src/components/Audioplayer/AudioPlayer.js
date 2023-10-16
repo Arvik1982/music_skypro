@@ -22,7 +22,8 @@ export function Player({playerVisibility}) {
   const [volumeOn, setVolumeOn] = useState(0.2);
   const [progressOn, setProgressOn] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
-  const [trackPlay, setTrackPlay] = useState([]);
+  
+
   let errorText = null;
  
 //redux
@@ -31,7 +32,7 @@ const allTracksRedux= useSelector(state=>state.track.tracks)
 
 
 const activeTrack=activeTrackRedux;
-
+const [trackPlay, setTrackPlay] = useState(activeTrack);
 
 
 
@@ -39,7 +40,7 @@ const activeTrack=activeTrackRedux;
 // activeTrack=tracks[prevTrackRedux];
 
 useEffect(() => {
-
+  
     
 
     if(playerOn){
@@ -102,7 +103,9 @@ useEffect(() => {
           id="audio"
           controls
           ref={realPlayer}
-          src={activeTrack.track_file}
+          src={
+            //activeTrack
+            trackPlay.track_file}
           style={{ marginBottom: "20px" }}
         >
           AudioPlayer

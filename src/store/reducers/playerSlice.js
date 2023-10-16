@@ -5,6 +5,8 @@ const playerSlice = createSlice({
     initialState:{
         activeTrack:[],
         tracks:[],
+        next:[],
+        prev:[]
         
 
        
@@ -13,8 +15,10 @@ const playerSlice = createSlice({
 
         setTrackRedux(state, action){
             state.activeTrack = action.payload.track
-            state.tracks = action.payload.tracks 
-            console.log(state.tracks)
+            state.tracks = action.payload.tracks
+            state.next= state.tracks.filter(el=>el.id===state.activeTrack.id+1)
+            state.prev= state.tracks.filter(el=>el.id===state.activeTrack.id-1)
+            console.log(state.prev)
             // state.activeTrack = state.tracks.filter(el=>el.id===state.activeTrack.id+1)
             // console.log(state.activeTrack)
         },
