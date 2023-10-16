@@ -20,20 +20,20 @@ const playerSlice = createSlice({
             state.prev= state.tracks.filter(el=>el.id===state.activeTrack.id-1)
             console.log(state.prev)
             // state.activeTrack = state.tracks.filter(el=>el.id===state.activeTrack.id+1)
-            // console.log(state.activeTrack)
+            
         },
-        // setNextTrackRedux(state, action){
-        //     state.activeTrack = state.tracks.filter(el=>el.id===state.activeTrack.id+1)
-        //     console.log(state.activeTrack)
-        // },
-      
+       
+        setNextRedux(state){
+            state.activeTrack = state.tracks.filter(el=>el.id===state.activeTrack.id+1)
+            console.log(state.activeTrack)
+        }
        
     }
-            
+        
 })
 
         
 
-export const{setTrackRedux,setNextTrackRedux}=playerSlice.actions
+export const{setTrackRedux,setNextRedux}=playerSlice.actions
 
 export default playerSlice.reducer;

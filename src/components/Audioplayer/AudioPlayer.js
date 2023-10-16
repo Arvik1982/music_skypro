@@ -6,10 +6,10 @@ import "../../img/icon/play.svg";
 import * as S from "./PlayerStyles";
 import { getTracks } from "../../api";
 //redux
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { setNextTrackRedux } from "../../store/reducers/playerSlice";
 
+import { useSelector } from "react-redux";
+import { setNextRedux } from "../../store/reducers/playerSlice";
+import { useDispatch } from "react-redux";
 let tracks=[]
 
 export function Player({playerVisibility}) {
@@ -28,8 +28,7 @@ export function Player({playerVisibility}) {
  
 //redux
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-const allTracksRedux = useSelector(state=>state.track.tracks)
-const nextTracksRedux = useSelector(state=>state.track.next)
+const dispatch=useDispatch()
 
 let activeTrack=activeTrackRedux;
 
@@ -90,13 +89,7 @@ useEffect(() => {
     realPlayer.current.loop = false;
     setLoopOn(false);
   };
-  const clickNextStart = () => {
-    setTrackPlay(nextTracksRedux)
-    console.log(nextTracksRedux)
-    realPlayer.current.play();
-    setPlayerOn(true);
-
-  };
+ 
 
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
@@ -111,9 +104,8 @@ useEffect(() => {
           id="audio"
           controls
           ref={realPlayer}
-          src={trackPlay
-            
-            // activeTrack
+          src={          
+            activeTrack
             
             .track_file}
           style={{ marginBottom: "20px" }}
@@ -156,7 +148,7 @@ useEffect(() => {
                   onClick={playerOn ? clickPlayerStop :  clickPlayerStart}
                   alt="play"
                 >
-                  {/* <use xlinkHref="img/icon/sprite.svg#icon-play"></use> */}
+                  
                   <use
                     href={
                       playerOn ? `${sprite}#icon-pause` : `${sprite}#icon-play`
@@ -166,7 +158,7 @@ useEffect(() => {
               </S.playerBtnPlay>
               <S.playerBtnNext>
                 <S.playerBtnNextSvg
-                  onClick={()=> {clickNextStart()}}
+                  onClick={()=> { dispatch(setNextRedux())}}
                                      //set activetreck - next, click play start                                               //NEXT
                   alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
