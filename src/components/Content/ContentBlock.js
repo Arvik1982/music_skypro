@@ -6,6 +6,10 @@ import React, { useEffect, useState } from "react";
 import * as S from "./ContentStyle.js";
 import { getTracks } from "../../api";
 import { Link } from "react-router-dom";
+//redux
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setTrackRedux } from "../../store/reducers/playerSlice";
 
 let errorText = null;
 let href;
@@ -32,8 +36,15 @@ let tracks = [
   { id: "20" },
   { id: "21" },
 ];
-export function Content({ activeTrack, setActiveTrack, setPlayerOn }) {
+export function Content({ setPlayerOn }) {
   const [contentVisible, setContentVisible] = useState(false);
+//redux
+  const activeTrackRedux = useSelector(state=>state.track.activeTrack)
+ 
+
+  console.log(activeTrackRedux)
+  const dispatch=useDispatch();
+  // console.log(activeTrackRedux[1].currentTrack)
 
   useEffect(() => {
     getTracks()
@@ -41,6 +52,7 @@ export function Content({ activeTrack, setActiveTrack, setPlayerOn }) {
         errorText = null;
         tracks = data;
         setContentVisible(true);
+        
         return tracks;
       })
       .catch((error) => {
@@ -87,8 +99,10 @@ export function Content({ activeTrack, setActiveTrack, setPlayerOn }) {
                   e.preventDefault();
 
                   console.log("player load");
-                  setPlayerOn("");
-                  setActiveTrack(track);
+                  setPlayerOn(true);
+                  dispatch(setTrackRedux({track,tracks}))
+                  // setActiveTrack(track);
+
                 }}
               >
                 <S.Track__title
