@@ -53,7 +53,7 @@ useEffect(() => {
         
         
       });
-    }, 2000);
+    }, 1000);
     setTimeout(() => {
       realPlayer.current.addEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
@@ -62,7 +62,7 @@ useEffect(() => {
          
         // console.log(trackTime)
       });
-    }, 1000);
+    }, 1);
 
     // return () => {
     //   realPlayer.current.removeEventListener("timeupdate", () => {
@@ -77,7 +77,13 @@ useEffect(() => {
 
 }, []);
 
-
+function play(){
+  
+  realPlayer.current.play();
+  dispatch(setNextRedux())
+  setPlayerOn(true);
+  console.log('ttt')
+}
   const clickPlayerStart = () => {
     
     realPlayer.current.play();
@@ -119,8 +125,7 @@ useEffect(() => {
           id="audio"
           controls
           ref={realPlayer}
-          src={          
-            activeTrack.track_file}
+          src={activeTrack.track_file}
           style={{ marginBottom: "20px" }}
         >
           AudioPlayer
@@ -172,7 +177,7 @@ useEffect(() => {
               </S.playerBtnPlay>
               <S.playerBtnNext>
                 <S.playerBtnNextSvg
-                  onClick={ ()=>dispatch(setNextRedux())}
+                  onClick={ play }
                                      //set activetreck - next, click play start                                               //NEXT
                   alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>

@@ -24,9 +24,9 @@ const playerSlice = createSlice({
         setNextRedux(state){
            
             let next = state.activeTrack.id-7
-            // if (next-state.tracks.length===0){state.activeTrack = state.tracks[0]}else{
+            if (next-state.tracks.length===0){state.activeTrack = state.tracks[0]}else{
             state.activeTrack = state.tracks[next]
-        // }
+        }
     
         },
         setPrevRedux(state){
