@@ -101,7 +101,7 @@ export function Content({ setPlayerOn }) {
                   console.log("player load");
                   setPlayerOn(true);
                   dispatch(setTrackRedux({track,tracks}))
-                  // setActiveTrack(track);
+                  
 
                 }}
               >

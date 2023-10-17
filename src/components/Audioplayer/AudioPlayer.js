@@ -8,7 +8,7 @@ import { getTracks } from "../../api";
 //redux
 
 import { useSelector } from "react-redux";
-import { setNextRedux } from "../../store/reducers/playerSlice";
+import { setNextRedux,setPrevRedux } from "../../store/reducers/playerSlice";
 import { useDispatch } from "react-redux";
 let tracks=[]
 
@@ -28,6 +28,7 @@ export function Player({playerVisibility}) {
  
 //redux
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
+const trackTimeRedux = useSelector(state=>state.track.trackTime)
 const dispatch=useDispatch()
 
 let activeTrack=activeTrackRedux;
@@ -46,13 +47,14 @@ useEffect(() => {
     setTimeout(() => {
       realPlayer.current.addEventListener("timeupdate", () => {
         setProgressOn(realPlayer.current.currentTime);
-        // console.log(progressOn)
+        
       });
     }, 1000);
     setTimeout(() => {
       realPlayer.current.addEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
         
+        console.log(trackTimeRedux)
         // console.log(trackTime)
       });
     }, 1);
@@ -89,7 +91,7 @@ useEffect(() => {
     realPlayer.current.loop = false;
     setLoopOn(false);
   };
- 
+
 
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
@@ -134,7 +136,7 @@ useEffect(() => {
             <S.playerControls>
               <S.playerBtnPrev>
                 <S.playerBtnPrevSvg
-                  onClick={()=>{}}
+                  onClick={()=>dispatch(setPrevRedux())}
                                                                               //PREV
                   alt="prev"
                 >
@@ -158,7 +160,7 @@ useEffect(() => {
               </S.playerBtnPlay>
               <S.playerBtnNext>
                 <S.playerBtnNextSvg
-                  onClick={()=> { dispatch(setNextRedux())}}
+                  onClick={()=>dispatch(setNextRedux())}
                                      //set activetreck - next, click play start                                               //NEXT
                   alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
