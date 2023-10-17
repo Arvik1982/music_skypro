@@ -8,7 +8,7 @@ import { getTracks } from "../../api";
 //redux
 
 import { useSelector } from "react-redux";
-import { setNextRedux,setPrevRedux } from "../../store/reducers/playerSlice";
+import { setNextRedux,setPrevRedux,setTimeRedux,setProgressRedux } from "../../store/reducers/playerSlice";
 import { useDispatch } from "react-redux";
 let tracks=[]
 
@@ -23,16 +23,18 @@ export function Player({playerVisibility}) {
   const [progressOn, setProgressOn] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
   const [trackPlay, setTrackPlay] = useState([]);
+ 
 
   let errorText = null;
  
 //redux
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-const trackTimeRedux = useSelector(state=>state.track.trackTime)
+const trackProgressRedux = useSelector(state=>state.track.trackProgressTime)
+
 const dispatch=useDispatch()
 
-let activeTrack=activeTrackRedux;
 
+let activeTrack = activeTrackRedux
 
 
 
@@ -47,17 +49,20 @@ useEffect(() => {
     setTimeout(() => {
       realPlayer.current.addEventListener("timeupdate", () => {
         setProgressOn(realPlayer.current.currentTime);
+        // dispatch(setProgressRedux(realPlayer.current.currentTime))
+        
         
       });
-    }, 1000);
+    }, 2000);
     setTimeout(() => {
       realPlayer.current.addEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
         
-        console.log(trackTimeRedux)
+        // dispatch(setTimeRedux(realPlayer.current.duration))
+         
         // console.log(trackTime)
       });
-    }, 1);
+    }, 1000);
 
     // return () => {
     //   realPlayer.current.removeEventListener("timeupdate", () => {
@@ -74,10 +79,10 @@ useEffect(() => {
 
 
   const clickPlayerStart = () => {
-   
+    
     realPlayer.current.play();
     setPlayerOn(true);
-
+    
   };
   const clickPlayerStop = () => {
     realPlayer.current.pause();
@@ -90,6 +95,14 @@ useEffect(() => {
   const clickPlayerLoopOff = () => {
     realPlayer.current.loop = false;
     setLoopOn(false);
+  };
+
+  const clickNextStart = () => {
+    // realPlayer.current.pause();
+    dispatch(setNextRedux());
+    realPlayer.current.play();
+    setPlayerOn(true);
+    
   };
 
 
@@ -107,9 +120,7 @@ useEffect(() => {
           controls
           ref={realPlayer}
           src={          
-            activeTrack
-            
-            .track_file}
+            activeTrack.track_file}
           style={{ marginBottom: "20px" }}
         >
           AudioPlayer
@@ -121,6 +132,7 @@ useEffect(() => {
           onChange={(e) => {
             realPlayer.current.currentTime = e.target.value;
             setProgressOn(e.target.value);
+            
           }}
           value={progressOn}
           max={trackTime}
@@ -136,8 +148,8 @@ useEffect(() => {
             <S.playerControls>
               <S.playerBtnPrev>
                 <S.playerBtnPrevSvg
-                  onClick={()=>dispatch(setPrevRedux())}
-                                                                              //PREV
+                  onClick={()=>{dispatch(setPrevRedux())}}
+                                                                                 //PREV
                   alt="prev"
                 >
                   <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
@@ -160,7 +172,7 @@ useEffect(() => {
               </S.playerBtnPlay>
               <S.playerBtnNext>
                 <S.playerBtnNextSvg
-                  onClick={()=>dispatch(setNextRedux())}
+                  onClick={ ()=>dispatch(setNextRedux())}
                                      //set activetreck - next, click play start                                               //NEXT
                   alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>

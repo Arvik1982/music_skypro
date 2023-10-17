@@ -8,8 +8,8 @@ const playerSlice = createSlice({
     initialState:{
         activeTrack:[],
         tracks:[],
-        trackTime:0
-        
+        trackProgressTime:[],
+        trackTime:[]
 
        
     },
@@ -18,16 +18,15 @@ const playerSlice = createSlice({
         setTrackRedux(state, action){
             state.activeTrack = action.payload.track
             state.tracks = action.payload.tracks
-            setInterval()
+            
          },
        
         setNextRedux(state){
            
             let next = state.activeTrack.id-7
-            
-            
-            if (next-state.tracks.length===0){state.activeTrack = state.tracks[0]}else{
-            state.activeTrack = state.tracks[next]}
+            // if (next-state.tracks.length===0){state.activeTrack = state.tracks[0]}else{
+            state.activeTrack = state.tracks[next]
+        // }
     
         },
         setPrevRedux(state){
@@ -36,10 +35,26 @@ const playerSlice = createSlice({
             let prevId =state.tracks.length-1
              if (prev<=0){
                 state.activeTrack = state.tracks[prevId]}
-          
-            else{state.activeTrack = state.tracks[prev]}
+             else{state.activeTrack = state.tracks[prev]}
     
-        }
+        },
+        setProgressRedux(state, action){
+            let next = state.activeTrack.id-7
+            state.trackProgressTime = action.payload
+            console.log(state.trackProgressTime)
+            let deltaTime =Math.round((state.trackTime-state.trackProgressTime)*100)/100
+            console.log(deltaTime)
+            if(deltaTime<=0.5){
+                console.log('end');
+                state.activeTrack = state.tracks[next]}
+            
+         },
+         setTimeRedux(state, action){
+            state.trackTime = action.payload
+            console.log(state.trackTime)
+           
+            
+         },
        
     }
         
@@ -47,6 +62,6 @@ const playerSlice = createSlice({
 
         
 
-export const{setTrackRedux,setNextRedux,setPrevRedux}=playerSlice.actions
+export const{setTrackRedux,setNextRedux,setPrevRedux,setProgressRedux,setTimeRedux}=playerSlice.actions
 
 export default playerSlice.reducer;
