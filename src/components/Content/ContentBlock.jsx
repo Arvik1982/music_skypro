@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import * as S from "./ContentStyle.js";
 import { getTracks } from "../../api";
 import { Link } from "react-router-dom";
+
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -91,10 +92,10 @@ export function Content({ setPlayerOn }) {
 
         {tracks.map((track) => {
           return (
-            <S.Playlist__item key={track.id}>
+            <S.Playlist__item   key={track.id} >
               {/* block start */}
 
-              <S.Playlist__track
+              <S.Playlist__track 
                 onClick={(e) => {
                   e.preventDefault();
 
@@ -113,12 +114,16 @@ export function Content({ setPlayerOn }) {
                 // setActiveTrack(track);
                 // }}
                 >
-                  <S.Track__titleImage>
+                  <S.Track__titleImage >
                     {contentVisible ? (
+                      <S.Playlist__titleSvg_dot style={track.id!==activeTrackRedux.id ?{display:'none'}:{}}>
                       <S.Track__titleSvg alt="music">
-                        <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-                        <use href={`${sprite}#icon-note`} />
+                       
+                        <use  xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                        <use  href={`${sprite}#icon-note`} />
+                        
                       </S.Track__titleSvg>
+                      </S.Playlist__titleSvg_dot>
                     ) : (
                       <SkeletonTheme baseColor="#202020" highlightColor="#444">
                         <S.Skeleton_square />

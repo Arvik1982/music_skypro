@@ -5,6 +5,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import "../../img/icon/play.svg";
 import * as S from "./PlayerStyles";
 import { getTracks } from "../../api";
+
 //redux
 
 import { useSelector } from "react-redux";
@@ -29,12 +30,13 @@ export function Player({playerVisibility}) {
  
 //redux
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-const trackProgressRedux = useSelector(state=>state.track.trackProgressTime)
+
+
 
 const dispatch=useDispatch()
 
 
-let activeTrack = activeTrackRedux
+const activeTrack = activeTrackRedux
 
 
 
@@ -43,8 +45,6 @@ let activeTrack = activeTrackRedux
 
 useEffect(() => {
   
-
-
     if(!playerOn){
     setTimeout(() => {
       realPlayer.current.addEventListener("timeupdate", () => {
@@ -53,16 +53,16 @@ useEffect(() => {
         
         
       });
-    }, 1000);
+    }, 1);
     setTimeout(() => {
       realPlayer.current.addEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
         
         // dispatch(setTimeRedux(realPlayer.current.duration))
-         
         // console.log(trackTime)
       });
-    }, 1);
+    },
+     1);
 
     // return () => {
     //   realPlayer.current.removeEventListener("timeupdate", () => {
@@ -77,13 +77,7 @@ useEffect(() => {
 
 }, []);
 
-function play(){
-  
-  realPlayer.current.play();
-  dispatch(setNextRedux())
-  setPlayerOn(true);
-  console.log('ttt')
-}
+
   const clickPlayerStart = () => {
     
     realPlayer.current.play();
@@ -111,11 +105,15 @@ function play(){
     
   };
 
-
+  function play(){
+    realPlayer.current.play();
+    setPlayerOn(true);
+    
+  }
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
     setContentVisible(true);
-  }, 500);
+  }, 1);
 
   return (
     <S.bar style={{ visibility: `${!playerVisibility}` }}>
@@ -177,7 +175,7 @@ function play(){
               </S.playerBtnPlay>
               <S.playerBtnNext>
                 <S.playerBtnNextSvg
-                  onClick={ play }
+                  onClick={ ()=>{dispatch(setNextRedux());play()}}
                                      //set activetreck - next, click play start                                               //NEXT
                   alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
