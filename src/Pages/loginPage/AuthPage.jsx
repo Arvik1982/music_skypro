@@ -2,8 +2,8 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
 import React, { useEffect, useState } from "react";
 import { login, registration } from "../../api";
-
-
+import logo from "../../img/logo_modal.png"
+// /img/logo_modal.png
 export default function AuthPage({isLoginMode, setIsLoginMode, setUser, user  }) {
   const [error, setError]=useState(null)
   const [email, setEmail] = useState("");
@@ -130,7 +130,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser, user  })
       <S.ModalForm>
         <Link to="/login">
           <S.ModalLogo>
-            <S.ModalLogoImage src="/img/logo_modal.png" alt="logo" />
+            <S.ModalLogoImage src="/logo_modal.png" alt="logo" />
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (

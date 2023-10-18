@@ -9,9 +9,19 @@ import { getTracks } from "../../api";
 //redux
 
 import { useSelector } from "react-redux";
-import { setNextRedux,setPrevRedux,setTimeRedux,setProgressRedux } from "../../store/reducers/playerSlice";
+import { 
+  setNextRedux,
+  setPrevRedux,
+  setTimeRedux,
+  setProgressRedux,
+  setShuffleRedux,
+  setNotShuffleRedux,
+  setOnDotRedux,
+  setOffDotRedux,
+  setCycleRedux} from "../../store/reducers/playerSlice";
 import { useDispatch } from "react-redux";
-let tracks=[]
+// let tracks=[]
+
 
 export function Player({playerVisibility}) {
 
@@ -23,34 +33,35 @@ export function Player({playerVisibility}) {
   const [volumeOn, setVolumeOn] = useState(0.2);
   const [progressOn, setProgressOn] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
-  const [trackPlay, setTrackPlay] = useState([]);
- 
+  const [mix, setMixOn] = useState(false);
+  
 
-  let errorText = null;
+  
  
 //redux
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-
-
-
+const shuffleOn = useSelector(state=>state.track.shuffle)
+// const shuffleTracks= useSelector(state=>state.track.shuffleTracks)
+const tracksRedux = useSelector(state=>state.track.tracks)
+const tempTracksRedux = useSelector(state=>state.track.tempTracks)
 const dispatch=useDispatch()
 
 
-const activeTrack = activeTrackRedux
+let activeTrack = activeTrackRedux
 
-
-
-// activeTrack=tracks[nextTrackRedux];
-// activeTrack=tracks[prevTrackRedux];
+console.log(shuffleOn)
+console.log(tracksRedux)
+console.log(tempTracksRedux)
 
 useEffect(() => {
+  
   
     if(!playerOn){
     setTimeout(() => {
       realPlayer.current.addEventListener("timeupdate", () => {
         setProgressOn(realPlayer.current.currentTime);
-        // dispatch(setProgressRedux(realPlayer.current.currentTime))
-        
+         dispatch(setProgressRedux(realPlayer.current.currentTime))
+         
         
       });
     }, 1);
@@ -58,11 +69,10 @@ useEffect(() => {
       realPlayer.current.addEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
         
-        // dispatch(setTimeRedux(realPlayer.current.duration))
+         dispatch(setTimeRedux(realPlayer.current.duration))
         // console.log(trackTime)
       });
-    },
-     1);
+    }, 1);
 
     // return () => {
     //   realPlayer.current.removeEventListener("timeupdate", () => {
@@ -72,37 +82,43 @@ useEffect(() => {
     //     setTrackTime(realPlayer.current.duration);
     //   });
     // };
- 
+    
 }
 
 }, []);
 
 
   const clickPlayerStart = () => {
-    
     realPlayer.current.play();
     setPlayerOn(true);
-    
+    dispatch(setOnDotRedux())
+    // dispatch(setNextRedux());
   };
   const clickPlayerStop = () => {
     realPlayer.current.pause();
     setPlayerOn(false);
+    dispatch(setOffDotRedux())
   };
   const clickPlayerLoopOn = () => {
     realPlayer.current.loop = true;
     setLoopOn(true);
+    dispatch(setCycleRedux())
   };
   const clickPlayerLoopOff = () => {
     realPlayer.current.loop = false;
     setLoopOn(false);
+    dispatch(setCycleRedux())
   };
 
-  const clickNextStart = () => {
-    // realPlayer.current.pause();
-    dispatch(setNextRedux());
-    realPlayer.current.play();
-    setPlayerOn(true);
-    
+  const clickPlayerShuffleOn = () => {
+    dispatch(setShuffleRedux())
+   
+    setMixOn(true);
+  };
+  const clickPlayerShuffleOff = () => {
+    dispatch(setNotShuffleRedux())
+   
+    setMixOn(false);
   };
 
   function play(){
@@ -113,12 +129,22 @@ useEffect(() => {
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
     setContentVisible(true);
-  }, 1);
+  }, 500);
 
-  return (
-    <S.bar style={{ visibility: `${!playerVisibility}` }}>
+if(playerOn){
+  realPlayer.current.play();
+}
+// if(playerOn & pause===true ){
+//   realPlayer.current.pause();
+// }
+
+
+  return ( 
+    <S.bar style={{ visibility: `${playerVisibility}` }}>
       <S.barContent>
+       
         <audio
+       
           hidden
           id="audio"
           controls
@@ -162,7 +188,9 @@ useEffect(() => {
 
               <S.playerBtnPlay className="_btn">
                 <S.playerBtnPlaySvg
-                  onClick={playerOn ? clickPlayerStop :  clickPlayerStart}
+                  onClick={
+                     playerOn ? clickPlayerStop :  clickPlayerStart                  //START-STOP
+                  }
                   alt="play"
                 >
                   
@@ -175,8 +203,8 @@ useEffect(() => {
               </S.playerBtnPlay>
               <S.playerBtnNext>
                 <S.playerBtnNextSvg
-                  onClick={ ()=>{dispatch(setNextRedux());play()}}
-                                     //set activetreck - next, click play start                                               //NEXT
+                  onClick={ ()=>{dispatch(setNextRedux())}}                            //NEXT
+                                                                  
                   alt="next">
                   <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
                   <use href={`${sprite}#icon-next`} />
@@ -193,13 +221,16 @@ useEffect(() => {
                   />
                 </S.playerBtnRepeatSvg>
               </S.playerBtnRepeat>
-              <S.playerBtnShuffle className=" _btn-icon">
+              <S.playerBtnShuffle  className=" _btn-icon">
+              {/* style={shuffleOn?{backgroundColor:'red'}:{backgroundColor:'yellow'}} */}
                 <S.playerBtnShuffleSvg
-                  onClick={() => alert("не реализовано")}
+                  onClick={  mix ? clickPlayerShuffleOff : clickPlayerShuffleOn }
+                  
+                                                                                              //SHUFFLE
                   alt="shuffle"
                 >
                   {/* <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use> */}
-                  <use href={`${sprite}#icon-shuffle`} />
+                  <use href={mix?`${sprite}#icon-shuffle-off`: `${sprite}#icon-shuffle`} />
                 </S.playerBtnShuffleSvg>
               </S.playerBtnShuffle>
             </S.playerControls>
@@ -285,5 +316,7 @@ useEffect(() => {
         </S.playerBlock>
       </S.barContent>
     </S.bar>
+    
   );
+  
 }

@@ -37,13 +37,18 @@ let tracks = [
   { id: "20" },
   { id: "21" },
 ];
-export function Content({ setPlayerOn }) {
+export function Content({playerOn, setPlayerOn }) {
   const [contentVisible, setContentVisible] = useState(false);
+
+  
+  console.log(playerOn)
+  
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
- 
-
-  console.log(activeTrackRedux)
+  const playerOnDot = useSelector(state=>state.track.playerOn)
+  
+console.log(playerOn)
+  // console.log(activeTrackRedux)
   const dispatch=useDispatch();
   // console.log(activeTrackRedux[1].currentTrack)
 
@@ -100,7 +105,7 @@ export function Content({ setPlayerOn }) {
                   e.preventDefault();
 
                   console.log("player load");
-                  setPlayerOn(true);
+                  setPlayerOn('');
                   dispatch(setTrackRedux({track,tracks}))
                   
 
@@ -115,15 +120,19 @@ export function Content({ setPlayerOn }) {
                 // }}
                 >
                   <S.Track__titleImage >
-                    {contentVisible ? (
-                      <S.Playlist__titleSvg_dot style={track.id!==activeTrackRedux.id ?{display:'none'}:{}}>
-                      <S.Track__titleSvg alt="music">
-                       
+                    {contentVisible ? (<>
+                    
+                      <S.Playlist__titleSvg_dot_Pause style={track.id===activeTrackRedux.id & playerOnDot===false ?{
+                        display:'block'}:{display:'none'}}></S.Playlist__titleSvg_dot_Pause>
+                       <S.Playlist__titleSvg_dot style={track.id===activeTrackRedux.id & playerOnDot===true?{display:'block'}:{display:'none'}}></S.Playlist__titleSvg_dot>
+
+                      <S.Track__titleSvg style={track.id===activeTrackRedux.id ?{
+                        display:'none'}:{}}  alt="music">
                         <use  xlinkHref="img/icon/sprite.svg#icon-note"></use>
                         <use  href={`${sprite}#icon-note`} />
-                        
                       </S.Track__titleSvg>
-                      </S.Playlist__titleSvg_dot>
+                      </>
+                      
                     ) : (
                       <SkeletonTheme baseColor="#202020" highlightColor="#444">
                         <S.Skeleton_square />

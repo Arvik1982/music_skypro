@@ -8,27 +8,35 @@ const playerSlice = createSlice({
     initialState:{
         activeTrack:[],
         tracks:[],
+        tempTracks:[],
         trackProgressTime:[],
         trackTime:[],
-        player:[]
+        playerOn:false,
+        shuffle:false,
+        shuffleTracks:[],
+        repeat: false
 
        
     },
     reducers:{
+       
 
         setTrackRedux(state, action){
             state.activeTrack = action.payload.track
             state.tracks = action.payload.tracks
+            state.tempTracks = action.payload.tracks
             
          },
        
         setNextRedux(state, action){
            
             let next = state.activeTrack.id-7
-            // if (next-state.tracks.length===0){state.activeTrack = state.tracks[0]}else{
+            if (next-state.tracks.length===0){state.activeTrack = state.tracks[0];
+           }else{
             state.activeTrack = state.tracks[next]
-        //}
-        state.player=action.payload
+
+        }
+        
 
         },
         setPrevRedux(state){
@@ -46,9 +54,15 @@ const playerSlice = createSlice({
             console.log(state.trackProgressTime)
             let deltaTime =Math.round((state.trackTime-state.trackProgressTime)*100)/100
             console.log(deltaTime)
-            if(deltaTime<=0.5){
-                console.log('end');
-                state.activeTrack = state.tracks[next]}
+            
+            if(deltaTime<=1 & state.repeat!=true){ 
+
+                if (next-state.tracks.length===0){state.activeTrack = state.tracks[0];
+               }else{
+                state.activeTrack = state.tracks[next]
+    
+            }}
+            
             
          },
          setTimeRedux(state, action){
@@ -57,13 +71,64 @@ const playerSlice = createSlice({
            
             
          },
+
+         setShuffleRedux(state){
+            state.shuffle=true
+            state.tracks=state.tracks.sort(()=>Math.random()-0.5)
+            console.log(state.tempTracks)
+            
+
+         },
+         setNotShuffleRedux(state){
+            state.shuffle=false
+            state.tracks=state.tempTracks
+            console.log(state.tracks)
+
+         },
+
+         setOnDotRedux(state){
+            state.playerOn=true
+            console.log(state.playerOn)
+
+         },
+         setOffDotRedux(state){
+            state.playerOn=false
+            console.log(state.playerOn)
+
+         },
+         setCycleRedux(state){
+
+        if(state.repeat===false){
+
+            state.repeat=true
+            state.tracks=state.activeTrack
+        }else{
+
+            state.repeat=false
+            state.tracks=state.tempTracks    
+        }
+        },
+
+
        
-    }
-        
+}
+     
 })
 
         
 
-export const{setTrackRedux,setNextRedux,setPrevRedux,setProgressRedux,setTimeRedux}=playerSlice.actions
+export const
+{
+    setTrackRedux,
+    setNextRedux,
+    setPrevRedux,
+    setProgressRedux,
+    setTimeRedux,
+    setShuffleRedux,
+    setNotShuffleRedux,
+    setOnDotRedux,
+    setOffDotRedux,
+    setCycleRedux
+}=playerSlice.actions
 
 export default playerSlice.reducer;
