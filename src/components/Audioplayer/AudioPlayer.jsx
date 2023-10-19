@@ -74,14 +74,14 @@ useEffect(() => {
       });
     }, 1);
 
-    // return () => {
-    //   realPlayer.current.removeEventListener("timeupdate", () => {
-    //     setProgressOn(realPlayer.current.currentTime);
-    //   });
-    //   realPlayer.current.removeEventListener("loadedmetadata", () => {
-    //     setTrackTime(realPlayer.current.duration);
-    //   });
-    // };
+    return () => {
+      realPlayer.current.removeEventListener("timeupdate", () => {
+        setProgressOn(realPlayer.current.currentTime);
+      });
+      realPlayer.current.removeEventListener("loadedmetadata", () => {
+        setTrackTime(realPlayer.current.duration);
+      });
+    };
     
 }
 
