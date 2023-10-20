@@ -54,10 +54,11 @@ const playerSlice = createSlice({
            
             let prev = state.activeTrack.id-9
             let prevId =state.tracks.length-1
+            if (state.tracks.length>1){
              if (prev<=0){
                 state.activeTrack = state.tracks[prevId]}
              else{state.activeTrack = state.tracks[prev]}
-    
+             }else{state.activeTrack = state.tracks[state.tracks.length-1]}
         },
         setProgressRedux(state, action){
             let next = state.activeTrack.id-7
