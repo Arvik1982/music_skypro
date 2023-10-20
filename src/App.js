@@ -1,7 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 import { AppRoutes } from "./routs";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
+import { Player } from "./components/Audioplayer/AudioPlayer";
 export const UserContext = React.createContext(null);
+
+
+
+
+
 const GlobalStyle = createGlobalStyle`
 
   *{margin: 0;
@@ -98,6 +104,9 @@ export function App() {
     <div className="App">
     <UserContext.Provider value={arrNameUser}>
       <AppRoutes isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
+      <Player playerVisibility = {playerOn} 
+      // activeTrack={activeTrack}
+      />
     </UserContext.Provider> 
       {/* <ExampleButtonInput />
       <AutoFocusInput /> */}

@@ -34,7 +34,7 @@ const [activeTrack, setActiveTrack]=useState([])
             </S.MainCenterBlock>
             <Sidebar user={user} />
           </S.Main>
-          <Player playerVisibility = {playerOn} activeTrack={activeTrack}  />
+          {/* <Player playerVisibility = {playerOn} activeTrack={activeTrack}  /> */}
           <Footer />
         </S.Container>
       </S.Wrapper>
