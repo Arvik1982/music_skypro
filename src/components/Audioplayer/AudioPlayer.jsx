@@ -40,18 +40,18 @@ export function Player({playerVisibility}) {
  
 //redux
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-const shuffleOn = useSelector(state=>state.track.shuffle)
+// const shuffleOn = useSelector(state=>state.track.shuffle)
 // const shuffleTracks= useSelector(state=>state.track.shuffleTracks)
-const tracksRedux = useSelector(state=>state.track.tracks)
-const tempTracksRedux = useSelector(state=>state.track.tempTracks)
+// const tracksRedux = useSelector(state=>state.track.tracks)
+// const tempTracksRedux = useSelector(state=>state.track.tempTracks)
 const dispatch=useDispatch()
 
 
 let activeTrack = activeTrackRedux
 
-console.log(shuffleOn)
-console.log(tracksRedux)
-console.log(tempTracksRedux)
+
+// console.log(tracksRedux)
+// console.log(tempTracksRedux)
 
 useEffect(() => {
   
@@ -103,11 +103,13 @@ useEffect(() => {
     realPlayer.current.loop = true;
     setLoopOn(true);
     dispatch(setCycleRedux())
+    console.log(activeTrack)
   };
   const clickPlayerLoopOff = () => {
     realPlayer.current.loop = false;
     setLoopOn(false);
-    dispatch(setCycleRedux())
+     dispatch(setCycleRedux())
+     console.log(activeTrack)
   };
 
   const clickPlayerShuffleOn = () => {
@@ -217,7 +219,8 @@ if(playerOn){
                 >
                   {/* <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use> */}
                   <use
-                    href={loopOn ? `${sprite}#loopOn` : `${sprite}#icon-repeat`}
+                    href={loopOn ? `${sprite}#loopOn` : `${sprite}#icon-repeat`}                              
+                                                                                                // REPEAT
                   />
                 </S.playerBtnRepeatSvg>
               </S.playerBtnRepeat>
@@ -304,7 +307,7 @@ if(playerOn){
                     let volumeRange = e.target.value / 100;
                     realPlayer.current.volume = volumeRange;
                     setVolumeOn(volumeRange);
-                    console.log(volumeOn);
+                    
                   }}
                   className="_btn"
                   type="range"

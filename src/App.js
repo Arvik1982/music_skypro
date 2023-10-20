@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { AppRoutes } from "./routs";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { Player } from "./components/Audioplayer/AudioPlayer";
+import { Nav } from "./components/Navmenu/NavMenu";
 export const UserContext = React.createContext(null);
 
 
@@ -94,7 +95,8 @@ export function App() {
   const [user, setUser] = useState(false);
   const [userName, setUserName]=useState(null)
   const [userPass, setUserPass]=useState(null)
-  const[isLoginMode, setIsLoginMode]=useState(true)
+  const [isLoginMode, setIsLoginMode]=useState(true)
+  const [listName, setListName]=useState('Tracks')
   
   let userLoginName= localStorage.getItem('userName')
   let textName= 'Имя пользователя:'
@@ -103,7 +105,8 @@ export function App() {
   return (
     <div className="App">
     <UserContext.Provider value={arrNameUser}>
-      <AppRoutes isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
+    
+      <AppRoutes listName={listName} setListName={setListName} isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
       <Player playerVisibility = {playerOn} 
       // activeTrack={activeTrack}
       />

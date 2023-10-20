@@ -9,12 +9,15 @@ const playerSlice = createSlice({
         activeTrack:[],
         tracks:[],
         tempTracks:[],
+        myTracks:[],
         trackProgressTime:[],
         trackTime:[],
         playerOn:false,
         shuffle:false,
-        shuffleTracks:[],
-        repeat: false
+        // shuffleTracks:[],
+        repeat: false,
+        
+
 
        
     },
@@ -25,13 +28,16 @@ const playerSlice = createSlice({
             state.activeTrack = action.payload.track
             state.tracks = action.payload.tracks
             state.tempTracks = action.payload.tracks
+            console.log(state.tracks)
             
+            console.log(state.myTracks)
+   
          },
        
         setNextRedux(state, action){
            
             let next = state.activeTrack.id-7
-            if (next-state.tracks.length===0){state.activeTrack = state.tracks[0];
+            if ((next-state.tracks.length) === 0){state.activeTrack = state.tracks[0];
            }else{
             state.activeTrack = state.tracks[next]
 
@@ -101,16 +107,21 @@ const playerSlice = createSlice({
         if(state.repeat===false){
 
             state.repeat=true
-            state.tracks=state.activeTrack
+            state.tracks=[state.activeTrack]
+            
         }else{
 
             state.repeat=false
-            state.tracks=state.tempTracks    
+            state.tracks=state.tempTracks 
         }
         },
 
+        setMyTracksRedux(state,action){
+        state.myTracks=action.payload.data
+        
+        console.log(state.myTracks)
+            },
 
-       
 }
      
 })
@@ -128,7 +139,9 @@ export const
     setNotShuffleRedux,
     setOnDotRedux,
     setOffDotRedux,
-    setCycleRedux
+    setCycleRedux,
+    setMyTracksRedux,
+    setLikedStatusRedux
 }=playerSlice.actions
 
 export default playerSlice.reducer;

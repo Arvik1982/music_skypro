@@ -7,14 +7,16 @@ import { Content } from "../../components/Content/ContentBlock";
 import { Footer } from "../../components/FooterBlock";
 import { Tracks } from "../../components/Tracs/tracs";
 import * as S from "../../StyleApp";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
-export function MainPage({setUser, playerOn, setPlayerOn,user}) {
+export function MainPage({setUser, playerOn, setPlayerOn,user,listName, setListName}) {
 
 const [activeTrack, setActiveTrack]=useState([])
 
-
+useEffect(() => {
+  
+  setListName('Треки')},[])
 
 
 
@@ -28,7 +30,7 @@ const [activeTrack, setActiveTrack]=useState([])
             <Nav setUser={setUser} setPlayerOn={setPlayerOn} />
             <S.MainCenterBlock>
               <Search />
-              <Tracks />
+              <Tracks listName={listName} setListName={setListName} />
               <Filter />
               <Content activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
             </S.MainCenterBlock>
