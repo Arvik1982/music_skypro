@@ -104,6 +104,8 @@ useEffect(() => {
     setLoopOn(true);
     dispatch(setCycleRedux())
     console.log(activeTrack)
+    console.log(activeTrack.id)
+    console.log(activeTrack[0])
   };
   const clickPlayerLoopOff = () => {
     realPlayer.current.loop = false;

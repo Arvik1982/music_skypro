@@ -37,11 +37,16 @@ const playerSlice = createSlice({
         setNextRedux(state, action){
            
             let next = state.activeTrack.id-7
-            if ((next-state.tracks.length) === 0){state.activeTrack = state.tracks[0];
-           }else{
-            state.activeTrack = state.tracks[next]
+            if (state.tracks.length>1){
+            if (next-state.tracks.length === 0 ){
+                
+                {state.activeTrack = state.tracks[0];}}
+               
+           else{state.activeTrack = state.tracks[next]
 
         }
+    
+    }else{state.activeTrack = state.tracks[state.tracks.length-1]}
         
 
         },
@@ -63,7 +68,7 @@ const playerSlice = createSlice({
             
             if(deltaTime<=1 & state.repeat!=true){ 
 
-                if (next-state.tracks.length===0){state.activeTrack = state.tracks[0];
+                if (next-state.tracks.length===0){state.activeTrack = state.tracks[0];console.log(state.activeTrack)
                }else{
                 state.activeTrack = state.tracks[next]
     
@@ -112,7 +117,7 @@ const playerSlice = createSlice({
         }else{
 
             state.repeat=false
-            state.tracks=state.tempTracks 
+            state.tracks=state.tempTracks
         }
         },
 
