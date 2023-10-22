@@ -6,8 +6,11 @@ const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track
 if(!response.ok)   {
     throw new Error('Ошибка сервера')
 }
-   
-    const data = await response.json()
+const data = await response.json()
+    // const newData = await response.json()
+    // newData.forEach((el)=> {el.liked =false;console.log(el)})
+    // console.log(newData)
+    // let data = newData
     return data
 
 
@@ -85,9 +88,23 @@ getToken(email,password) .then((response)=>{ let data = response.json(); return 
     Authorization: `Bearer ${accessToken}`,
   },
 })
+
+// const data = await response.json()
+
+const newData = await response.json()
+newData.forEach((el, index)=> {
+      el.id =index+8;console.log(el)})
+console.log(newData)
+let data = newData
+
    
-   const data = await response.json()
-   return data           
+// const newData = await response.json()
+// newData.forEach((el)=> {el.liked =false;console.log(el)})
+// console.log(newData)
+// let data = newData
+return data
+
+              
                 }
 
 export async function addMyTracks(id){

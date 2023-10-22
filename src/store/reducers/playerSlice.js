@@ -33,21 +33,27 @@ const playerSlice = createSlice({
             console.log(state.myTracks)
    
          },
+
        
         setNextRedux(state, action){
            
             let next = state.activeTrack.id-7
+
             if (state.tracks.length>1){
-            if (next-state.tracks.length === 0 ){
+
+            if (next-state.tracks.length === 0 )
+            {
                 
-                {state.activeTrack = state.tracks[0];}}
+                {state.activeTrack =state.tracks[state.tracks.length-(state.tracks.length)];}
+            
+            }
                
            else{state.activeTrack = state.tracks[next]
 
         }
     
     }else{state.activeTrack = state.tracks[state.tracks.length-1]}
-        
+      
 
         },
         setPrevRedux(state){
@@ -55,7 +61,7 @@ const playerSlice = createSlice({
             let prev = state.activeTrack.id-9
             let prevId =state.tracks.length-1
             if (state.tracks.length>1){
-             if (prev<=0){
+             if (prev<0){
                 state.activeTrack = state.tracks[prevId]}
              else{state.activeTrack = state.tracks[prev]}
              }else{state.activeTrack = state.tracks[state.tracks.length-1]}
@@ -63,20 +69,23 @@ const playerSlice = createSlice({
         setProgressRedux(state, action){
             let next = state.activeTrack.id-7
             state.trackProgressTime = action.payload
-            console.log(state.trackProgressTime)
+            
             let deltaTime =Math.round((state.trackTime-state.trackProgressTime)*100)/100
-            console.log(deltaTime)
             
-            if(deltaTime<=1 & state.repeat!=true){ 
+            
+            if(deltaTime<=1 & state.repeat===false){ 
+                console.log('repeat true')
 
-                if (next-state.tracks.length===0){state.activeTrack = state.tracks[0];console.log(state.activeTrack)
+                if (next-state.tracks.length === 0){state.activeTrack = state.tracks[state.tracks.length-state.tracks.length]
+                    ;console.log(state.activeTrack)
                }else{
-                state.activeTrack = state.tracks[next]
-    
-            }}
+
+                if(state.repeat===true){console.log('trrru');state.activeTrack = state.activeTrack}else{console.log('????')
+                state.activeTrack = state.tracks[next]}
+        
+          
             
-            
-         },
+         }}},
          setTimeRedux(state, action){
             state.trackTime = action.payload
             console.log(state.trackTime)
@@ -109,16 +118,18 @@ const playerSlice = createSlice({
 
          },
          setCycleRedux(state){
-
-        if(state.repeat===false){
+            
+           
+         if(state.repeat===false){
 
             state.repeat=true
-            state.tracks=[state.activeTrack]
-            
+            // state.tracks=[state.activeTrack]
+            console.log(state.repeat)
         }else{
 
             state.repeat=false
-            state.tracks=state.tempTracks
+            // state.tracks=state.tempTracks
+            console.log(state.repeat)  
         }
         },
 

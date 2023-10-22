@@ -49,7 +49,7 @@ const dispatch=useDispatch()
 
 let activeTrack = activeTrackRedux
 
-
+// console.log(activeTrack)
 // console.log(tracksRedux)
 // console.log(tempTracksRedux)
 
@@ -58,7 +58,7 @@ useEffect(() => {
   
     if(!playerOn){
     setTimeout(() => {
-      realPlayer.current.addEventListener("timeupdate", () => {
+      realPlayer?.current.addEventListener("timeupdate", () => {
         setProgressOn(realPlayer.current.currentTime);
          dispatch(setProgressRedux(realPlayer.current.currentTime))
          
@@ -66,7 +66,7 @@ useEffect(() => {
       });
     }, 1);
     setTimeout(() => {
-      realPlayer.current.addEventListener("loadedmetadata", () => {
+      realPlayer?.current.addEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
         
          dispatch(setTimeRedux(realPlayer.current.duration))
@@ -78,7 +78,7 @@ useEffect(() => {
       realPlayer.current.removeEventListener("timeupdate", () => {
         setProgressOn(realPlayer.current.currentTime);
       });
-      realPlayer.current.removeEventListener("loadedmetadata", () => {
+      realPlayer?.current.removeEventListener("loadedmetadata", () => {
         setTrackTime(realPlayer.current.duration);
       });
     };
@@ -89,13 +89,13 @@ useEffect(() => {
 
 
   const clickPlayerStart = () => {
-    realPlayer.current.play();
+    realPlayer?.current.play();
     setPlayerOn(true);
     dispatch(setOnDotRedux())
     // dispatch(setNextRedux());
   };
   const clickPlayerStop = () => {
-    realPlayer.current.pause();
+    realPlayer?.current.pause();
     setPlayerOn(false);
     dispatch(setOffDotRedux())
   };
@@ -104,6 +104,7 @@ useEffect(() => {
     setLoopOn(true);
     dispatch(setCycleRedux())
     console.log(activeTrack)
+
     console.log(activeTrack.id)
     console.log(activeTrack[0])
   };
@@ -111,7 +112,7 @@ useEffect(() => {
     realPlayer.current.loop = false;
     setLoopOn(false);
      dispatch(setCycleRedux())
-     console.log(activeTrack)
+    //  console.log(activeTrack)
   };
 
   const clickPlayerShuffleOn = () => {
@@ -125,11 +126,7 @@ useEffect(() => {
     setMixOn(false);
   };
 
-  function play(){
-    realPlayer.current.play();
-    setPlayerOn(true);
-    
-  }
+
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {
     setContentVisible(true);
