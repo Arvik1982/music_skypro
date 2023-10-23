@@ -39,7 +39,7 @@ let tracks = [
 ];
 export function Content({playerOn, setPlayerOn }) {
   const [contentVisible, setContentVisible] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(1);
   const user = useContext(UserContext)
   console.log(playerOn)
   
@@ -49,13 +49,12 @@ export function Content({playerOn, setPlayerOn }) {
   const myTracksRedux = useSelector(state=>state.track.myTracks)
 
 console.log(myTracksRedux)
-  // console.log(activeTrackRedux)
+  
   const dispatch=useDispatch();
-  // console.log(activeTrackRedux[1].currentTrack)
+  
 
 
-  function likes(track){
-    
+  function likes(track){ 
       for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
    let likName =track.stared_user[index_user].username
   
@@ -64,12 +63,17 @@ console.log(myTracksRedux)
               
        if (likName === un[0])     
         {
-          return true
+          console.log(track.id)
+          return track.id
           
         }
          }
         
   }
+function liker(){
+ setLiked(Math.random() )
+}
+  
 
   useEffect(() => {
     getTracks()
@@ -206,18 +210,15 @@ console.log(myTracksRedux)
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg onClick={()=>{addMyTracks(track.id);setLiked(true) }}  alt="time">             {/* LIKES */}
+                    <S.Track__timeSvg onClick={()=>{addMyTracks(track.id);console.log('CLICK');liker()}}  alt="time">             {/* LIKES */}
                                                                                                               
                       <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      <use href={ 
-                        
-                        
-                        
-                        likes(track) === true
-                        // liked===true
-                        ?`${sprite}#icon-like-liked`:`${sprite}#icon-like`} />
+                      <use key={liked} href={ likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                        // likes(track)&&`${sprite}#icon-like-liked`
+                        } />
                     </S.Track__timeSvg>
                   ) : (
+                    // ;`${sprite}#icon-like`
                     <SkeletonTheme baseColor="#202020" highlightColor="#444">
                       <S.Skeleton_lineMini />
                     </SkeletonTheme>

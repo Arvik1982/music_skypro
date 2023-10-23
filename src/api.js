@@ -125,7 +125,7 @@ return data
                 }
 
 export async function addMyTracks(id){
-   
+    
                     const accessToken = localStorage.getItem('access')
         
         
@@ -138,7 +138,7 @@ export async function addMyTracks(id){
         })
            
            const data = await response.json()
-           
+          
            return data           
                         }
 
@@ -156,7 +156,7 @@ export async function delMyTracks(id){
                 })
                    
                    const data = await response.json()
-                   getMyTracks()
+                  
                    console.log('DELL TRACK')
                    console.log(data)
                    return data           

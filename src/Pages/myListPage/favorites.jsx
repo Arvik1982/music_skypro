@@ -134,14 +134,7 @@ console.log(playerOn)
 
                 }}
               >
-                <S.Track__title
-
-                // onClick={()=>{
-                // console.log('player load');
-                // setPlayerOn('');
-                // setActiveTrack(track);
-                // }}
-                >
+                <S.Track__title>
                   <S.Track__titleImage >
                     {contentVisible ? (<>
                     
