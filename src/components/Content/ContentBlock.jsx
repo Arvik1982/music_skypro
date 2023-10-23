@@ -2,18 +2,18 @@ import sprite from "./sprite.svg";
 // import "../components/ContentBlock.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as S from "./ContentStyle.js";
 import { addMyTracks, getTracks } from "../../api";
 import { Link } from "react-router-dom";
-
+import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setTrackRedux,setTrackIdRedux,setLikedStatusRedux } from "../../store/reducers/playerSlice";
 
 let errorText = null;
-let href;
+let liked=false;
 let tracks = [
   { id: "1" },
   { id: "2" },
@@ -39,8 +39,8 @@ let tracks = [
 ];
 export function Content({playerOn, setPlayerOn }) {
   const [contentVisible, setContentVisible] = useState(false);
-
-
+  const [liked, setLiked] = useState(false);
+  const user = useContext(UserContext)
   console.log(playerOn)
   
 //redux
@@ -53,12 +53,31 @@ console.log(myTracksRedux)
   const dispatch=useDispatch();
   // console.log(activeTrackRedux[1].currentTrack)
 
+
+  function likes(track){
+    
+      for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
+   let likName =track.stared_user[index_user].username
+  
+   let un=user
+  
+              
+       if (likName === un[0])     
+        {
+          return true
+          
+        }
+         }
+        
+  }
+
   useEffect(() => {
     getTracks()
       .then((data) => {
         errorText = null;
         tracks = data;
         setContentVisible(true);
+        
         
         return tracks;
       })
@@ -68,7 +87,7 @@ console.log(myTracksRedux)
         tracks = [];
         return errorText;
       });
-  }, []);
+  }, [liked]);
 
   // const [contentVisible, setContentVisible] = useState(false);
   // setTimeout(() => {
@@ -97,6 +116,7 @@ console.log(myTracksRedux)
         </div>
 
         {tracks.map((track) => {
+          
           return (
             <S.Playlist__item   key={track.id} >
               {/* block start */}
@@ -186,10 +206,16 @@ console.log(myTracksRedux)
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg onClick={()=>addMyTracks(track.id)}  alt="time">             {/* LIKES */}
+                    <S.Track__timeSvg onClick={()=>{addMyTracks(track.id);setLiked(true) }}  alt="time">             {/* LIKES */}
                                                                                                               
                       <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      <use href={ tracks.liked===true?`${sprite}#icon-like-liked`:`${sprite}#icon-like`} />
+                      <use href={ 
+                        
+                        
+                        
+                        likes(track) === true
+                        // liked===true
+                        ?`${sprite}#icon-like-liked`:`${sprite}#icon-like`} />
                     </S.Track__timeSvg>
                   ) : (
                     <SkeletonTheme baseColor="#202020" highlightColor="#444">

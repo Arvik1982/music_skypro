@@ -45,7 +45,7 @@ let tracks = [
 ];
 export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName}) {
   const [contentVisible, setContentVisible] = useState(false);
-
+ 
   
   console.log(playerOn)
   
@@ -66,7 +66,7 @@ console.log(playerOn)
     getMyTracks()
       .then((data) => {
         errorText = null;
-        tracks = data;
+        tracks=data;
         setContentVisible(true);
         console.log(tracks)
         dispatch(setMyTracksRedux({data}))
@@ -220,7 +220,7 @@ console.log(playerOn)
                   )}
 
                   {contentVisible ? (
-                    <S.Track__timeText>
+                    <S.Track__timeText> 
                       {track.duration_in_seconds}
                     </S.Track__timeText>
                   ) : (

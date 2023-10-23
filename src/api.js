@@ -6,11 +6,34 @@ const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track
 if(!response.ok)   {
     throw new Error('Ошибка сервера')
 }
-const data = await response.json()
-    // const newData = await response.json()
-    // newData.forEach((el)=> {el.liked =false;console.log(el)})
-    // console.log(newData)
-    // let data = newData
+
+
+const newData = await response.json()
+newData.forEach((el, index)=> {
+el.id =index+8})
+let staredUser ='user'
+let data = newData
+console.log(data)
+// for (let index = 0; index < data.length; index++) {
+//    for (let index_user = 0; index_user < data[index].stared_user.length; index_user++) {
+
+
+//     // console.log(data[index].stared_user[index_user].username) 
+    
+//     let userName = 'user';
+//     if (data[index].stared_user[index_user].username==='test@test.test')
+    
+//      {console.log('TRUE') }
+//      else{console.log('FALSE')}
+//    }
+
+
+
+// }
+    
+
+
+
     return data
 
 
@@ -39,7 +62,7 @@ getToken(email,password) .then((response)=>{ let data = response.json(); return 
    
     }
  
-    export async function login(email,password){
+export async function login(email,password){
         const response = await fetch('https://skypro-music-api.skyeng.tech/user/login/',
         {
             method: "POST",
@@ -62,7 +85,7 @@ getToken(email,password) .then((response)=>{ let data = response.json(); return 
 
         }
         
-    export async function getToken (email,password){
+export async function getToken (email,password){
             const response = await fetch('https://skypro-music-api.skyeng.tech/user/token/',
             {
                 method: "POST",
@@ -78,7 +101,7 @@ getToken(email,password) .then((response)=>{ let data = response.json(); return 
     
             }
 
-        export async function getMyTracks(){
+export async function getMyTracks(){
             const accessToken = localStorage.getItem('access')
 
 
@@ -89,19 +112,13 @@ getToken(email,password) .then((response)=>{ let data = response.json(); return 
   },
 })
 
-// const data = await response.json()
 
 const newData = await response.json()
 newData.forEach((el, index)=> {
-      el.id =index+8;console.log(el)})
-console.log(newData)
+      el.id =index+8})
+
 let data = newData
 
-   
-// const newData = await response.json()
-// newData.forEach((el)=> {el.liked =false;console.log(el)})
-// console.log(newData)
-// let data = newData
 return data
 
               
@@ -139,7 +156,9 @@ export async function delMyTracks(id){
                 })
                    
                    const data = await response.json()
-                   
+                   getMyTracks()
+                   console.log('DELL TRACK')
+                   console.log(data)
                    return data           
                                 }
 
