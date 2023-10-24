@@ -20,36 +20,39 @@ import { setTrackRedux, setMyTracksRedux,likeTrackRedux } from "../../store/redu
 
 let errorText = null;
 let href;
-let tracks=
+// let tracks=
 
-[
-  { id: "1" },
-  { id: "2" },
-  { id: "3" },
-  { id: "4" },
-  { id: "5" },
-  { id: "6" },
-  { id: "7" },
-  { id: "8" },
-  { id: "9" },
-  { id: "10" },
-  { id: "11" },
-  { id: "12" },
-  { id: "13" },
-  { id: "14" },
-  { id: "15" },
-  { id: "16" },
-  { id: "17" },
-  { id: "18" },
-  { id: "19" },
-  { id: "20" },
-  { id: "21" },
-];
+// [
+//   { id: "1" },
+//   { id: "2" },
+//   { id: "3" },
+//   { id: "4" },
+//   { id: "5" },
+//   { id: "6" },
+//   { id: "7" },
+//   { id: "8" },
+//   { id: "9" },
+//   { id: "10" },
+//   { id: "11" },
+//   { id: "12" },
+//   { id: "13" },
+//   { id: "14" },
+//   { id: "15" },
+//   { id: "16" },
+//   { id: "17" },
+//   { id: "18" },
+//   { id: "19" },
+//   { id: "20" },
+//   { id: "21" },
+// ];
 
 export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName}) {
   const [contentVisible, setContentVisible] = useState(false);
   const [change, setChange] = useState(null);
-  
+  const [tracks,setTracks]= useState([
+    { id: "1" },
+    { id: "2" },
+    { id: "3" }])
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
@@ -59,11 +62,11 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
     await delMyTracks(id);
     const updatedTracks = await getMyTracks()
       errorText = null;
-      tracks=updatedTracks;
+      setTracks(updatedTracks);
       setContentVisible(true);
       console.log(tracks)
-      // dispatch(setMyTracksRedux({data}))
-      // return tracks
+      dispatch(setMyTracksRedux({tracks}))
+      return tracks
       ;}
 
     // } catch (error) {console.log(error.message)
@@ -83,18 +86,18 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
     getMyTracks()
       .then((data) => {
         errorText = null;
-        tracks=data;
+        setTracks(data);
         setContentVisible(true);
         console.log(tracks)
         dispatch(setMyTracksRedux({data,
-          // tracksMy
+           tracks
         }))
         return tracks;
       })
       .catch((error) => {
         errorText = error.message;
         setContentVisible(true);
-        tracks = [];
+        setTracks ([]) ;
         return errorText;
       })
   }, []);
