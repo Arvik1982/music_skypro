@@ -1,10 +1,9 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
 import React, { useEffect, useState } from "react";
 import { login, registration } from "../../api";
-import logo from "../../img/logo_modal.png"
-// /img/logo_modal.png
-export default function AuthPage({isLoginMode, setIsLoginMode, setUser, user  }) {
+
+export default function AuthPage({isLoginMode, setIsLoginMode, setUser}) {
   const [error, setError]=useState(null)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +23,6 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser, user  })
 
     login(email,password).then((response)=>{
       setButtonActive(false)
-      console.log(response.status)
       if (response.ok){
       let data = response.json()
       responseOk=true
@@ -42,9 +40,6 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser, user  })
 
         setError(data.detail)
       }else{
-
-      
-      console.log(data)  
       localStorage.setItem('userName',data.username)
       
       if(responseOk===true){

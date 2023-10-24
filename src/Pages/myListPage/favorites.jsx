@@ -120,9 +120,9 @@ console.log(playerOn)
           </h1>
         </div>
 
-        {tracks.map((track) => {
+        {tracks.map((track, index) => {
           return (
-            <S.Playlist__item   key={track.id} >
+            <S.Playlist__item   key={index} >
               {/* block start */}
 
               <S.Playlist__track 
@@ -201,7 +201,7 @@ console.log(playerOn)
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg onClick={()=>delMyTracks(track.id)}  alt="time">
+                    <S.Track__timeSvg onClick={()=>delMyTracks(track.id_old)}  alt="time">
                                              
                                                                                                         {/* FAVORITES */}
                       <use href={`${sprite}#icon-like-liked`} />

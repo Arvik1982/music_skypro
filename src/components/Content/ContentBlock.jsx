@@ -1,16 +1,17 @@
 import sprite from "./sprite.svg";
-// import "../components/ContentBlock.css";
+
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useContext, useEffect, useState } from "react";
 import * as S from "./ContentStyle.js";
 import { addMyTracks, getTracks } from "../../api";
-import { Link } from "react-router-dom";
+
 import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux,setTrackIdRedux,setLikedStatusRedux } from "../../store/reducers/playerSlice";
+import { setTrackRedux,setTrackIdRedux,setLikedStatusRedux,setTrackIsLiked } from "../../store/reducers/playerSlice";
+
 
 let errorText = null;
 let liked=false;
@@ -39,16 +40,15 @@ let tracks = [
 ];
 export function Content({playerOn, setPlayerOn }) {
   const [contentVisible, setContentVisible] = useState(false);
-  const [liked, setLiked] = useState(1);
+  const [liked, setLiked] = useState(null);
   const user = useContext(UserContext)
-  console.log(playerOn)
+  
   
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
-  const myTracksRedux = useSelector(state=>state.track.myTracks)
+  const setTrackIsLikedRedux = useSelector(state=>state.setTrackIsLiked)
 
-console.log(myTracksRedux)
   
   const dispatch=useDispatch();
   
@@ -70,33 +70,34 @@ console.log(myTracksRedux)
          }
         
   }
-function liker(){
- setLiked(Math.random() )
-}
+
+function renderTracks(){
   
+  getTracks()
+    .then((data) => {
+      errorText = null;
+      tracks = data;
+      setContentVisible(true);
+      
+      console.log('GET TRACKS')
+      
+      return tracks;
+      
+    })
+    .catch((error) => {
+      errorText = error.message;
+      setContentVisible(true);
+      tracks = [];
+      return errorText;
+    })
+}  
+
 
   useEffect(() => {
-    getTracks()
-      .then((data) => {
-        errorText = null;
-        tracks = data;
-        setContentVisible(true);
-        
-        
-        return tracks;
-      })
-      .catch((error) => {
-        errorText = error.message;
-        setContentVisible(true);
-        tracks = [];
-        return errorText;
-      });
-  }, [liked]);
+    console.log('USE EFF')
+renderTracks()}, []);
 
-  // const [contentVisible, setContentVisible] = useState(false);
-  // setTimeout(() => {
-  // setContentVisible(true);
-  // }, 1000);
+
 
   return (
     <S.CentralBlockContent>
@@ -128,22 +129,13 @@ function liker(){
               <S.Playlist__track 
                 onClick={(e) => {
                   e.preventDefault();
-
-                  console.log("player load");
                   setPlayerOn('');
                   dispatch(setTrackRedux({track,tracks}))
                   
 
                 }}
               >
-                <S.Track__title
-
-                // onClick={()=>{
-                // console.log('player load');
-                // setPlayerOn('');
-                // setActiveTrack(track);
-                // }}
-                >
+                <S.Track__title>
                   <S.Track__titleImage >
                     {contentVisible ? (<>
                     
@@ -210,10 +202,12 @@ function liker(){
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg onClick={()=>{addMyTracks(track.id);console.log('CLICK');liker()}}  alt="time">             {/* LIKES */}
+                    <S.Track__timeSvg  onClick={()=>{addMyTracks(track.id);console.log('ADD CLICK')}}  alt="time">            
+                    
+                                                                                                                       {/* LIKES */}
                                                                                                               
                       <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      <use key={liked} href={ likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                      <use  href={ likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
                         // likes(track)&&`${sprite}#icon-like-liked`
                         } />
                     </S.Track__timeSvg>

@@ -1,4 +1,5 @@
 
+
 export async function getTracks(){
 const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/')
 
@@ -115,7 +116,11 @@ export async function getMyTracks(){
 
 const newData = await response.json()
 newData.forEach((el, index)=> {
-      el.id =index+8})
+      el.id_old = el.id
+      console.log(el.id_old)
+      el.id =index+8;
+      console.log(el.id)
+    })
 
 let data = newData
 
@@ -125,7 +130,7 @@ return data
                 }
 
 export async function addMyTracks(id){
-    
+      
                     const accessToken = localStorage.getItem('access')
         
         
@@ -138,16 +143,16 @@ export async function addMyTracks(id){
         })
            
            const data = await response.json()
-          
+           
            return data           
                         }
 
-export async function delMyTracks(id){
+export async function delMyTracks(id_old){
    
                             const accessToken = localStorage.getItem('access')
                 
                 
-                            const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+                            const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id_old}/favorite/`, {
                   
                             method: "DELETE",
                             headers: {
@@ -157,8 +162,7 @@ export async function delMyTracks(id){
                    
                    const data = await response.json()
                   
-                   console.log('DELL TRACK')
-                   console.log(data)
+  
                    return data           
                                 }
 
