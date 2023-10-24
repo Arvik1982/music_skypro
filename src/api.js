@@ -78,20 +78,17 @@ export async function getToken (email,password){
             },
         }).catch((error)=>{alert(error.message)})
        return response
-    
-            }
+ }
 
 export async function getMyTracks(){
-            const accessToken = localStorage.getItem('access')
-
-
-                const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
+const accessToken = localStorage.getItem('access')
+const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
   method: "GET",
   headers: {
     Authorization: `Bearer ${accessToken}`,
   },
 })
-if(response.status===401){throw new Error('Нужна авторизация')}
+ if(response.status===401){throw new Error('Нужна авторизация')}
 
 const newData = await response.json()
 newData.forEach((el, index)=> {
@@ -99,32 +96,34 @@ newData.forEach((el, index)=> {
       console.log(el.id_old)
       el.id =index+8;
       console.log(el.id)
-    }).catch((error)=>{alert (error.message)})
+    })
+   
 
 let data = newData
 
 return data
 
               
-                }
+ }
 
-// export async function addMyTracks(id){
+export async function addMyTracks(id){
       
-// const accessToken = localStorage.getItem('access')
+const accessToken = localStorage.getItem('access')
         
         
-//                     const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+                    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
           
-//                     method: "POST",
-//                     headers: {
-//             Authorization: `Bearer ${accessToken}`,
-//           },
-//         })
+                    method: "POST",
+                    headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+           if (response.status===401){throw new Error('server error Необходима авторизация')}
+
+           const data = await response.json()
            
-//            const data = await response.json()
-           
-//            return data           
-//                         }
+           return data           
+                        }
 
 
 

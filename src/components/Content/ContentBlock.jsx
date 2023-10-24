@@ -4,7 +4,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useContext, useEffect, useState } from "react";
 import * as S from "./ContentStyle.js";
-import { addMyTracks, getTracks } from "../../api";
+import { addMyTracks, delMyTracks, getTracks } from "../../api";
 
 import { UserContext } from "../../App"
 //redux
@@ -41,6 +41,7 @@ let tracks = [
 export function Content({playerOn, setPlayerOn }) {
   const [contentVisible, setContentVisible] = useState(false);
   const [liked, setLiked] = useState(null);
+  const [error, setError]=useState(null)
   const user = useContext(UserContext)
   
   
@@ -71,10 +72,16 @@ export function Content({playerOn, setPlayerOn }) {
         
   }
 function renderLikes(id){
-  dispatch(likeTrackRedux(id)).then((data)=>{return data}).then(()=>renderTracks()
-
-  )
+  addMyTracks(id).then(()=>renderTracks()
+  ).catch((err)=>{  setError(err.message)
+  })
 }
+function renderDisLikes(id){
+  delMyTracks(id).then(()=>renderTracks()
+  ).catch((err)=>{ setError(err.message)
+  })
+}
+
 
 function renderTracks(){
   
@@ -108,8 +115,9 @@ function renderTracks(){
 
   return (
     <S.CentralBlockContent>
-      {err&&<h2 style={{color:'red',
-    alignSelf:'center'}}>{err}</h2>}
+      
+      {error&&<h2 style={{color:'red',
+    alignSelf:'center'}}>{error} для простановки лайков</h2>}
       <S.CentralBlock_playlistTitle>
         
         <S.PlaylistTitleCol01>Трек</S.PlaylistTitleCol01>
@@ -213,7 +221,7 @@ function renderTracks(){
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg  onClick={()=>{ renderLikes(track.id)
+                    <S.Track__timeSvg  onClick={()=>{likes(track)!==track.id? renderLikes(track.id):renderDisLikes(track.id)
                       // dispatch(likeTrackRedux(track.id));
                       console.log('ADD CLICK')}}  alt="time">            
                     

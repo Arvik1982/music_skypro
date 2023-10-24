@@ -20,7 +20,9 @@ import { setTrackRedux, setMyTracksRedux,likeTrackRedux } from "../../store/redu
 
 let errorText = null;
 let href;
-let tracks = [
+let tracks=
+
+[
   { id: "1" },
   { id: "2" },
   { id: "3" },
@@ -43,26 +45,50 @@ let tracks = [
   { id: "20" },
   { id: "21" },
 ];
+
 export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName}) {
   const [contentVisible, setContentVisible] = useState(false);
-
+  const [change, setChange] = useState(null);
   
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
   const dispatch=useDispatch();
+
+  async function  toggleLike(id){
+    await delMyTracks(id);
+    const updatedTracks = await getMyTracks()
+      errorText = null;
+      tracks=updatedTracks;
+      setContentVisible(true);
+      console.log(tracks)
+      // dispatch(setMyTracksRedux({data}))
+      // return tracks
+      ;}
+
+    // } catch (error) {console.log(error.message)
+      // errorText = error.message;
+      // setContentVisible(true);
+      // tracksMy = [];
+      // return errorText;
+    // }
+     
+    
+  //  }
   
   useEffect(() => {
     setListName('Мои треки')
 
-   
+   console.log('useeff')
     getMyTracks()
       .then((data) => {
         errorText = null;
         tracks=data;
         setContentVisible(true);
         console.log(tracks)
-        dispatch(setMyTracksRedux({data}))
+        dispatch(setMyTracksRedux({data,
+          // tracksMy
+        }))
         return tracks;
       })
       .catch((error) => {
@@ -73,27 +99,11 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
       })
   }, []);
 
- function renderList(id){
-  delMyTracks(id).then((data)=>getMyTracks().then((data) => {
-    errorText = null;
-    tracks=data;
-    setContentVisible(true);
-    console.log(tracks)
-    dispatch(setMyTracksRedux({data}))
-    return tracks;
-  }) .catch((error) => {
-    errorText = error.message;
-    setContentVisible(true);
-    tracks = [];
-    return errorText;
-  })
-   
-  )
- }
+
 
   return (
 
-    <S.Wrapper>
+    <S.Wrapper >
       
     <S.Container>
     
@@ -132,7 +142,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
                 onClick={(e) => {
                   e.preventDefault();
                   setPlayerOn('');
-                  dispatch(setTrackRedux({track,tracks}))
+                  dispatch(setTrackRedux({track}))
                   
 
                 }}
@@ -205,7 +215,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg onClick={()=>{renderList(track.id_old);console.log(track.id_old)}}  alt="time">
+                    <S.Track__timeSvg onClick={()=>{toggleLike(track.id_old);console.log(track.id_old)}}  alt="time">
                                              
                                                                                                         {/* FAVORITES */}
                       <use href={`${sprite}#icon-like-liked`} />

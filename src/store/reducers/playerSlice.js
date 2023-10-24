@@ -42,15 +42,17 @@ export const likeTrackRedux = createAsyncThunk(
         headers: {
         Authorization: `Bearer ${accessToken}`,
 },
-});
-  
+})
+  console.log(response)
       if (!response.ok){
           
           throw new Error('server error Необходима авторизация')
       
       }
+// const data = await response.json()
+// console.log(data.detail)
+// return data
 
-      // получить список всех треков и отправить в стейт
 
   } catch (error) {return rejectWithValue(error.message)
       
