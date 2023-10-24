@@ -10,7 +10,7 @@ import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux,setTrackIdRedux,setLikedStatusRedux,setTrackIsLiked,likeTrackRedux } from "../../store/reducers/playerSlice";
+import { setTrackRedux,getAllTracksRedux,likeTrackRedux } from "../../store/reducers/playerSlice";
 
 
 let errorText = null;
@@ -47,8 +47,8 @@ export function Content({playerOn, setPlayerOn }) {
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
-  const status= useSelector(state=>state.status)
-
+  const status= useSelector(state=>state.track.status)
+  const err= useSelector(state=>state.track.error)
   
   const dispatch=useDispatch();
   
@@ -63,13 +63,18 @@ export function Content({playerOn, setPlayerOn }) {
               
        if (likName === un[0])     
         {
-          console.log(track.id)
+          
           return track.id
           
         }
          }
         
   }
+function renderLikes(id){
+  dispatch(likeTrackRedux(id)).then((data)=>{return data}).then(()=>renderTracks()
+
+  )
+}
 
 function renderTracks(){
   
@@ -94,18 +99,24 @@ function renderTracks(){
 
 
   useEffect(() => {
-    console.log('USE EFF')
-renderTracks()}, []);
+
+    
+ renderTracks()
+}, []);
 
 
 
   return (
-    <S.CentralBlockContent key={status}>
+    <S.CentralBlockContent>
+      {err&&<h2 style={{color:'red',
+    alignSelf:'center'}}>{err}</h2>}
       <S.CentralBlock_playlistTitle>
+        
         <S.PlaylistTitleCol01>Трек</S.PlaylistTitleCol01>
         <S.PlaylistTitleCol02>ИСПОЛНИТЕЛЬ</S.PlaylistTitleCol02>
         <S.PlaylistTitleCol03>АЛЬБОМ</S.PlaylistTitleCol03>
         <S.PlaylistTitleCol04>
+        
           <S.Playlist__titleSvg alt="time">
             <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
           </S.Playlist__titleSvg>
@@ -202,12 +213,15 @@ renderTracks()}, []);
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg  onClick={()=>{dispatch(likeTrackRedux(track.id));console.log('ADD CLICK')}}  alt="time">            
+                    <S.Track__timeSvg  onClick={()=>{ renderLikes(track.id)
+                      // dispatch(likeTrackRedux(track.id));
+                      console.log('ADD CLICK')}}  alt="time">            
                     
                                                                                                                        {/* LIKES */}
                                                                                                               
                       <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      <use  href={ likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                      <use  href={ 
+                        likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
                         // likes(track)&&`${sprite}#icon-like-liked`
                         } />
                     </S.Track__timeSvg>

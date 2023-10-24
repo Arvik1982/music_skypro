@@ -15,12 +15,7 @@ el.id =index+8})
 
 let data = newData
 
-    
-
-
-
     return data
-
 
 }
 
@@ -96,7 +91,7 @@ export async function getMyTracks(){
     Authorization: `Bearer ${accessToken}`,
   },
 })
-
+if(response.status===401){throw new Error('Нужна авторизация')}
 
 const newData = await response.json()
 newData.forEach((el, index)=> {
@@ -104,7 +99,7 @@ newData.forEach((el, index)=> {
       console.log(el.id_old)
       el.id =index+8;
       console.log(el.id)
-    })
+    }).catch((error)=>{alert (error.message)})
 
 let data = newData
 

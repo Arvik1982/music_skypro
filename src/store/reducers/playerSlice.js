@@ -1,6 +1,33 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
+export const getAllTracksRedux = createAsyncThunk(
+  'player/getAllTracksRedux',
+  async function(_,{rejectWithValue}){
+
+    try {
+
+      const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/');
+  
+      if (!response.ok){
+          
+          throw new Error('server error getAllTracksRedux ')
+      
+      }
+const newData = await response.json()
+newData.forEach((el, index)=> {
+el.id =index+8})
+let data = newData
+
+return data
+
+} catch (error) {return rejectWithValue(error.message)
+      
+  }
+
+
+  })
+
 export const likeTrackRedux = createAsyncThunk(
   'player/likeTrackRedux',
   async function(id,{rejectWithValue,dispatch}){
@@ -19,7 +46,7 @@ export const likeTrackRedux = createAsyncThunk(
   
       if (!response.ok){
           
-          throw new Error('server error')
+          throw new Error('server error Необходима авторизация')
       
       }
 
@@ -54,9 +81,9 @@ const playerSlice = createSlice({
   extraReducers:{
 [likeTrackRedux.pending]:(state,action)=>{state.status='loading'; state.error=null;}, //pending загрузка
 [likeTrackRedux.fulfilled]:(state,action)=>{state.status='resolved';}, //fulfilled получены данные
-[likeTrackRedux.rejected]:(state,action) =>{state.status='rejected';state.error=action.payload} //rejected ошибка
-  }
-  ,
+[likeTrackRedux.rejected]:(state,action) =>{state.status='rejected';state.error=action.payload}, //rejected ошибка
+[getAllTracksRedux.fulfilled]:(state,action)=>{state.status='resolved';state.tracks=action.payload; console.log(state.tracks)} //fulfilled получены данные
+  },
   reducers: {
     setTrackRedux(state, action) {
       state.activeTrack = action.payload.track;
