@@ -1,5 +1,38 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+
+export const likeTrackRedux = createAsyncThunk(
+  'player/likeTrackRedux',
+  async function(id,{rejectWithValue,dispatch}){
+    const accessToken = localStorage.getItem('access')
+
+    try {
+
+      const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`,
+      {
+          
+        method: "POST",
+        headers: {
+        Authorization: `Bearer ${accessToken}`,
+},
+});
+  
+      if (!response.ok){
+          
+          throw new Error('server error')
+      
+      }
+
+      // получить список всех треков и отправить в стейт
+
+  } catch (error) {return rejectWithValue(error.message)
+      
+  }
+
+
+  }
+
+)
 
 const playerSlice = createSlice({
   name: "player",
@@ -14,8 +47,16 @@ const playerSlice = createSlice({
     playerOn: false,
     shuffle: false,
     repeat: false,
-    trackIsLiked: false,
+    // trackIsLiked: false,
+    status:null,
+    error:null
   },
+  extraReducers:{
+[likeTrackRedux.pending]:(state,action)=>{state.status='loading'; state.error=null;}, //pending загрузка
+[likeTrackRedux.fulfilled]:(state,action)=>{state.status='resolved';}, //fulfilled получены данные
+[likeTrackRedux.rejected]:(state,action) =>{state.status='rejected';state.error=action.payload} //rejected ошибка
+  }
+  ,
   reducers: {
     setTrackRedux(state, action) {
       state.activeTrack = action.payload.track;
@@ -24,6 +65,15 @@ const playerSlice = createSlice({
       console.log(state.tracks);
 
       console.log(state.myTracks);
+    },
+
+    setTracksRedux(state, action) {
+      
+      state.tracks = action.payload.tracks;
+      
+      console.log(state.tracks);
+
+     
     },
 
     setNextRedux(state, action) {
@@ -63,7 +113,7 @@ const playerSlice = createSlice({
         Math.round((state.trackTime - state.trackProgressTime) * 100) / 100;
 
       if ((deltaTime <= 1) & (state.repeat === false)) {
-        console.log("repeat true");
+        
 
         if (next - state.tracks.length === 0) {
           state.activeTrack =
@@ -71,10 +121,10 @@ const playerSlice = createSlice({
           console.log(state.activeTrack);
         } else {
           if (state.repeat === true) {
-            console.log("trrru");
+            
             state.activeTrack = state.activeTrack;
           } else {
-            console.log("????");
+            
             state.activeTrack = state.tracks[next];
           }
         }
@@ -118,13 +168,9 @@ const playerSlice = createSlice({
 
     setMyTracksRedux(state, action) {
       state.myTracks = action.payload.data;
-
       console.log(state.myTracks);
     },
-    setTrackIsLiked(state) {
-      state.trackIsLiked = true;
-      console.log("SET LIKED");
-    },
+    
   },
 });
 
@@ -142,6 +188,7 @@ export const {
   setMyTracksRedux,
   setLikedStatusRedux,
   setTrackIsLiked,
+  setTracksRedux
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

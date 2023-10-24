@@ -12,25 +12,9 @@ if(!response.ok)   {
 const newData = await response.json()
 newData.forEach((el, index)=> {
 el.id =index+8})
-let staredUser ='user'
+
 let data = newData
-console.log(data)
-// for (let index = 0; index < data.length; index++) {
-//    for (let index_user = 0; index_user < data[index].stared_user.length; index_user++) {
 
-
-//     // console.log(data[index].stared_user[index_user].username) 
-    
-//     let userName = 'user';
-//     if (data[index].stared_user[index_user].username==='test@test.test')
-    
-//      {console.log('TRUE') }
-//      else{console.log('FALSE')}
-//    }
-
-
-
-// }
     
 
 
@@ -129,23 +113,26 @@ return data
               
                 }
 
-export async function addMyTracks(id){
+// export async function addMyTracks(id){
       
-                    const accessToken = localStorage.getItem('access')
+// const accessToken = localStorage.getItem('access')
         
         
-                    const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
+//                     const response = await fetch(`https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`, {
           
-                    method: "POST",
-                    headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
+//                     method: "POST",
+//                     headers: {
+//             Authorization: `Bearer ${accessToken}`,
+//           },
+//         })
            
-           const data = await response.json()
+//            const data = await response.json()
            
-           return data           
-                        }
+//            return data           
+//                         }
+
+
+
 
 export async function delMyTracks(id_old){
    

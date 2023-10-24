@@ -15,7 +15,7 @@ import { Sidebar } from "../../components/Sidebar/SideBar";
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux, setMyTracksRedux } from "../../store/reducers/playerSlice";
+import { setTrackRedux, setMyTracksRedux,likeTrackRedux } from "../../store/reducers/playerSlice";
 
 
 let errorText = null;
@@ -45,20 +45,13 @@ let tracks = [
 ];
 export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName}) {
   const [contentVisible, setContentVisible] = useState(false);
- 
-  
-  console.log(playerOn)
+
   
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
-  const myTracksRedux = useSelector(state=>state.track.myTracks)
-
-console.log(playerOn)
-  // console.log(activeTrackRedux)
   const dispatch=useDispatch();
-  // console.log(activeTrackRedux[1].currentTrack)
-
+  
   useEffect(() => {
     setListName('Мои треки')
 
@@ -77,16 +70,26 @@ console.log(playerOn)
         setContentVisible(true);
         tracks = [];
         return errorText;
-      }).then((data)=>{
-
-
-      });
+      })
   }, []);
 
-  // const [contentVisible, setContentVisible] = useState(false);
-  // setTimeout(() => {
-  // setContentVisible(true);
-  // }, 1000);
+ function renderList(id){
+  delMyTracks(id).then((data)=>getMyTracks().then((data) => {
+    errorText = null;
+    tracks=data;
+    setContentVisible(true);
+    console.log(tracks)
+    dispatch(setMyTracksRedux({data}))
+    return tracks;
+  }) .catch((error) => {
+    errorText = error.message;
+    setContentVisible(true);
+    tracks = [];
+    return errorText;
+  })
+   
+  )
+ }
 
   return (
 
@@ -135,6 +138,7 @@ console.log(playerOn)
                 }}
               >
                 <S.Track__title>
+                  {errorText&&<h2>ERROR_{errorText}</h2>}
                   <S.Track__titleImage >
                     {contentVisible ? (<>
                     
@@ -201,7 +205,7 @@ console.log(playerOn)
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg onClick={()=>delMyTracks(track.id_old)}  alt="time">
+                    <S.Track__timeSvg onClick={()=>{renderList(track.id_old);console.log(track.id_old)}}  alt="time">
                                              
                                                                                                         {/* FAVORITES */}
                       <use href={`${sprite}#icon-like-liked`} />

@@ -10,7 +10,7 @@ import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux,setTrackIdRedux,setLikedStatusRedux,setTrackIsLiked } from "../../store/reducers/playerSlice";
+import { setTrackRedux,setTrackIdRedux,setLikedStatusRedux,setTrackIsLiked,likeTrackRedux } from "../../store/reducers/playerSlice";
 
 
 let errorText = null;
@@ -47,7 +47,7 @@ export function Content({playerOn, setPlayerOn }) {
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
-  const setTrackIsLikedRedux = useSelector(state=>state.setTrackIsLiked)
+  const status= useSelector(state=>state.status)
 
   
   const dispatch=useDispatch();
@@ -100,7 +100,7 @@ renderTracks()}, []);
 
 
   return (
-    <S.CentralBlockContent>
+    <S.CentralBlockContent key={status}>
       <S.CentralBlock_playlistTitle>
         <S.PlaylistTitleCol01>Трек</S.PlaylistTitleCol01>
         <S.PlaylistTitleCol02>ИСПОЛНИТЕЛЬ</S.PlaylistTitleCol02>
@@ -202,7 +202,7 @@ renderTracks()}, []);
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg  onClick={()=>{addMyTracks(track.id);console.log('ADD CLICK')}}  alt="time">            
+                    <S.Track__timeSvg  onClick={()=>{dispatch(likeTrackRedux(track.id));console.log('ADD CLICK')}}  alt="time">            
                     
                                                                                                                        {/* LIKES */}
                                                                                                               
