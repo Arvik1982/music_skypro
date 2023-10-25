@@ -11,45 +11,70 @@ import { UserContext } from "../../App"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setTrackRedux,getAllTracksRedux,likeTrackRedux } from "../../store/reducers/playerSlice";
+import { useNavigate } from "react-router-dom";
 
 
 let errorText = null;
 let liked=false;
-let tracks = [
-  { id: "1" },
-  { id: "2" },
-  { id: "3" },
-  { id: "4" },
-  { id: "5" },
-  { id: "6" },
-  { id: "7" },
-  { id: "8" },
-  { id: "9" },
-  { id: "10" },
-  { id: "11" },
-  { id: "12" },
-  { id: "13" },
-  { id: "14" },
-  { id: "15" },
-  { id: "16" },
-  { id: "17" },
-  { id: "18" },
-  { id: "19" },
-  { id: "20" },
-  { id: "21" },
-];
-export function Content({playerOn, setPlayerOn }) {
+// let tracks = [
+//   { id: "1" },
+//   { id: "2" },
+//   { id: "3" },
+//   { id: "4" },
+//   { id: "5" },
+//   { id: "6" },
+//   { id: "7" },
+//   { id: "8" },
+//   { id: "9" },
+//   { id: "10" },
+//   { id: "11" },
+//   { id: "12" },
+//   { id: "13" },
+//   { id: "14" },
+//   { id: "15" },
+//   { id: "16" },
+//   { id: "17" },
+//   { id: "18" },
+//   { id: "19" },
+//   { id: "20" },
+//   { id: "21" },
+// ];
+export function Content({playerOn, setPlayerOn,user, setUser }) {
   const [contentVisible, setContentVisible] = useState(false);
-  const [liked, setLiked] = useState(null);
+  // const [liked, setLiked] = useState(null);
   const [error, setError]=useState(null)
-  const user = useContext(UserContext)
-  
+  const userName = useContext(UserContext)
+  const navigate=useNavigate()
+  const [tracks,setTracks]= useState([
+    { id: "1" },
+    { id: "2" },
+    { id: "3" },
+    { id: "4" },
+    { id: "5" },
+    { id: "6" },
+    { id: "7" },
+    { id: "8" },
+    { id: "9" },
+    { id: "10" },
+    { id: "11" },
+    { id: "12" },
+    { id: "13" },
+    { id: "14" },
+    { id: "15" },
+    { id: "16" },
+    { id: "17" },
+    { id: "18" },
+    { id: "19" },
+    { id: "20" },
+    { id: "21" },])
+
+
   
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
-  const status= useSelector(state=>state.track.status)
-  const err= useSelector(state=>state.track.error)
+  // const status= useSelector(state=>state.track.status)
+  // const err= useSelector(state=>state.track.error)
   
   const dispatch=useDispatch();
   
@@ -59,7 +84,7 @@ export function Content({playerOn, setPlayerOn }) {
       for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
    let likName =track.stared_user[index_user].username
   
-   let un=user
+   let un=userName
   
               
        if (likName === un[0])     
@@ -73,12 +98,15 @@ export function Content({playerOn, setPlayerOn }) {
   }
 function renderLikes(id){
   addMyTracks(id).then(()=>renderTracks()
-  ).catch((err)=>{  setError(err.message)
+  ).catch((err)=>{
+  // localStorage.removeItem('userName');
+  setError(err.message);
+  setTimeout(()=>navigate("/login",{replace:true}),2000)
   })
 }
 function renderDisLikes(id){
   delMyTracks(id).then(()=>renderTracks()
-  ).catch((err)=>{ setError(err.message)
+  ).catch((err)=>{setError(err.message); 
   })
 }
 
@@ -88,18 +116,19 @@ function renderTracks(){
   getTracks()
     .then((data) => {
       errorText = null;
-      tracks = data;
+      setTracks(data);
       setContentVisible(true);
-      
-      console.log('GET TRACKS')
-      
       return tracks;
       
     })
     .catch((error) => {
       errorText = error.message;
       setContentVisible(true);
-      tracks = [];
+      setTracks([]);
+      localStorage.removeItem('userName')
+      // setUser(false);
+      // console.log('REDIRECT /')
+      // navigate("/",{replace:true})
       return errorText;
     })
 }  

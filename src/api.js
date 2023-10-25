@@ -107,7 +107,7 @@ return data
  }
 
 export async function addMyTracks(id){
-      
+     console.log('add my tracks') 
 const accessToken = localStorage.getItem('access')
         
         

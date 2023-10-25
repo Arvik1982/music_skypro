@@ -6,7 +6,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import React, { useEffect, useState } from "react";
 import * as S from "./favoritesStyle";
 import { delMyTracks, getMyTracks, getTracks } from "../../api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "../../components/Navmenu/NavMenu";
 import { Search } from "../../components/Search/Search";
 import { Tracks } from "../../components/Tracs/tracs";
@@ -19,36 +19,12 @@ import { setTrackRedux, setMyTracksRedux,likeTrackRedux } from "../../store/redu
 
 
 let errorText = null;
-let href;
-// let tracks=
-
-// [
-//   { id: "1" },
-//   { id: "2" },
-//   { id: "3" },
-//   { id: "4" },
-//   { id: "5" },
-//   { id: "6" },
-//   { id: "7" },
-//   { id: "8" },
-//   { id: "9" },
-//   { id: "10" },
-//   { id: "11" },
-//   { id: "12" },
-//   { id: "13" },
-//   { id: "14" },
-//   { id: "15" },
-//   { id: "16" },
-//   { id: "17" },
-//   { id: "18" },
-//   { id: "19" },
-//   { id: "20" },
-//   { id: "21" },
-// ];
+// let href;
 
 export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName}) {
   const [contentVisible, setContentVisible] = useState(false);
-  const [change, setChange] = useState(null);
+  
+  const navigate=useNavigate()
   const [tracks,setTracks]= useState([
     { id: "1" },
     { id: "2" },
@@ -59,6 +35,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
   const dispatch=useDispatch();
 
   async function  toggleLike(id){
+    try{
     await delMyTracks(id);
     const updatedTracks = await getMyTracks()
       errorText = null;
@@ -69,15 +46,16 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
       return tracks
       ;}
 
-    // } catch (error) {console.log(error.message)
-      // errorText = error.message;
-      // setContentVisible(true);
-      // tracksMy = [];
-      // return errorText;
-    // }
-     
-    
-  //  }
+
+      catch (error) {
+        errorText=error.message
+        setTimeout(()=>navigate("/login",{replace:true}),1000)
+        return errorText
+      
+      }}
+
+
+   
   
   useEffect(() => {
     setListName('Мои треки')
@@ -89,15 +67,14 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
         setTracks(data);
         setContentVisible(true);
         console.log(tracks)
-        dispatch(setMyTracksRedux({data,
-           tracks
-        }))
-        return tracks;
+        dispatch(setMyTracksRedux({tracks}))
+        // return tracks;
       })
       .catch((error) => {
         errorText = error.message;
         setContentVisible(true);
         setTracks ([]) ;
+        setTimeout(()=>navigate("/login",{replace:true}),2000)
         return errorText;
       })
   }, []);
@@ -131,7 +108,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
         <div style={{ color: "red" }}>
           <h1>
             {errorText !== null
-              ? `Ошибка: ${errorText}, попробуйте позже`
+              ? `Ошибка: ${errorText}`
               : null}
           </h1>
         </div>
@@ -145,7 +122,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
                 onClick={(e) => {
                   e.preventDefault();
                   setPlayerOn('');
-                  dispatch(setTrackRedux({track}))
+                  dispatch(setTrackRedux({track,tracks}))
                   
 
                 }}
@@ -218,7 +195,9 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg onClick={()=>{toggleLike(track.id_old);console.log(track.id_old)}}  alt="time">
+                    <S.Track__timeSvg 
+                    onClick={()=>{toggleLike(track.id_old);console.log(track.id_old)}}  
+                    alt="time">
                                              
                                                                                                         {/* FAVORITES */}
                       <use href={`${sprite}#icon-like-liked`} />

@@ -91,8 +91,8 @@ const playerSlice = createSlice({
       state.activeTrack = action.payload.track;
       state.tracks = action.payload.tracks;
       state.tempTracks = action.payload.tracks;
+      
       console.log(state.tracks);
-
       console.log(state.myTracks);
     },
 
