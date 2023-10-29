@@ -97,6 +97,7 @@ export function App() {
   const [userPass, setUserPass]=useState(null)
   const [isLoginMode, setIsLoginMode]=useState(true)
   const [listName, setListName]=useState('Tracks')
+  const [tracks, setTracks] =useState([{ id: "1" }])
   
   let userLoginName= localStorage.getItem('userName')
   let textName= 'Имя пользователя:'
@@ -106,7 +107,12 @@ export function App() {
     <div className="App">
     <UserContext.Provider value={arrNameUser}>
     
-      <AppRoutes listName={listName} setListName={setListName} isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
+      <AppRoutes
+       tracks={tracks} setTracks={setTracks} 
+       
+       
+       
+       listName={listName} setListName={setListName} isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
       <Player playerVisibility = {playerOn} 
       // activeTrack={activeTrack}
       />

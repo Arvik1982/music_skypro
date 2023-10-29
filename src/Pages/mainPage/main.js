@@ -10,7 +10,7 @@ import * as S from "../../StyleApp";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
-export function MainPage({setUser, playerOn, setPlayerOn,user,listName, setListName}) {
+export function MainPage({setUser, playerOn, setPlayerOn,user,listName, setListName, tracks, setTracks}) {
 
 const [activeTrack, setActiveTrack]=useState([])
 
@@ -29,10 +29,10 @@ useEffect(() => {
           
             <Nav setUser={setUser} setPlayerOn={setPlayerOn} />
             <S.MainCenterBlock>
-              <Search />
+              <Search  tracks={tracks} setTracks={setTracks}  />
               <Tracks listName={listName} setListName={setListName} />
               <Filter />
-              <Content activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
+              <Content  tracks={tracks} setTracks={setTracks}  activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
             </S.MainCenterBlock>
             <Sidebar user={user} />
           </S.Main>

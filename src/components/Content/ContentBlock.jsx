@@ -1,81 +1,30 @@
 import sprite from "./sprite.svg";
-
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useContext, useEffect, useState } from "react";
 import * as S from "./ContentStyle.js";
 import { addMyTracks, delMyTracks, getTracks } from "../../api";
-
 import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux,getAllTracksRedux,likeTrackRedux } from "../../store/reducers/playerSlice";
+import { setTrackRedux,setTracksRedux } from "../../store/reducers/playerSlice";
 import { useNavigate } from "react-router-dom";
 
 
 let errorText = null;
 let liked=false;
-// let tracks = [
-//   { id: "1" },
-//   { id: "2" },
-//   { id: "3" },
-//   { id: "4" },
-//   { id: "5" },
-//   { id: "6" },
-//   { id: "7" },
-//   { id: "8" },
-//   { id: "9" },
-//   { id: "10" },
-//   { id: "11" },
-//   { id: "12" },
-//   { id: "13" },
-//   { id: "14" },
-//   { id: "15" },
-//   { id: "16" },
-//   { id: "17" },
-//   { id: "18" },
-//   { id: "19" },
-//   { id: "20" },
-//   { id: "21" },
-// ];
-export function Content({playerOn, setPlayerOn,user, setUser }) {
+
+export function Content({playerOn, setPlayerOn,user, setUser, tracks, setTracks}) {
   const [contentVisible, setContentVisible] = useState(false);
-  // const [liked, setLiked] = useState(null);
   const [error, setError]=useState(null)
   const userName = useContext(UserContext)
   const navigate=useNavigate()
-  const [tracks,setTracks]= useState([
-    { id: "1" },
-    { id: "2" },
-    { id: "3" },
-    { id: "4" },
-    { id: "5" },
-    { id: "6" },
-    { id: "7" },
-    { id: "8" },
-    { id: "9" },
-    { id: "10" },
-    { id: "11" },
-    { id: "12" },
-    { id: "13" },
-    { id: "14" },
-    { id: "15" },
-    { id: "16" },
-    { id: "17" },
-    { id: "18" },
-    { id: "19" },
-    { id: "20" },
-    { id: "21" },])
-
-
   
+ 
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
-  // const status= useSelector(state=>state.track.status)
-  // const err= useSelector(state=>state.track.error)
-  
   const dispatch=useDispatch();
   
 
@@ -117,6 +66,7 @@ function renderTracks(){
     .then((data) => {
       errorText = null;
       setTracks(data);
+      dispatch(setTracksRedux(data));
       setContentVisible(true);
       return tracks;
       
@@ -135,8 +85,7 @@ function renderTracks(){
 
 
   useEffect(() => {
-
-    
+ 
  renderTracks()
 }, []);
 

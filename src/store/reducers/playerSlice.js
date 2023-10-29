@@ -78,7 +78,9 @@ const playerSlice = createSlice({
     repeat: false,
     // trackIsLiked: false,
     status:null,
-    error:null
+    error:null,
+    searchResults:[],
+    searchBase:[]
   },
   extraReducers:{
 [likeTrackRedux.pending]:(state,action)=>{state.status='loading'; state.error=null;}, //pending загрузка
@@ -87,6 +89,14 @@ const playerSlice = createSlice({
 [getAllTracksRedux.fulfilled]:(state,action)=>{state.status='resolved';state.tracks=action.payload; console.log(state.tracks)} //fulfilled получены данные
   },
   reducers: {
+setSearchResults(state, action){
+  state.searchResults = action.payload
+  state.tracks = action.payload
+  console.log(state.searchResults);
+  console.log(state.tracks)
+
+},
+
     setTrackRedux(state, action) {
       state.activeTrack = action.payload.track;
       state.tracks = action.payload.tracks;
@@ -98,9 +108,9 @@ const playerSlice = createSlice({
 
     setTracksRedux(state, action) {
       
-      state.tracks = action.payload.tracks;
-      
-      console.log(state.tracks);
+      state.tracks = action.payload
+      state.searchBase = action.payload;
+      console.log(state.searchBase);
 
      
     },
@@ -196,7 +206,7 @@ const playerSlice = createSlice({
     },
 
     setMyTracksRedux(state, action) {
-      state.myTracks = action.payload.data;
+      state.myTracks = action.payload;
       console.log(state.myTracks);
     },
     
@@ -217,7 +227,8 @@ export const {
   setMyTracksRedux,
   setLikedStatusRedux,
   setTrackIsLiked,
-  setTracksRedux
+  setTracksRedux,
+  setSearchResults
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

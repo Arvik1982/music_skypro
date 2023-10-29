@@ -5,7 +5,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useEffect, useState } from "react";
 import * as S from "./favoritesStyle";
-import { delMyTracks, getMyTracks, getTracks } from "../../api";
+import { delMyTracks, getMyTracks, getTracks, refreshToken } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
 import { Nav } from "../../components/Navmenu/NavMenu";
 import { Search } from "../../components/Search/Search";
@@ -15,23 +15,30 @@ import { Sidebar } from "../../components/Sidebar/SideBar";
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux, setMyTracksRedux,likeTrackRedux } from "../../store/reducers/playerSlice";
+import { setTracksRedux,setTrackRedux, setMyTracksRedux,likeTrackRedux } from "../../store/reducers/playerSlice";
 
 
 let errorText = null;
 // let href;
 
-export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName}) {
+export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName,
+  //  tracks, setTracks
+  
+  }) {
   const [contentVisible, setContentVisible] = useState(false);
   
   const navigate=useNavigate()
+
   const [tracks,setTracks]= useState([
     { id: "1" },
     { id: "2" },
-    { id: "3" }])
+    { id: "3" }
+  ])
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
+  const myTracks = useSelector(state=>state.track.myTracks)
+  console. log(myTracks)
   const dispatch=useDispatch();
 
   async function  toggleLike(id){
@@ -42,7 +49,8 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
       setTracks(updatedTracks);
       setContentVisible(true);
       console.log(tracks)
-      dispatch(setMyTracksRedux({tracks}))
+      
+      dispatch(setMyTracksRedux(updatedTracks))
       return tracks
       ;}
 
@@ -60,21 +68,39 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
   useEffect(() => {
     setListName('Мои треки')
 
+    //dispatch(setTracksRedux(tracks))
+
    console.log('useeff')
     getMyTracks()
       .then((data) => {
         errorText = null;
-        setTracks(data);
+        console.log(data)
+        
         setContentVisible(true);
         console.log(tracks)
-        dispatch(setMyTracksRedux({tracks}))
+        dispatch(setTracksRedux(data))
+        dispatch(setMyTracksRedux(data))
+        setTracks(data);
         // return tracks;
       })
       .catch((error) => {
         errorText = error.message;
         setContentVisible(true);
         setTracks ([]) ;
-        setTimeout(()=>navigate("/login",{replace:true}),2000)
+        refreshToken().then(()=>{
+          getMyTracks()
+          .then((data) => {
+            errorText = null;
+            setTracks(data);
+            setContentVisible(true);
+            console.log(tracks)
+            dispatch(setMyTracksRedux({tracks}))
+            // return tracks;
+            setTimeout(()=>navigate("/favorites",{replace:true}),2000)
+          })
+
+        })
+        
         return errorText;
       })
   }, []);
@@ -113,7 +139,12 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
           </h1>
         </div>
 
-        {tracks.map((track, index) => {
+        {
+        
+        myTracks
+        
+        // tracks
+        .map((track, index) => {
           return (
             <S.Playlist__item   key={index} >
               {/* block start */}
