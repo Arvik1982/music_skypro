@@ -34,7 +34,7 @@ export async function getSelectionTracks(){
   el.id =index+8})
   
   let data = newData
-  
+  // console.log(data)
       return data
   
   }
@@ -77,11 +77,12 @@ export async function login(email,password){
     }).catch((error)=>{alert(error.message)})
 
     getToken(email,password) .then((response)=>{ let data = response.json(); return data})
-    .then((data)=>{console.log(data)
+    .then((data)=>{
+      // console.log(data)
       localStorage.setItem('access',data.access)
       localStorage.setItem('refresh',data.refresh)
       refresh = localStorage.getItem('refresh')
-      console.log(refresh)
+      // console.log(refresh)
 
       
    
@@ -107,7 +108,7 @@ export async function getToken (email,password){
        return response
  }
 
-export async function getMyTracks(){
+export async function getMyTracks(username){
 const accessToken = localStorage.getItem('access')
 const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
   method: "GET",
@@ -115,10 +116,11 @@ const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track
     Authorization: `Bearer ${accessToken}`,
   },
 })
- if(response.status===401){throw new Error('Нужна авторизация')}
+ if(response.status===401){throw new Error('Нужна авторизация2')}
 
 const newData = await response.json()
 newData.forEach((el, index)=> {
+      el.stared_user = username
       el.id_old = el.id
       console.log(el.id_old)
       el.id =index+8;
@@ -134,7 +136,7 @@ return data
  }
 
 export async function addMyTracks(id){
-     console.log('add my tracks') 
+    //  console.log('add my tracks') 
 const accessToken = localStorage.getItem('access')
         
         
@@ -176,7 +178,7 @@ export async function delMyTracks(id_old){
 
 export async function refreshToken(){
   let refreshToken = localStorage.getItem('refresh')
-  console.log(refreshToken)
+  // console.log(refreshToken)
 try {
   
 
@@ -193,7 +195,7 @@ try {
                                   const newToken= await response.json()
                                   localStorage.setItem('access',newToken.access)
                                   const newAccessToken = localStorage.getItem('access')
-                                  console.log (newAccessToken)
+                                  // console.log (newAccessToken)
                                   return newAccessToken
                                 } catch (error) {alert('требуется ввод логина и пароля')
                               }

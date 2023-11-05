@@ -76,11 +76,12 @@ const playerSlice = createSlice({
     playerOn: false,
     shuffle: false,
     repeat: false,
-    // trackIsLiked: false,
     status:null,
     error:null,
     searchResults:[],
-    searchBase:[]
+    searchBase:[],
+    categoryList:[],
+    isLiked:[]
   },
   extraReducers:{
 [likeTrackRedux.pending]:(state,action)=>{state.status='loading'; state.error=null;}, //pending загрузка
@@ -89,28 +90,48 @@ const playerSlice = createSlice({
 [getAllTracksRedux.fulfilled]:(state,action)=>{state.status='resolved';state.tracks=action.payload; console.log(state.tracks)} //fulfilled получены данные
   },
   reducers: {
+    setIsLiked(state, action){
+    
+      state.isLiked = action.payload
+      console.log(state.isLiked)    
+    },
+
+    setSearchBase(state, action){
+    
+      state.searchBase = action.payload    
+    },
+
+    setCategoryResults(state, action){
+      
+      state.categoryList = action.payload
+      state.tracks = action.payload
+      // console.log(state.categoryList);
+      // console.log(state.tracks)
+    
+    },
 setSearchResults(state, action){
   state.searchResults = action.payload
   state.tracks = action.payload
-  console.log(state.searchResults);
-  console.log(state.tracks)
+  // console.log(state.searchResults);
+  // console.log(state.tracks)
 
 },
 
     setTrackRedux(state, action) {
       state.activeTrack = action.payload.track;
+      // console.log(state.activeTrack)
       state.tracks = action.payload.tracks;
       state.tempTracks = action.payload.tracks;
       
-      console.log(state.tracks);
-      console.log(state.myTracks);
+    //  console.log(state.tracks);
+    //   console.log(state.myTracks); 
     },
 
     setTracksRedux(state, action) {
       
       state.tracks = action.payload
       state.searchBase = action.payload;
-      console.log(state.searchBase);
+      // console.log(state.searchBase);
 
      
     },
@@ -157,7 +178,7 @@ setSearchResults(state, action){
         if (next - state.tracks.length === 0) {
           state.activeTrack =
             state.tracks[state.tracks.length - state.tracks.length];
-          console.log(state.activeTrack);
+          // console.log(state.activeTrack);
         } else {
           if (state.repeat === true) {
             
@@ -171,43 +192,43 @@ setSearchResults(state, action){
     },
     setTimeRedux(state, action) {
       state.trackTime = action.payload;
-      console.log(state.trackTime);
+      // console.log(state.trackTime);
     },
 
     setShuffleRedux(state) {
       state.shuffle = true;
       state.tracks = state.tracks.sort(() => Math.random() - 0.5);
-      console.log(state.tempTracks);
+      // console.log(state.tempTracks);
     },
     setNotShuffleRedux(state) {
       state.shuffle = false;
       state.tracks = state.tempTracks;
-      console.log(state.tracks);
+      // console.log(state.tracks);
     },
 
     setOnDotRedux(state) {
       state.playerOn = true;
-      console.log(state.playerOn);
+      // console.log(state.playerOn);
     },
     setOffDotRedux(state) {
       state.playerOn = false;
-      console.log(state.playerOn);
+      // console.log(state.playerOn);
     },
     setCycleRedux(state) {
       if (state.repeat === false) {
         state.repeat = true;
         // state.tracks=[state.activeTrack]
-        console.log(state.repeat);
+        // console.log(state.repeat);
       } else {
         state.repeat = false;
         // state.tracks=state.tempTracks
-        console.log(state.repeat);
+        // console.log(state.repeat);
       }
     },
 
     setMyTracksRedux(state, action) {
       state.myTracks = action.payload;
-      console.log(state.myTracks);
+      // console.log(state.myTracks);
     },
     
   },
@@ -228,7 +249,10 @@ export const {
   setLikedStatusRedux,
   setTrackIsLiked,
   setTracksRedux,
-  setSearchResults
+  setSearchResults,
+  setCategoryResults,
+  setSearchBase,
+  setIsLiked
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

@@ -1,11 +1,13 @@
 import sprite from "./sprite.svg";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "../../img/icon/play.svg";
 import * as S from "./PlayerStyles";
-import { getTracks } from "../../api";
-
+import { getMyTracks, getTracks } from "../../api";
+import { UserContext } from "../../App"
+import { useNavigate, useParams } from "react-router-dom";
+import { addMyTracks,delMyTracks } from "../../api";
 //redux
 
 import { useSelector } from "react-redux";
@@ -18,15 +20,18 @@ import {
   setNotShuffleRedux,
   setOnDotRedux,
   setOffDotRedux,
-  setCycleRedux} from "../../store/reducers/playerSlice";
+  setCycleRedux,
+  setTrackRedux,
+  setTracksRedux,
+  setMyTracksRedux} from "../../store/reducers/playerSlice";
 import { useDispatch } from "react-redux";
 // let tracks=[]
 
 
-export function Player({playerVisibility}) {
-
+export function Player({playerVisibility, tracks, setTracks}) {
   
-
+  const[liked, setLiked] = useState()
+  const param = useParams()
   const realPlayer = useRef(null);
   const [playerOn, setPlayerOn] = useState(false);
   const [loopOn, setLoopOn] = useState(false);
@@ -34,26 +39,26 @@ export function Player({playerVisibility}) {
   const [progressOn, setProgressOn] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
   const [mix, setMixOn] = useState(false);
+  const userName = useContext(UserContext)
   
-
+  
   
  
 //redux
+const tracksRedux = useSelector(state=>state.track.tracks)
+
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-// const shuffleOn = useSelector(state=>state.track.shuffle)
-// const shuffleTracks= useSelector(state=>state.track.shuffleTracks)
-// const tracksRedux = useSelector(state=>state.track.tracks)
-// const tempTracksRedux = useSelector(state=>state.track.tempTracks)
+const isLikedRedux = useSelector(state=>state.track.isLiked)
+const myTracks = useSelector(state=>state.track.myTracks)
+console.log(myTracks)
 const dispatch=useDispatch()
-
-
-let activeTrack = activeTrackRedux
-
-// console.log(activeTrack)
-// console.log(tracksRedux)
-// console.log(tempTracksRedux)
+let activeTrack = activeTrackRedux 
+const navigate=useNavigate()
 
 useEffect(() => {
+  renderTracks()
+  likes()
+  console.log('i work');
   
   
     if(!playerOn){
@@ -85,7 +90,9 @@ useEffect(() => {
     
 }
 
-}, []);
+}, [activeTrack
+  // tracks
+]);
 
 
   const clickPlayerStart = () => {
@@ -103,10 +110,10 @@ useEffect(() => {
     realPlayer.current.loop = true;
     setLoopOn(true);
     dispatch(setCycleRedux())
-    console.log(activeTrack)
+    // console.log(activeTrack)
 
-    console.log(activeTrack.id)
-    console.log(activeTrack[0])
+    // console.log(activeTrack.id)
+    // console.log(activeTrack[0])
   };
   const clickPlayerLoopOff = () => {
     realPlayer.current.loop = false;
@@ -138,8 +145,101 @@ if(playerOn){
 // if(playerOn & pause===true ){
 //   realPlayer.current.pause();
 // }
+console.log(activeTrackRedux)
 
 
+//LIKES-START
+
+function renderLikes(id){
+  addMyTracks(id).then(()=>renderTracks()
+  ).catch((err)=>{console.log(err.message)
+  // localStorage.removeItem('userName');
+  // setError(err.message);
+  // setTimeout(()=>navigate("/login",{replace:true}),2000)
+  })
+}
+function renderDisLikes(id){
+  delMyTracks(id).then(()=>renderTracks()
+  ).catch((err)=>{console.log(err.message)
+    // setError(err.message); 
+  })
+}
+function renderTracks(){
+  
+  getTracks()
+    .then((data) => {
+      // console.log(data)
+      // errorText = null;
+      setTracks(data);
+      // console.log(tracks)
+      dispatch(setTracksRedux(data));
+      // dispatch(setMyTracksRedux(data))
+      setContentVisible(true);
+      
+      // return tracks;
+      
+    }).then(()=>{getMyTracks().then((data)=>{dispatch(setMyTracksRedux(data))})
+  
+    .catch((error) => {
+      // errorText = error.message;
+      setContentVisible(true);
+      // setTracks([]);
+      localStorage.removeItem('userName')
+      navigate("/login",{replace:true})
+      // setUser(false);
+      // console.log('REDIRECT /')
+      // navigate("/",{replace:true})
+      // return errorText;
+    })
+  
+  })
+    .catch((error) => {
+      // errorText = error.message;
+      setContentVisible(true);
+      // setTracks([]);
+      localStorage.removeItem('userName')
+      navigate("/login",{replace:true})
+      // setUser(false);
+      // console.log('REDIRECT /')
+      // navigate("/",{replace:true})
+      // return errorText;
+    })
+} 
+
+
+// function likes(track){ 
+//   console.log(track)
+//   for (let index_user = 0; index_user < track.length; index_user++) {
+// let likName =track.stared_user[index_user].username
+
+// let un=userName
+
+          
+//    if (likName === un[0])     
+//     {
+      
+//       return track.id
+      
+//     }
+    
+//      }
+    
+// }
+
+
+
+
+
+
+function likes(){ 
+console.log(activeTrack)
+console.log(myTracks)
+  let likedTrack = myTracks.find(item=>item.name===activeTrack.name)
+setLiked(Boolean(likedTrack))
+  console.log(Boolean(likedTrack))
+}
+
+//LIKES-END
   return ( 
     <S.bar style={{ visibility: `${playerVisibility}` }}>
       <S.barContent>
@@ -200,6 +300,7 @@ if(playerOn){
                       playerOn ? `${sprite}#icon-pause` : `${sprite}#icon-play`
                     }
                   />
+                  
                 </S.playerBtnPlaySvg>
               </S.playerBtnPlay>
               <S.playerBtnNext>
@@ -277,13 +378,28 @@ if(playerOn){
                 </S.playerTrackPlayAlbum>
               </S.playerTrackPlayContain>
               <S.playerTrackPlayLkeDislike>
-                <S.playerTrackPlayLke className=" _btn-icon">
-                  <S.playerTrackPlayLikeSvg alt="like">
-                    <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                    <use href={`${sprite}#icon-like`} />
+                <S.playerTrackPlayLke onClick={()=>{console.log('like');renderLikes(activeTrack.id);
+                
+                // likes()
+                
+                }} className=" _btn-icon">
+                  <S.playerTrackPlayLikeSvg alt="like">                                         
+                                                                                                {/* //LIKES */}
+                    {/* <use xlinkHref="img/icon/sprite.svg#icon-like-liked"></use> */}
+                    <use href={
+
+liked? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                      // true? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                      
+                      // `${sprite}#icon-like-liked`
+                      
+                      
+                      } />
+
+{console.log(activeTrackRedux.stared_user)}
                   </S.playerTrackPlayLikeSvg>
                 </S.playerTrackPlayLke>
-                <S.playerTrackPlayDisLke className="_btn-icon">
+                <S.playerTrackPlayDisLke onClick={()=>{console.log('disLike');renderDisLikes(activeTrack.id)}} className="_btn-icon">
                   <S.playerTrackPlayDisLikeSvg alt="dislike">
                     <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
                     <use href={`${sprite}#icon-dislike`} />

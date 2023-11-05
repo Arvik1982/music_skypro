@@ -8,7 +8,7 @@ import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux,setTracksRedux } from "../../store/reducers/playerSlice";
+import { setTrackRedux,setTracksRedux,setIsLiked } from "../../store/reducers/playerSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -42,6 +42,7 @@ export function Content({playerOn, setPlayerOn,user, setUser, tracks, setTracks}
           return track.id
           
         }
+        
          }
         
   }
@@ -64,10 +65,13 @@ function renderTracks(){
   
   getTracks()
     .then((data) => {
+      // console.log(data)
       errorText = null;
       setTracks(data);
+      // console.log(tracks)
       dispatch(setTracksRedux(data));
       setContentVisible(true);
+      
       return tracks;
       
     })
@@ -87,7 +91,7 @@ function renderTracks(){
   useEffect(() => {
  
  renderTracks()
-}, []);
+}, [dispatch]);
 
 
 
@@ -125,6 +129,7 @@ function renderTracks(){
 
               <S.Playlist__track 
                 onClick={(e) => {
+                  
                   e.preventDefault();
                   setPlayerOn('');
                   dispatch(setTrackRedux({track,tracks}))
@@ -156,7 +161,7 @@ function renderTracks(){
                   <S.Track_titleText>
                     <S.Track__titleLink
                       onClick={() => {
-                        console.log("player load ?");
+                        // console.log("player load ?");
                       }}
                       className="trackNameLink"
                       href="http://"
@@ -199,9 +204,15 @@ function renderTracks(){
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg  onClick={()=>{likes(track)!==track.id? renderLikes(track.id):renderDisLikes(track.id)
+                    <S.Track__timeSvg  onClick={()=>{
+                      likes(track)!==track.id? renderLikes(track.id):renderDisLikes(track.id);
+                      console.log('wor11111');
+                      dispatch(setTrackRedux({track,tracks}))
                       // dispatch(likeTrackRedux(track.id));
-                      console.log('ADD CLICK')}}  alt="time">            
+                      // console.log('ADD CLICK')
+                      }
+                      
+                      }  alt="time">            
                     
                                                                                                                        {/* LIKES */}
                                                                                                               

@@ -12,7 +12,7 @@ import AuthPageReg from "./Pages/loginPage/registration";
 
 
 export function AppRoutes ({user, setUser,playerOn, setPlayerOn, setUserName, setUserPass, isLoginMode,setIsLoginMode, listName, setListName, tracks, setTracks}){
-    console.log(Boolean(user))
+    // console.log(Boolean(user))
 return(
 <Routes>
 <Route  path="*" element ={<ErrPage/>}/>
@@ -26,7 +26,7 @@ return(
 tracks={tracks} setTracks={setTracks} 
 
 listName={listName} setListName={setListName} user={user} setUser={setUser} playerOn={playerOn} setPlayerOn={setPlayerOn}/>}/>
-<Route  path="/category/:id" element ={<PlayListPage listName={listName} setListName={setListName} setPlayerOn={setPlayerOn}/>}/>
+<Route  path="/category/:id" element ={<PlayListPage  listName={listName} setListName={setListName} setPlayerOn={setPlayerOn}/>}/>
 <Route  path="/" element ={<MainPage
 
 tracks={tracks} setTracks={setTracks}  

@@ -97,7 +97,8 @@ export function App() {
   const [userPass, setUserPass]=useState(null)
   const [isLoginMode, setIsLoginMode]=useState(true)
   const [listName, setListName]=useState('Tracks')
-  const [tracks, setTracks] =useState([{ id: "1" }])
+  const [tracks, setTracks] =useState([{ id: "8" },
+  { id: "9" },{ id: "10" },{ id: "11" },{ id: "12" },{ id: "13" },{ id: "14" },{ id: "15" }])
   
   let userLoginName= localStorage.getItem('userName')
   let textName= 'Имя пользователя:'
@@ -113,7 +114,7 @@ export function App() {
        
        
        listName={listName} setListName={setListName} isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
-      <Player playerVisibility = {playerOn} 
+      <Player playerVisibility = {playerOn} tracks={tracks} setTracks={setTracks}
       // activeTrack={activeTrack}
       />
     </UserContext.Provider> 

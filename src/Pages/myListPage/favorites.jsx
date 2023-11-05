@@ -1,9 +1,9 @@
 
-
+import { UserContext } from "../../App"
 import sprite from "./sprite.svg";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as S from "./favoritesStyle";
 import { delMyTracks, getMyTracks, getTracks, refreshToken } from "../../api";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,13 +26,21 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
   
   }) {
   const [contentVisible, setContentVisible] = useState(false);
-  
+  const userName = useContext(UserContext)
   const navigate=useNavigate()
 
   const [tracks,setTracks]= useState([
     { id: "1" },
     { id: "2" },
     { id: "3" }
+    ,
+    { id: "4" }
+    ,
+    { id: "5" }
+    ,
+    { id: "6" }
+    ,
+    { id: "7" }
   ])
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
@@ -68,14 +76,13 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
   useEffect(() => {
     setListName('Мои треки')
 
-    //dispatch(setTracksRedux(tracks))
+    dispatch(setTracksRedux(tracks))
 
    console.log('useeff')
-    getMyTracks()
+    getMyTracks(userName)
       .then((data) => {
         errorText = null;
         console.log(data)
-        
         setContentVisible(true);
         console.log(tracks)
         dispatch(setTracksRedux(data))
@@ -94,7 +101,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
             setTracks(data);
             setContentVisible(true);
             console.log(tracks)
-            dispatch(setMyTracksRedux({tracks}))
+            dispatch(setMyTracksRedux(tracks))
             // return tracks;
             setTimeout(()=>navigate("/favorites",{replace:true}),2000)
           })
@@ -105,7 +112,19 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
       })
   }, []);
 
+let newTracks;
+{contentVisible? newTracks = myTracks:newTracks = tracks}
 
+
+// function likes(track){ 
+//   console.log(track)
+//   for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
+// let likName =track.stared_user[0]
+// console.log(likName)
+// let un=userName
+          
+//    if (likName === un[0])     
+//     {return track.id}}}
 
   return (
 
@@ -140,11 +159,14 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
         </div>
 
         {
+          
         
-        myTracks
+        // myTracks
         
         // tracks
-        .map((track, index) => {
+
+        
+        newTracks.map((track, index) => {
           return (
             <S.Playlist__item   key={index} >
               {/* block start */}
@@ -231,7 +253,12 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
                     alt="time">
                                              
                                                                                                         {/* FAVORITES */}
-                      <use href={`${sprite}#icon-like-liked`} />
+                      <use href={
+                        // likes(track)? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                        
+                        `${sprite}#icon-like-liked`
+                        
+                        } />
                     </S.Track__timeSvg>
                   ) : (
                     <SkeletonTheme baseColor="#202020" highlightColor="#444">

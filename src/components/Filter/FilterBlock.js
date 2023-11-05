@@ -16,7 +16,7 @@ export function Filter() {
               activeFilter === "author"
                 ? setActiveFilter("")
                 : setActiveFilter("author");
-              console.log(`click`);
+              // console.log(`click`);
             }}
             className="_btn-text"
           >
@@ -70,7 +70,7 @@ export function Filter() {
               activeFilter === "year"
                 ? setActiveFilter("")
                 : setActiveFilter("year");
-              console.log(`click-y`);
+              // console.log(`click-y`);
             }}
             className="_btn-text"
           >
@@ -106,7 +106,7 @@ export function Filter() {
               activeFilter === "style"
                 ? setActiveFilter("")
                 : setActiveFilter("style");
-              console.log(`click`);
+              // console.log(`click`);
             }}
             className="_btn-text"
           >

@@ -17,6 +17,7 @@ import { Tracks } from "../../components/Tracs/tracs";
 import { Filter } from "../../components/Filter/FilterBlock";
 import { Sidebar } from "../../components/Sidebar/SideBar";
 
+import { setCategoryResults,setSearchBase } from "../../store/reducers/playerSlice";
 
 
 let errorText = null;
@@ -30,7 +31,10 @@ listName: `100 лучших песен`},
 listName: `Инди`  },
 ]
 
-export function PlayListPage ({user, setUser, playerOn, setPlayerOn, listName, setListName}){
+export function PlayListPage ({user, setUser, playerOn, setPlayerOn, listName, setListName
+  // , tracks, setTracks
+
+}){
 
 
 
@@ -42,8 +46,9 @@ const dispatch=useDispatch();
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
 const playerOnDot = useSelector(state=>state.track.playerOn)
 const userName = useContext(UserContext)
+const categoryListRedux = useSelector(state=>state.track.categoryList)
 const [category, setCategory]=useState([])
-
+console.log(categoryListRedux)
 const param = useParams()
 
 function setGenreList(genre){
@@ -55,32 +60,47 @@ function setGenreList(genre){
     setListName('Рок музыка') 
 
     getSelectionTracks().then((data) => {
+    
         let selectionTracks=data
-        let tracks = selectionTracks[genre].items
-        return tracks
+        let tracksN = selectionTracks[genre].items
+        tracksN.forEach((el, index)=> {
+          el.id =index+8})
+          console.log(tracksN)
+          
+
+        
+        return tracksN
+
+
+
     }).then((data) => {
         errorText = null;
+        console.log(data)
         setTracks(data);
         setContentVisible(true);
+        dispatch(setCategoryResults(data))
+        dispatch(setSearchBase(data))
+        // console.log(categoryListRedux)
         return tracks;
         
       })
       .catch((error) => {
         errorText = error.message;
         setContentVisible(true);
-        setTracks([]);
+        console.log("error")
+        // setTracks([]);
         localStorage.removeItem('userName')
         return errorText;
       })
     }
-
+    console.log(tracks)
 
     useEffect(()=>{
     setGenreList(Number(param.id)-1)
     },[param])
 
-let list = arr.find((el)=> el.id === Number(param.id))
-console.log(list)
+// let list = arr.find((el)=> el.id === Number(param.id))
+// console.log(list)
 
 
 
@@ -101,7 +121,7 @@ function renderLikes(id){
   function renderTracks(){
   
     setGenreList(Number(param.id)-1)
-
+console.log(param)
   }  
   function likes(track){ 
     for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
@@ -147,8 +167,13 @@ function renderLikes(id){
               </h1>
             </div>
     
-            {tracks.map((track) => {
-              
+            {
+            
+            // tracks 
+            categoryListRedux
+            .map((track) => {
+              console.log(track.id)
+              // console.log(activeTrackRedux.id)
               return (
                 <S.Playlist__item   key={track.id} >
                   {/* block start */}
@@ -157,7 +182,7 @@ function renderLikes(id){
                     onClick={(e) => {
                       e.preventDefault();
                       setPlayerOn('');
-                      dispatch(setTrackRedux({track,tracks}))
+                      dispatch(setTrackRedux({track, tracks}))
                       
     
                     }}
@@ -166,12 +191,27 @@ function renderLikes(id){
                       <S.Track__titleImage >
                         {contentVisible ? (<>
                         
-                          <S.Playlist__titleSvg_dot_Pause style={track.id===activeTrackRedux.id & playerOnDot===false ?{
-                            display:'block'}:{display:'none'}}></S.Playlist__titleSvg_dot_Pause>
-                           <S.Playlist__titleSvg_dot style={track.id===activeTrackRedux.id & playerOnDot===true?{display:'block'}:{display:'none'}}></S.Playlist__titleSvg_dot>
+                          <S.Playlist__titleSvg_dot_Pause 
+                          
+                          style={track.id===
+                            activeTrackRedux.id 
+                            & playerOnDot===false ?{
+                            display:'block'}:{display:'none'}}
+                            
+                            ></S.Playlist__titleSvg_dot_Pause>
+                           <S.Playlist__titleSvg_dot 
+
+                           style={track.id===activeTrackRedux.id 
+                           & playerOnDot===true?{display:'block'}:{display:'none'}}
+                           
+                           ></S.Playlist__titleSvg_dot>
     
-                          <S.Track__titleSvg style={track.id===activeTrackRedux.id ?{
-                            display:'none'}:{}}  alt="music">
+                          <S.Track__titleSvg 
+
+                          style={track.id===activeTrackRedux.id ?{
+                            display:'none'}:{}}
+                            
+                            alt="music">
                             <use  xlinkHref="img/icon/sprite.svg#icon-note"></use>
                             <use  href={`${sprite}#icon-note`} />
                           </S.Track__titleSvg>

@@ -8,9 +8,9 @@ export function Nav({setUser, setPlayerOn}) {
   const [menuVisible, setVisible] = useState(false);
   const menuClick = () => {
     setVisible(!menuVisible);
-    console.log(menuVisible);
-    console.log(setUser);
-    console.log(setPlayerOn);
+    // console.log(menuVisible);
+    // console.log(setUser);
+    // console.log(setPlayerOn);
   };
 
   return (
