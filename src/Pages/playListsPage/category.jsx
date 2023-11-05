@@ -31,7 +31,7 @@ listName: `100 лучших песен`},
 listName: `Инди`  },
 ]
 
-export function PlayListPage ({user, setUser, playerOn, setPlayerOn, listName, setListName
+export function PlayListPage ({user, setUser, playerOn, setPlayerOn, listName, setListName, status, setStatus
   // , tracks, setTracks
 
 }){
@@ -39,6 +39,7 @@ export function PlayListPage ({user, setUser, playerOn, setPlayerOn, listName, s
 
 
 const navigate=useNavigate()
+const [allTracks,setAllTracks] = useState([])
 const [tracks,setTracks]= useState([])
 const [error, setError]=useState(null)
 const [contentVisible, setContentVisible] = useState(false);
@@ -48,8 +49,15 @@ const playerOnDot = useSelector(state=>state.track.playerOn)
 const userName = useContext(UserContext)
 const categoryListRedux = useSelector(state=>state.track.categoryList)
 const [category, setCategory]=useState([])
-console.log(categoryListRedux)
+
 const param = useParams()
+
+console.log(categoryListRedux)
+
+
+function toggle(){
+  status?setStatus(false):setStatus(true)
+}
 
 function setGenreList(genre){
     if (genre ===0)
@@ -60,13 +68,13 @@ function setGenreList(genre){
     setListName('Рок музыка') 
 
     getSelectionTracks().then((data) => {
-    
+      // toggle()
         let selectionTracks=data
         let tracksN = selectionTracks[genre].items
         tracksN.forEach((el, index)=> {
           el.id =index+8})
           console.log(tracksN)
-          
+          getTracks().then((data)=>{setAllTracks(data)})  
 
         
         return tracksN
@@ -74,13 +82,15 @@ function setGenreList(genre){
 
 
     }).then((data) => {
+      
         errorText = null;
         console.log(data)
         setTracks(data);
         setContentVisible(true);
         dispatch(setCategoryResults(data))
         dispatch(setSearchBase(data))
-        // console.log(categoryListRedux)
+       
+        
         return tracks;
         
       })
@@ -93,7 +103,7 @@ function setGenreList(genre){
         return errorText;
       })
     }
-    console.log(tracks)
+    // console.log(tracks)
 
     useEffect(()=>{
     setGenreList(Number(param.id)-1)
@@ -104,33 +114,47 @@ function setGenreList(genre){
 
 
 
-function renderLikes(id){
-    addMyTracks(id).then(()=>renderTracks()
-    ).catch((err)=>{
+function renderLikes(track){
+  console.log(track)
+  console.log(allTracks)
+ let item = allTracks.find((item)=>item.name===track.name)
+ console.log(item)
+ let id=item.id
+ console.log(id)
+     addMyTracks(id).then(()=>{renderTracks();}
+     ).catch((err)=>{
     // localStorage.removeItem('userName');
     setError(err.message);
     setTimeout(()=>navigate("/login",{replace:true}),2000)
     })
   }
-  function renderDisLikes(id){
+  function renderDisLikes(track){
+    console.log(track)
+    let item = allTracks.find((item)=>item.name===track.name)
+    console.log(item)
+    let id=item.id
     delMyTracks(id).then(()=>renderTracks()
     ).catch((err)=>{setError(err.message); 
     })
   }
 
   function renderTracks(){
-  
+    
     setGenreList(Number(param.id)-1)
-console.log(param)
+    
   }  
   function likes(track){ 
     for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
- let likName =track.stared_user[index_user].username
+ let likName = track.stared_user[index_user].username
 
  let un=userName
             
      if (likName === un[0])     
-      {return track.id}}}
+      {console.log(track.name)
+        console.log(categoryListRedux)
+        return track.name}}}
+
+
   return (<S.Wrapper >
       
     <S.Container>
@@ -269,7 +293,7 @@ console.log(param)
                     </S.Track__album>
                     <S.Track_time>
                       {contentVisible ? (
-                        <S.Track__timeSvg  onClick={()=>{likes(track)!==track.id? renderLikes(track.id):renderDisLikes(track.id)
+                        <S.Track__timeSvg  onClick={()=>{console.log(track.name);console.log(track.id);likes(track)!==track.name? renderLikes(track):renderDisLikes(track)
                           // dispatch(likeTrackRedux(track.id));
                           console.log('ADD CLICK')}}  alt="time">            
                         
@@ -277,7 +301,8 @@ console.log(param)
                                                                                                                   
                           <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
                           <use  href={ 
-                            likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                            likes(track)? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
+                            // likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
                             // likes(track)&&`${sprite}#icon-like-liked`
                             } />
                         </S.Track__timeSvg>

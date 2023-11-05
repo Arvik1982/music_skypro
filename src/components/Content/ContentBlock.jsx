@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 let errorText = null;
 let liked=false;
 
-export function Content({playerOn, setPlayerOn,user, setUser, tracks, setTracks}) {
+export function Content({status, setStatus, playerOn, setPlayerOn,user, setUser, tracks, setTracks}) {
   const [contentVisible, setContentVisible] = useState(false);
   const [error, setError]=useState(null)
   const userName = useContext(UserContext)
@@ -71,7 +71,7 @@ function renderTracks(){
       // console.log(tracks)
       dispatch(setTracksRedux(data));
       setContentVisible(true);
-      
+      status?setStatus(false):setStatus(true);
       return tracks;
       
     })

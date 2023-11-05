@@ -28,7 +28,7 @@ import { useDispatch } from "react-redux";
 // let tracks=[]
 
 
-export function Player({playerVisibility, tracks, setTracks}) {
+export function Player({playerVisibility, tracks, setTracks, status, setStatus}) {
   
   const[liked, setLiked] = useState()
   const param = useParams()
@@ -90,11 +90,18 @@ useEffect(() => {
     
 }
 
-}, [activeTrack
+}, [activeTrack, status
   // tracks
 ]);
 
-
+function triggerLikes(){
+  if(liked===true){}
+  if(liked!==true){setLiked(true)}
+}
+function triggerDisLikes(){
+  if(liked===true){setLiked(false)}
+  if(liked!==true){}
+}
   const clickPlayerStart = () => {
     realPlayer?.current.play();
     setPlayerOn(true);
@@ -151,7 +158,7 @@ console.log(activeTrackRedux)
 //LIKES-START
 
 function renderLikes(id){
-  addMyTracks(id).then(()=>renderTracks()
+  addMyTracks(id).then(()=>{renderTracks()}
   ).catch((err)=>{console.log(err.message)
   // localStorage.removeItem('userName');
   // setError(err.message);
@@ -378,7 +385,7 @@ setLiked(Boolean(likedTrack))
                 </S.playerTrackPlayAlbum>
               </S.playerTrackPlayContain>
               <S.playerTrackPlayLkeDislike>
-                <S.playerTrackPlayLke onClick={()=>{console.log('like');renderLikes(activeTrack.id);
+                <S.playerTrackPlayLke onClick={()=>{console.log('like');renderLikes(activeTrack.id);triggerLikes()
                 
                 // likes()
                 
@@ -399,7 +406,7 @@ liked? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
 {console.log(activeTrackRedux.stared_user)}
                   </S.playerTrackPlayLikeSvg>
                 </S.playerTrackPlayLke>
-                <S.playerTrackPlayDisLke onClick={()=>{console.log('disLike');renderDisLikes(activeTrack.id)}} className="_btn-icon">
+                <S.playerTrackPlayDisLke onClick={()=>{console.log('disLike');renderDisLikes(activeTrack.id);triggerDisLikes()}} className="_btn-icon">
                   <S.playerTrackPlayDisLikeSvg alt="dislike">
                     <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
                     <use href={`${sprite}#icon-dislike`} />

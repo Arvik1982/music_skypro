@@ -91,6 +91,7 @@ export function App() {
   
   
   // let localUser=localStorage.getItem('user')
+  const [status, setStatus] = useState(false);
   const [playerOn, setPlayerOn] = useState("hidden");
   const [user, setUser] = useState(false);
   const [userName, setUserName]=useState(null)
@@ -111,11 +112,12 @@ export function App() {
       <AppRoutes
        tracks={tracks} setTracks={setTracks} 
        
-       
+       status={status} setStatus={setStatus}
        
        listName={listName} setListName={setListName} isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
       <Player playerVisibility = {playerOn} tracks={tracks} setTracks={setTracks}
       // activeTrack={activeTrack}
+      status={status} setStatus={setStatus}
       />
     </UserContext.Provider> 
       {/* <ExampleButtonInput />
