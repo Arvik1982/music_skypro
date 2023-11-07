@@ -34,7 +34,7 @@ export async function getSelectionTracks(){
   el.id =index+8})
   
   let data = newData
-  // console.log(data)
+  
       return data
   
   }
@@ -78,11 +78,11 @@ export async function login(email,password){
 
     getToken(email,password) .then((response)=>{ let data = response.json(); return data})
     .then((data)=>{
-      // console.log(data)
+      
       localStorage.setItem('access',data.access)
       localStorage.setItem('refresh',data.refresh)
       refresh = localStorage.getItem('refresh')
-      // console.log(refresh)
+      
 
       
    
@@ -122,9 +122,9 @@ const newData = await response.json()
 newData.forEach((el, index)=> {
       el.stared_user = username
       el.id_old = el.id
-      console.log(el.id_old)
+      // console.log(el.id_old)
       el.id =index+8;
-      console.log(el.id)
+      // console.log(el.id)
     })
    
 
@@ -178,7 +178,7 @@ export async function delMyTracks(id_old){
 
 export async function refreshToken(){
   let refreshToken = localStorage.getItem('refresh')
-  // console.log(refreshToken)
+ 
 try {
   
 
@@ -195,7 +195,7 @@ try {
                                   const newToken= await response.json()
                                   localStorage.setItem('access',newToken.access)
                                   const newAccessToken = localStorage.getItem('access')
-                                  // console.log (newAccessToken)
+                                  
                                   return newAccessToken
                                 } catch (error) {alert('требуется ввод логина и пароля')
                               }

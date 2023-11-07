@@ -36,7 +36,7 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
       }
     else{
     registration(email,password,email)
-    .then((response)=>{console.log(response)
+    .then((response)=>{
 
     if (response.status!==201){
     responseStatus=false
@@ -55,14 +55,14 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
       errArr.push(data.username,data.email,data.password)
       let index = errArr.indexOf(undefined)
       errArr.splice(index,1)
-      console.log(errArr)
+      
       let errString = errArr.join(' / ')
-      console.log(errString);setError(errString);}
+      ;setError(errString);}
 
       else{
         localStorage.setItem('user', data.username)
         setIsLoginMode(true)
-        console.log(localStorage.getItem('user'))
+        
       }
 
     })

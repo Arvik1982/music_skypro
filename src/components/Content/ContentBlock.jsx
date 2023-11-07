@@ -65,10 +65,10 @@ function renderTracks(){
   
   getTracks()
     .then((data) => {
-      // console.log(data)
+    
       errorText = null;
       setTracks(data);
-      // console.log(tracks)
+     
       dispatch(setTracksRedux(data));
       setContentVisible(true);
       status?setStatus(false):setStatus(true);
@@ -80,9 +80,7 @@ function renderTracks(){
       setContentVisible(true);
       setTracks([]);
       localStorage.removeItem('userName')
-      // setUser(false);
-      // console.log('REDIRECT /')
-      // navigate("/",{replace:true})
+     
       return errorText;
     })
 }  
@@ -161,7 +159,7 @@ function renderTracks(){
                   <S.Track_titleText>
                     <S.Track__titleLink
                       onClick={() => {
-                        // console.log("player load ?");
+                        
                       }}
                       className="trackNameLink"
                       href="http://"
@@ -206,10 +204,9 @@ function renderTracks(){
                   {contentVisible ? (
                     <S.Track__timeSvg  onClick={()=>{
                       likes(track)!==track.id? renderLikes(track.id):renderDisLikes(track.id);
-                      console.log('wor11111');
+                      ;
                       dispatch(setTrackRedux({track,tracks}))
-                      // dispatch(likeTrackRedux(track.id));
-                      // console.log('ADD CLICK')
+                     
                       }
                       
                       }  alt="time">            

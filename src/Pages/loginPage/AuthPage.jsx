@@ -31,7 +31,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser}) {
     }
     else{
       let data = response.json()
-      console.log('err')
+      
       return(data)
     }})
     .then((data)=>{       
@@ -75,7 +75,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser}) {
       }else{
     registration(email,password,email)
     
-    .then((response)=>{console.log(response.status)
+    .then((response)=>{
       setButtonActive(false)
       if(!response.ok){
       responseOk=false
@@ -87,20 +87,20 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser}) {
     return data})
 
     .then((data)=>{
-      console.log(data)
+      
       if(!responseOk){
       let errArr=[]
       errArr.push(data.username,data.email,data.password)
       let index = errArr.indexOf(undefined)
       errArr.splice(index,1)
-      console.log(errArr)
+      
       let errString = errArr.join(' / ')
-      console.log(errString);setError(errString); 
+      ;setError(errString); 
       setError(errString)
       }else{
         setTimeout(
         setUser(true),1000)
-        console.log('entering...')
+        
         navigate("/",{replace:true})
         localStorage.setItem('userName',data.username)
       }

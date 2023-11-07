@@ -40,8 +40,8 @@ export function Player({playerVisibility, tracks, setTracks, status, setStatus})
   const [trackTime, setTrackTime] = useState(0);
   const [mix, setMixOn] = useState(false);
   const userName = useContext(UserContext)
-  
-  
+  const [allTracks,setAllTracks] = useState([])
+  // console.log(allTracks)
   
  
 //redux
@@ -50,7 +50,7 @@ const tracksRedux = useSelector(state=>state.track.tracks)
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
 const isLikedRedux = useSelector(state=>state.track.isLiked)
 const myTracks = useSelector(state=>state.track.myTracks)
-console.log(myTracks)
+// console.log(myTracks)
 const dispatch=useDispatch()
 let activeTrack = activeTrackRedux 
 const navigate=useNavigate()
@@ -58,7 +58,7 @@ const navigate=useNavigate()
 useEffect(() => {
   renderTracks()
   likes()
-  console.log('i work');
+  // console.log('i work');
   
   
     if(!playerOn){
@@ -75,7 +75,7 @@ useEffect(() => {
         setTrackTime(realPlayer.current.duration);
         
          dispatch(setTimeRedux(realPlayer.current.duration))
-        // console.log(trackTime)
+        
       });
     }, 1);
 
@@ -117,10 +117,7 @@ function triggerDisLikes(){
     realPlayer.current.loop = true;
     setLoopOn(true);
     dispatch(setCycleRedux())
-    // console.log(activeTrack)
-
-    // console.log(activeTrack.id)
-    // console.log(activeTrack[0])
+    
   };
   const clickPlayerLoopOff = () => {
     realPlayer.current.loop = false;
@@ -152,12 +149,18 @@ if(playerOn){
 // if(playerOn & pause===true ){
 //   realPlayer.current.pause();
 // }
-console.log(activeTrackRedux)
+// console.log(activeTrackRedux)
 
 
 //LIKES-START
 
-function renderLikes(id){
+function renderLikes(activeTrack){
+
+  let item = allTracks.find((item)=>item.name===activeTrack.name)
+  // console.log(item)
+  let id=item.id
+  // console.log(id)
+
   addMyTracks(id).then(()=>{renderTracks()}
   ).catch((err)=>{console.log(err.message)
   // localStorage.removeItem('userName');
@@ -165,38 +168,41 @@ function renderLikes(id){
   // setTimeout(()=>navigate("/login",{replace:true}),2000)
   })
 }
-function renderDisLikes(id){
+function renderDisLikes(activeTrack){
+
+  let item = allTracks.find((item)=>item.name===activeTrack.name)
+  // console.log(item)
+  let id=item.id
+  // console.log(id)
+
   delMyTracks(id).then(()=>renderTracks()
   ).catch((err)=>{console.log(err.message)
-    // setError(err.message); 
+    
   })
 }
 function renderTracks(){
   
   getTracks()
     .then((data) => {
-      // console.log(data)
-      // errorText = null;
+      
+      setAllTracks(data)
       setTracks(data);
-      // console.log(tracks)
+      
       dispatch(setTracksRedux(data));
-      // dispatch(setMyTracksRedux(data))
+      
       setContentVisible(true);
       
-      // return tracks;
+      
       
     }).then(()=>{getMyTracks().then((data)=>{dispatch(setMyTracksRedux(data))})
   
     .catch((error) => {
-      // errorText = error.message;
+      
       setContentVisible(true);
       // setTracks([]);
       localStorage.removeItem('userName')
       navigate("/login",{replace:true})
-      // setUser(false);
-      // console.log('REDIRECT /')
-      // navigate("/",{replace:true})
-      // return errorText;
+      
     })
   
   })
@@ -206,10 +212,7 @@ function renderTracks(){
       // setTracks([]);
       localStorage.removeItem('userName')
       navigate("/login",{replace:true})
-      // setUser(false);
-      // console.log('REDIRECT /')
-      // navigate("/",{replace:true})
-      // return errorText;
+      
     })
 } 
 
@@ -239,11 +242,11 @@ function renderTracks(){
 
 
 function likes(){ 
-console.log(activeTrack)
-console.log(myTracks)
+// console.log(activeTrack)
+// console.log(myTracks)
   let likedTrack = myTracks.find(item=>item.name===activeTrack.name)
 setLiked(Boolean(likedTrack))
-  console.log(Boolean(likedTrack))
+  // console.log(Boolean(likedTrack))
 }
 
 //LIKES-END
@@ -385,7 +388,11 @@ setLiked(Boolean(likedTrack))
                 </S.playerTrackPlayAlbum>
               </S.playerTrackPlayContain>
               <S.playerTrackPlayLkeDislike>
-                <S.playerTrackPlayLke onClick={()=>{console.log('like');renderLikes(activeTrack.id);triggerLikes()
+                <S.playerTrackPlayLke onClick={()=>{console.log('like');
+                renderLikes(activeTrack)
+                // renderLikes(activeTrack.id);
+                
+                triggerLikes()
                 
                 // likes()
                 
@@ -403,10 +410,10 @@ liked? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
                       
                       } />
 
-{console.log(activeTrackRedux.stared_user)}
+{/* {console.log(activeTrackRedux.stared_user)} */}
                   </S.playerTrackPlayLikeSvg>
                 </S.playerTrackPlayLke>
-                <S.playerTrackPlayDisLke onClick={()=>{console.log('disLike');renderDisLikes(activeTrack.id);triggerDisLikes()}} className="_btn-icon">
+                <S.playerTrackPlayDisLke onClick={()=>{console.log('disLike');renderDisLikes(activeTrack);triggerDisLikes()}} className="_btn-icon">
                   <S.playerTrackPlayDisLikeSvg alt="dislike">
                     <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
                     <use href={`${sprite}#icon-dislike`} />

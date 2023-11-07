@@ -18,9 +18,9 @@ const searchBaseRedux = useSelector(state=>state.track.searchBase)
 const [searchText, setSearchText]= useState()
 const dispatch=useDispatch()
 const param = useParams()
-console.log(param)
+
 let page = param.id
-console.log(page)
+
 let resultSearch;
 
 
@@ -29,7 +29,7 @@ let resultSearch;
 
 
 function filterAllTracks(){ 
-  console.log('Alltracks') 
+  
 let inputCase = String(searchText).toLowerCase()
 resultSearch = tracksRedux .filter(el=>String(el.name).toLowerCase().includes(inputCase))
 setTracks(resultSearch)
@@ -37,17 +37,17 @@ setTracks(resultSearch)
 
 
 function filterMyTracks(){ 
-  console.log('Mytracks') 
+  
   let inputCase = String(searchText).toLowerCase()
   resultSearch = tracksRedux .filter(el=>String(el.name).toLowerCase().includes(inputCase))
   // setTracks(resultSearch)
   dispatch(setMyTracksRedux(resultSearch))
-  console.log('filter favorites')
+  
   }
 
   function filterCategoryTracks(){
 
-  console.log('filter category')
+  
     
     let inputCase = String(searchText).toLowerCase()
 
@@ -80,9 +80,9 @@ else  {filterAllTracks()};
       <S.searchText 
       value={searchText}  
       onChange={(event)=>{setSearchText(event.target.value);
-      console.log(searchText);
+      
       // {page ==='favorites'? filterMyTracks(): filterAllTracks()};
-       console.log(resultSearch)         
+             
       }} 
       
       type="search" placeholder="Поиск" name="search" />

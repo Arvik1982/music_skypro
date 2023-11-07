@@ -43,15 +43,13 @@ export const likeTrackRedux = createAsyncThunk(
         Authorization: `Bearer ${accessToken}`,
 },
 })
-  console.log(response)
+  
       if (!response.ok){
           
           throw new Error('server error Необходима авторизация')
       
       }
-// const data = await response.json()
-// console.log(data.detail)
-// return data
+
 
 
   } catch (error) {return rejectWithValue(error.message)
@@ -81,19 +79,56 @@ const playerSlice = createSlice({
     searchResults:[],
     searchBase:[],
     categoryList:[],
-    isLiked:[]
+    isLiked:[],
+    filterAuthor:[]
+    ,
+    sortTracks:[]
+   
+
+
   },
   extraReducers:{
 [likeTrackRedux.pending]:(state,action)=>{state.status='loading'; state.error=null;}, //pending загрузка
 [likeTrackRedux.fulfilled]:(state,action)=>{state.status='resolved';}, //fulfilled получены данные
 [likeTrackRedux.rejected]:(state,action) =>{state.status='rejected';state.error=action.payload}, //rejected ошибка
-[getAllTracksRedux.fulfilled]:(state,action)=>{state.status='resolved';state.tracks=action.payload; console.log(state.tracks)} //fulfilled получены данные
+[getAllTracksRedux.fulfilled]:(state,action)=>{state.status='resolved';state.tracks=action.payload; } //fulfilled получены данные
   },
   reducers: {
+
+    setSortYearFavorites(state, action){
+    
+      state.sortTracks = action.payload
+       let temp = state.sortTracks
+       state.categoryList=temp.sort(function grow(a,b){
+    
+        return new Date(a.release_date)-new Date(b.release_date)
+        
+        })
+console.log(state.categoryList)
+    },
+
+    setSortYearFavorites(state, action){
+    
+      state.sortTracks = action.payload
+       let temp = state.sortTracks
+       state.myTracks=temp.sort(function grow(a,b){
+    
+        return new Date(a.release_date)-new Date(b.release_date)
+        
+        })
+
+    },
+
+    setFilterAuthor(state, action){
+    
+      state.filterAuthor = action.payload.track.author
+       
+    },
+
     setIsLiked(state, action){
     
       state.isLiked = action.payload
-      console.log(state.isLiked)    
+       
     },
 
     setSearchBase(state, action){
@@ -105,33 +140,30 @@ const playerSlice = createSlice({
       
       state.categoryList = action.payload
       state.tracks = action.payload
-      // console.log(state.categoryList);
-      // console.log(state.tracks)
+      
     
     },
 setSearchResults(state, action){
   state.searchResults = action.payload
   state.tracks = action.payload
-  // console.log(state.searchResults);
-  // console.log(state.tracks)
+
 
 },
 
     setTrackRedux(state, action) {
       state.activeTrack = action.payload.track;
-      // console.log(state.activeTrack)
+      
       state.tracks = action.payload.tracks;
       state.tempTracks = action.payload.tracks;
       
-    //  console.log(state.tracks);
-    //   console.log(state.myTracks); 
+   
     },
 
     setTracksRedux(state, action) {
       
       state.tracks = action.payload
       state.searchBase = action.payload;
-      // console.log(state.searchBase);
+      
 
      
     },
@@ -178,7 +210,7 @@ setSearchResults(state, action){
         if (next - state.tracks.length === 0) {
           state.activeTrack =
             state.tracks[state.tracks.length - state.tracks.length];
-          // console.log(state.activeTrack);
+          
         } else {
           if (state.repeat === true) {
             
@@ -192,43 +224,42 @@ setSearchResults(state, action){
     },
     setTimeRedux(state, action) {
       state.trackTime = action.payload;
-      // console.log(state.trackTime);
+    
     },
 
     setShuffleRedux(state) {
       state.shuffle = true;
       state.tracks = state.tracks.sort(() => Math.random() - 0.5);
-      // console.log(state.tempTracks);
+      
     },
     setNotShuffleRedux(state) {
       state.shuffle = false;
       state.tracks = state.tempTracks;
-      // console.log(state.tracks);
+    
     },
 
     setOnDotRedux(state) {
       state.playerOn = true;
-      // console.log(state.playerOn);
+      
     },
     setOffDotRedux(state) {
       state.playerOn = false;
-      // console.log(state.playerOn);
+      
     },
     setCycleRedux(state) {
       if (state.repeat === false) {
         state.repeat = true;
-        // state.tracks=[state.activeTrack]
-        // console.log(state.repeat);
+        
       } else {
         state.repeat = false;
-        // state.tracks=state.tempTracks
-        // console.log(state.repeat);
+        
       }
     },
 
     setMyTracksRedux(state, action) {
       state.myTracks = action.payload;
-      // console.log(state.myTracks);
+      
+      
     },
     
   },
@@ -252,7 +283,9 @@ export const {
   setSearchResults,
   setCategoryResults,
   setSearchBase,
-  setIsLiked
+  setIsLiked,
+  setFilterAuthor,
+  setSortYearFavorites
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

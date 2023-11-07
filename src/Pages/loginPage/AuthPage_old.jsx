@@ -21,7 +21,7 @@ export default function AuthPage({isLoginMode, setUserName, setUserPass,setUser,
       setPlaceholderUser('заполните поле ввода')}
     else{
     
-    login(email,password).then((response)=>{console.log(response);
+    login(email,password).then((response)=>{
       if (response.status!==200){
         responseStatus=false
         let data = response.json()
@@ -39,7 +39,7 @@ export default function AuthPage({isLoginMode, setUserName, setUserPass,setUser,
             else{
               localStorage.setItem('user', data.username)
               setUser(true)
-              console.log(localStorage.getItem('user'))
+              
             }
       
           })
@@ -61,7 +61,7 @@ export default function AuthPage({isLoginMode, setUserName, setUserPass,setUser,
       }
     else{
     registration(email,password,email)
-    .then((response)=>{console.log(response)
+    .then((response)=>{
 
     if (response.status!==201){
     responseStatus=false
@@ -80,14 +80,14 @@ export default function AuthPage({isLoginMode, setUserName, setUserPass,setUser,
       errArr.push(data.username,data.email,data.password)
       let index = errArr.indexOf(undefined)
       errArr.splice(index,1)
-      console.log(errArr)
+      
       let errString = errArr.join(' / ')
-      console.log(errString);setError(errString);}
+     ;setError(errString);}
 
       else{
         localStorage.setItem('user', data.username)
         setIsLoginMode(true)
-        console.log(localStorage.getItem('user'))
+        
       }
 
     })

@@ -52,7 +52,7 @@ const [category, setCategory]=useState([])
 
 const param = useParams()
 
-console.log(categoryListRedux)
+
 
 
 function toggle(){
@@ -73,7 +73,7 @@ function setGenreList(genre){
         let tracksN = selectionTracks[genre].items
         tracksN.forEach((el, index)=> {
           el.id =index+8})
-          console.log(tracksN)
+          
           getTracks().then((data)=>{setAllTracks(data)})  
 
         
@@ -84,7 +84,7 @@ function setGenreList(genre){
     }).then((data) => {
       
         errorText = null;
-        console.log(data)
+       
         setTracks(data);
         setContentVisible(true);
         dispatch(setCategoryResults(data))
@@ -97,30 +97,28 @@ function setGenreList(genre){
       .catch((error) => {
         errorText = error.message;
         setContentVisible(true);
-        console.log("error")
+        
         // setTracks([]);
         localStorage.removeItem('userName')
         return errorText;
       })
     }
-    // console.log(tracks)
+  
 
     useEffect(()=>{
     setGenreList(Number(param.id)-1)
     },[param])
 
-// let list = arr.find((el)=> el.id === Number(param.id))
-// console.log(list)
+
 
 
 
 function renderLikes(track){
-  console.log(track)
-  console.log(allTracks)
+
  let item = allTracks.find((item)=>item.name===track.name)
- console.log(item)
+
  let id=item.id
- console.log(id)
+ 
      addMyTracks(id).then(()=>{renderTracks();}
      ).catch((err)=>{
     // localStorage.removeItem('userName');
@@ -129,9 +127,9 @@ function renderLikes(track){
     })
   }
   function renderDisLikes(track){
-    console.log(track)
+    
     let item = allTracks.find((item)=>item.name===track.name)
-    console.log(item)
+    
     let id=item.id
     delMyTracks(id).then(()=>renderTracks()
     ).catch((err)=>{setError(err.message); 
@@ -150,8 +148,7 @@ function renderLikes(track){
  let un=userName
             
      if (likName === un[0])     
-      {console.log(track.name)
-        console.log(categoryListRedux)
+      {
         return track.name}}}
 
 
@@ -196,8 +193,8 @@ function renderLikes(track){
             // tracks 
             categoryListRedux
             .map((track) => {
-              console.log(track.id)
-              // console.log(activeTrackRedux.id)
+              
+              
               return (
                 <S.Playlist__item   key={track.id} >
                   {/* block start */}
@@ -250,7 +247,7 @@ function renderLikes(track){
                       <S.Track_titleText>
                         <S.Track__titleLink
                           onClick={() => {
-                            console.log("player load ?");
+                           
                           }}
                           className="trackNameLink"
                           href="http://"
@@ -293,9 +290,9 @@ function renderLikes(track){
                     </S.Track__album>
                     <S.Track_time>
                       {contentVisible ? (
-                        <S.Track__timeSvg  onClick={()=>{console.log(track.name);console.log(track.id);likes(track)!==track.name? renderLikes(track):renderDisLikes(track)
+                        <S.Track__timeSvg  onClick={()=>{likes(track)!==track.name? renderLikes(track):renderDisLikes(track)
                           // dispatch(likeTrackRedux(track.id));
-                          console.log('ADD CLICK')}}  alt="time">            
+                          }}  alt="time">            
                         
                                                                                                                            {/* LIKES */}
                                                                                                                   

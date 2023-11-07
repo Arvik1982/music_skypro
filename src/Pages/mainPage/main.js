@@ -31,7 +31,7 @@ useEffect(() => {
             <S.MainCenterBlock>
               <Search  tracks={tracks} setTracks={setTracks}  />
               <Tracks listName={listName} setListName={setListName} />
-              <Filter />
+              <Filter tracks={tracks} setTracks={setTracks} />
               <Content status={status} setStatus={setStatus}  tracks={tracks} setTracks={setTracks}  activeTrack={activeTrack} setActiveTrack={setActiveTrack} playerOn={playerOn} setPlayerOn={setPlayerOn}/>
             </S.MainCenterBlock>
             <Sidebar user={user} />

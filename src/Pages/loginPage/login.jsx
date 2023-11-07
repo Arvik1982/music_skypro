@@ -49,7 +49,7 @@ margin-top: 100px;
 `
 
 export function LoginPage ({setUser}){
- console.log(setUser)
+ 
   return(
     <div>
     <Text__h1>"Страница входа"</Text__h1>

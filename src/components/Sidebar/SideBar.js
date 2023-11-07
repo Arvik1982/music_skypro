@@ -14,7 +14,7 @@ import { UserContext } from "../../App"
 export function Sidebar() {
 
   const user = useContext(UserContext)
-  console.log(user)
+  
 
   const [contentVisible, setContentVisible] = useState(false);
   setTimeout(() => {

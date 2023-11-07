@@ -56,7 +56,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
       errorText = null;
       setTracks(updatedTracks);
       setContentVisible(true);
-      console.log(tracks)
+      
       
       dispatch(setMyTracksRedux(updatedTracks))
       return tracks
@@ -78,13 +78,13 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
 
     dispatch(setTracksRedux(tracks))
 
-   console.log('useeff')
+   
     getMyTracks(userName)
       .then((data) => {
         errorText = null;
-        console.log(data)
+      
         setContentVisible(true);
-        console.log(tracks)
+       
         dispatch(setTracksRedux(data))
         dispatch(setMyTracksRedux(data))
         setTracks(data);
@@ -100,7 +100,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
             errorText = null;
             setTracks(data);
             setContentVisible(true);
-            console.log(tracks)
+            
             dispatch(setMyTracksRedux(tracks))
             // return tracks;
             setTimeout(()=>navigate("/favorites",{replace:true}),2000)
@@ -116,15 +116,7 @@ let newTracks;
 {contentVisible? newTracks = myTracks:newTracks = tracks}
 
 
-// function likes(track){ 
-//   console.log(track)
-//   for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
-// let likName =track.stared_user[0]
-// console.log(likName)
-// let un=userName
-          
-//    if (likName === un[0])     
-//     {return track.id}}}
+
 
   return (
 
@@ -205,7 +197,7 @@ let newTracks;
                   <S.Track_titleText>
                     <S.Track__titleLink
                       onClick={() => {
-                        console.log("player load ?");
+                        
                       }}
                       className="trackNameLink"
                       href="http://"
