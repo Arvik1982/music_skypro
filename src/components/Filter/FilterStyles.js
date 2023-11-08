@@ -46,6 +46,7 @@ export const centralBlockFilterButton = styled.button`
   border-radius: 60px;
   padding: 6px 20px;
   &:focus {
+    
     background-color: rgb(58, 17, 58);
   }
   &:not(:last-child) {
@@ -92,3 +93,12 @@ left:-5px;
 z-index: 100;
 }  
 `;
+
+// export const styleFilterDot = styled.div`
+
+//   &:focus{
+//     color:red;
+//   }
+
+ 
+// `;

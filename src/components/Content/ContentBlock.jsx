@@ -68,9 +68,8 @@ function renderTracks(){
     
       errorText = null;
       setTracks(data);
-     
       dispatch(setTracksRedux(data));
-      setContentVisible(true);
+      
       status?setStatus(false):setStatus(true);
       return tracks;
       
@@ -80,9 +79,8 @@ function renderTracks(){
       setContentVisible(true);
       setTracks([]);
       localStorage.removeItem('userName')
-     
       return errorText;
-    })
+    }).then(()=>{setTimeout(()=>setContentVisible(true),5000)})
 }  
 
 

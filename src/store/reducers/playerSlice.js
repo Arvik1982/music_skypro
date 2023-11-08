@@ -95,29 +95,40 @@ const playerSlice = createSlice({
   },
   reducers: {
 
-    setSortYearFavorites(state, action){
-    
-      state.sortTracks = action.payload
-       let temp = state.sortTracks
+    setSortYearFavoritesGr(state, action){
+    let temp=[...action.payload]
        state.categoryList=temp.sort(function grow(a,b){
-    
-        return new Date(a.release_date)-new Date(b.release_date)
+       return new Date(a.release_date)-new Date(b.release_date)
         
         })
 console.log(state.categoryList)
     },
 
-    setSortYearFavorites(state, action){
-    
-      state.sortTracks = action.payload
-       let temp = state.sortTracks
-       state.myTracks=temp.sort(function grow(a,b){
-    
-        return new Date(a.release_date)-new Date(b.release_date)
-        
-        })
+    setSortYearMyTracksGr(state, action){
+      let temp=[...action.payload]
+         state.myTracks=temp.sort(function grow(a,b){
+         return new Date(a.release_date)-new Date(b.release_date)
+          
+          })
+  console.log(state.categoryList)
+      },
+    setSortYearFavoritesDcr(state, action){
+      let temp=[...action.payload]
+         state.categoryList=temp.sort(function grow(a,b){
+         return new Date(b.release_date)-new Date(a.release_date)
+          
+          })
+  console.log(state.categoryList)
+      },
 
-    },
+      setSortYearMyTracksDcr(state, action){
+        let temp=[...action.payload]
+           state.myTracks=temp.sort(function grow(a,b){
+           return new Date(b.release_date)-new Date(a.release_date)
+            
+            })
+    console.log(state.categoryList)
+        },
 
     setFilterAuthor(state, action){
     
@@ -285,7 +296,10 @@ export const {
   setSearchBase,
   setIsLiked,
   setFilterAuthor,
-  setSortYearFavorites
+  setSortYearFavoritesGr,
+  setSortYearFavoritesDcr,
+  setSortYearMyTracksGr,
+  setSortYearMyTracksDcr
 } = playerSlice.actions;
 
 export default playerSlice.reducer;
