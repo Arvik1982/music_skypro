@@ -8,7 +8,7 @@ import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux,setTracksRedux,setIsLiked } from "../../store/reducers/playerSlice";
+import { setTrackRedux,setTracksRedux,setIsLiked,setFilterActiveTrackRedux } from "../../store/reducers/playerSlice";
 import { useNavigate } from "react-router-dom";
 
 
@@ -62,17 +62,13 @@ function renderDisLikes(id){
 
 
 function renderTracks(){
-  
-  getTracks()
+   getTracks()
     .then((data) => {
-    
       errorText = null;
       setTracks(data);
       dispatch(setTracksRedux(data));
-      
       status?setStatus(false):setStatus(true);
       return tracks;
-      
     })
     .catch((error) => {
       errorText = error.message;
@@ -85,11 +81,14 @@ function renderTracks(){
 
 
   useEffect(() => {
- 
  renderTracks()
-}, [dispatch]);
+}, [
+  // dispatch
+]);
 
-
+let newTracks;
+let skeletonTracks=[{ id: "8" }]
+{contentVisible? newTracks = tracks:newTracks = skeletonTracks}
 
   return (
     <S.CentralBlockContent>
@@ -117,7 +116,7 @@ function renderTracks(){
           </h1>
         </div>
 
-        {tracks.map((track) => {
+        {newTracks.map((track) => {
           
           return (
             <S.Playlist__item   key={track.id} >
@@ -128,9 +127,12 @@ function renderTracks(){
                   
                   e.preventDefault();
                   setPlayerOn('');
-                  dispatch(setTrackRedux({track,tracks}))
-                  
 
+                   
+                  dispatch(setTrackRedux({track,tracks}))
+                 
+                  
+                  // dispatch(setTrackRedux({track,tracks}))
                 }}
               >
                 <S.Track__title>

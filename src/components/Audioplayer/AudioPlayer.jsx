@@ -46,11 +46,11 @@ export function Player({playerVisibility, tracks, setTracks, status, setStatus})
  
 //redux
 const tracksRedux = useSelector(state=>state.track.tracks)
-
+const filterAuthor= useSelector(state=>state.track.filterAuthor)
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
 const isLikedRedux = useSelector(state=>state.track.isLiked)
 const myTracks = useSelector(state=>state.track.myTracks)
-// console.log(myTracks)
+const filterState = useSelector(state=>state.track.filterState)
 const dispatch=useDispatch()
 let activeTrack = activeTrackRedux 
 const navigate=useNavigate()
@@ -58,41 +58,39 @@ const navigate=useNavigate()
 useEffect(() => {
   renderTracks()
   likes()
-  // console.log('i work');
+  
   
   
     if(!playerOn){
     setTimeout(() => {
       realPlayer?.current.addEventListener("timeupdate", () => {
-        setProgressOn(realPlayer.current.currentTime);
-         dispatch(setProgressRedux(realPlayer.current.currentTime))
+        setProgressOn(realPlayer?.current.currentTime);
+         dispatch(setProgressRedux(realPlayer?.current.currentTime))
          
         
       });
     }, 1);
     setTimeout(() => {
       realPlayer?.current.addEventListener("loadedmetadata", () => {
-        setTrackTime(realPlayer.current.duration);
+        setTrackTime(realPlayer?.current.duration);
         
-         dispatch(setTimeRedux(realPlayer.current.duration))
+         dispatch(setTimeRedux(realPlayer?.current.duration))
         
       });
     }, 1);
 
     return () => {
-      realPlayer.current.removeEventListener("timeupdate", () => {
-        setProgressOn(realPlayer.current.currentTime);
+      realPlayer?.current.removeEventListener("timeupdate", () => {
+        setProgressOn(realPlayer?.current.currentTime);
       });
-      realPlayer?.current.removeEventListener("loadedmetadata", () => {
-        setTrackTime(realPlayer.current.duration);
+      realPlayer.current.removeEventListener("loadedmetadata", () => {
+        setTrackTime(realPlayer?.current.duration);
       });
     };
     
 }
 
-}, [activeTrack, status
-  // tracks
-]);
+}, [activeTrack, status]);
 
 function triggerLikes(){
   if(liked===true){}
@@ -144,12 +142,9 @@ function triggerDisLikes(){
   }, 500);
 
 if(playerOn){
-  realPlayer.current.play();
+  realPlayer?.current.play();
 }
-// if(playerOn & pause===true ){
-//   realPlayer.current.pause();
-// }
-// console.log(activeTrackRedux)
+
 
 
 //LIKES-START
@@ -157,23 +152,21 @@ if(playerOn){
 function renderLikes(activeTrack){
 
   let item = allTracks.find((item)=>item.name===activeTrack.name)
-  // console.log(item)
+  
   let id=item.id
-  // console.log(id)
+  
 
   addMyTracks(id).then(()=>{renderTracks()}
   ).catch((err)=>{console.log(err.message)
-  // localStorage.removeItem('userName');
-  // setError(err.message);
-  // setTimeout(()=>navigate("/login",{replace:true}),2000)
+  
   })
 }
 function renderDisLikes(activeTrack){
 
   let item = allTracks.find((item)=>item.name===activeTrack.name)
-  // console.log(item)
+ 
   let id=item.id
-  // console.log(id)
+  
 
   delMyTracks(id).then(()=>renderTracks()
   ).catch((err)=>{console.log(err.message)
@@ -181,15 +174,12 @@ function renderDisLikes(activeTrack){
   })
 }
 function renderTracks(){
-  
-  getTracks()
+
+    getTracks()
     .then((data) => {
-      
-      setAllTracks(data)
+      setAllTracks(data);
       setTracks(data);
-      
       dispatch(setTracksRedux(data));
-      
       setContentVisible(true);
       
       
@@ -199,7 +189,7 @@ function renderTracks(){
     .catch((error) => {
       
       setContentVisible(true);
-      // setTracks([]);
+      
       localStorage.removeItem('userName')
       navigate("/login",{replace:true})
       
@@ -216,37 +206,11 @@ function renderTracks(){
     })
 } 
 
-
-// function likes(track){ 
-//   console.log(track)
-//   for (let index_user = 0; index_user < track.length; index_user++) {
-// let likName =track.stared_user[index_user].username
-
-// let un=userName
-
-          
-//    if (likName === un[0])     
-//     {
-      
-//       return track.id
-      
-//     }
-    
-//      }
-    
-// }
-
-
-
-
-
-
 function likes(){ 
-// console.log(activeTrack)
-// console.log(myTracks)
+
   let likedTrack = myTracks.find(item=>item.name===activeTrack.name)
 setLiked(Boolean(likedTrack))
-  // console.log(Boolean(likedTrack))
+ 
 }
 
 //LIKES-END
@@ -399,18 +363,16 @@ setLiked(Boolean(likedTrack))
                 }} className=" _btn-icon">
                   <S.playerTrackPlayLikeSvg alt="like">                                         
                                                                                                 {/* //LIKES */}
-                    {/* <use xlinkHref="img/icon/sprite.svg#icon-like-liked"></use> */}
+                    
                     <use href={
 
 liked? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
-                      // true? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
                       
-                      // `${sprite}#icon-like-liked`
                       
                       
                       } />
 
-{/* {console.log(activeTrackRedux.stared_user)} */}
+
                   </S.playerTrackPlayLikeSvg>
                 </S.playerTrackPlayLke>
                 <S.playerTrackPlayDisLke onClick={()=>{console.log('disLike');renderDisLikes(activeTrack);triggerDisLikes()}} className="_btn-icon">

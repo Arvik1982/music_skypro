@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import * as S from "./FilterStyles.js";
 import { setTracksRedux,setTrackRedux, setMyTracksRedux,likeTrackRedux,setFilterAuthor, setCategoryResults,setSortYearFavoritesGr,
-  setSortYearFavoritesDcr,setSortYearMyTracksGr,setSortYearMyTracksDcr } from "../../store/reducers/playerSlice";
+  setSortYearFavoritesDcr,setSortYearMyTracksGr,setSortYearMyTracksDcr,setFilterState } from "../../store/reducers/playerSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { delMyTracks, getMyTracks, getTracks, refreshToken } from "../../api";
@@ -14,8 +14,7 @@ export function Filter({tracks, setTracks}) {
 const[filterAuthorNumber, setFilterAuthorNumber]  =useState('')
 const[filterSortNumber, setFilterSortNumber]  =useState('')
 const[filterCategoryNumber, setFilterCategoryNumber]  =useState('')
-
-const[filterType, setFilterType]=useState()
+const[filterType, setFilterType] = useState()
 const searchBaseRedux = useSelector(state=>state.track.searchBase)
 const myTracks = useSelector(state=>state.track.myTracks)
 const categoryListRedux = useSelector(state=>state.track.categoryList)
@@ -35,14 +34,17 @@ getMyTracks().then((data)=>{setFilterMyTracks(data)})
 //filter AUTHOR 
 
 function callFilterFunction(track){
+  dispatch(setFilterState());
   if (page === '1'||page === '2'||page === '3'){authorFilterCategory(track)}
   else if (page ==='favorites'){authorFilterMy(track)}
   else  {authorFilterAll(track)};
 }
 
 function authorFilterAll(track){
+  
   setTracks(filterTracks.filter((el)=>el.author===track.author))
   setFilterAuthorNumber(filterTracks.filter((el)=>el.author===track.author).length)
+  dispatch(setTracksRedux({filterTracks}))
 };
 function authorFilterMy(track){
 

@@ -241,7 +241,7 @@ let newTracks;
                 <S.Track_time>
                   {contentVisible ? (
                     <S.Track__timeSvg 
-                    onClick={()=>{toggleLike(track.id_old);console.log(track.id_old)}}  
+                    onClick={()=>{toggleLike(track.id_old);}}  
                     alt="time">
                                              
                                                                                                         {/* FAVORITES */}

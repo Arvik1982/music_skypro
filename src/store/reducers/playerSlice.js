@@ -80,9 +80,9 @@ const playerSlice = createSlice({
     searchBase:[],
     categoryList:[],
     isLiked:[],
-    filterAuthor:[]
-    ,
-    sortTracks:[]
+    filterAuthor:[],
+    sortTracks:[],
+    filterState:false
    
 
 
@@ -94,6 +94,11 @@ const playerSlice = createSlice({
 [getAllTracksRedux.fulfilled]:(state,action)=>{state.status='resolved';state.tracks=action.payload; } //fulfilled получены данные
   },
   reducers: {
+
+    setFilterState(state,action){
+      state.filterState=true
+      console.log(state.filterState)
+    },
 
     setSortYearFavoritesGr(state, action){
     let temp=[...action.payload]
@@ -163,9 +168,17 @@ setSearchResults(state, action){
 
     setTrackRedux(state, action) {
       state.activeTrack = action.payload.track;
-      
+      console.log(state.activeTrack)
       state.tracks = action.payload.tracks;
       state.tempTracks = action.payload.tracks;
+      
+   
+    },
+
+    setFilterActiveTrackRedux(state, action) {
+      state.activeTrack = action.payload
+      console.log(state.activeTrack)
+     
       
    
     },
@@ -299,7 +312,9 @@ export const {
   setSortYearFavoritesGr,
   setSortYearFavoritesDcr,
   setSortYearMyTracksGr,
-  setSortYearMyTracksDcr
+  setSortYearMyTracksDcr,
+  setFilterState,
+  setFilterActiveTrackRedux
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

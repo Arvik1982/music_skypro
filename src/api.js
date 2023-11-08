@@ -109,34 +109,31 @@ export async function getToken (email,password){
  }
 
 export async function getMyTracks(username){
+
 const accessToken = localStorage.getItem('access')
+
 const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
   method: "GET",
   headers: {
     Authorization: `Bearer ${accessToken}`,
   },
 })
- if(response.status===401){throw new Error('Нужна авторизация2')}
+ if(response.status===401){
+  refreshToken()
+  throw new Error('Нужна авторизация');
+ }
 
 const newData = await response.json()
 newData.forEach((el, index)=> {
       el.stared_user = username
       el.id_old = el.id
-      // console.log(el.id_old)
       el.id =index+8;
-      // console.log(el.id)
-    })
-   
-
+      })
 let data = newData
-
 return data
-
-              
- }
+}
 
 export async function addMyTracks(id){
-    //  console.log('add my tracks') 
 const accessToken = localStorage.getItem('access')
         
         
