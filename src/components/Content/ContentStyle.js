@@ -33,6 +33,7 @@ export const CentralBlock_playlistTitle = styled(
 )``;
 
 export const CentralBlockContentPlaylist = styled.div`
+
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

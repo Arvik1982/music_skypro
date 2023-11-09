@@ -1,11 +1,34 @@
 import styled from "styled-components";
 
 export const displayYes = styled.ul`
+overflow-y:auto;
+overflow-x:hidden;
+scrollbar-color:red;
+display:flex;
+flex-direction: column;
+gap: 20px;
   top: 50px;
   border-radius: 10px;
   padding-left: 20px;
-  min-width: 150px;
-  height: fit-content;
+  min-width: 248px;
+  min-height:250px;
+  background: #565454;
+  position: absolute;
+  bottom: -90px;
+  left: -5px;
+  z-index: 100;
+`;
+export const displayYesYar = styled.ul`
+overflow-y:auto;
+overflow-x:hidden;
+display:flex;
+flex-direction: column;
+gap: 10px;
+  top: 50px;
+  border-radius: 10px;
+  padding-left: 20px;
+  min-width: 248px;
+  height:fit-content;
   background: #565454;
   position: absolute;
   bottom: -90px;
@@ -64,6 +87,7 @@ export const filterBlockYear = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  
 `;
 export const filterBlockStyle = styled.div`
   position: relative;
@@ -80,11 +104,12 @@ color: aliceblue;
 }  
 `;
 export const styleFilterUl = styled.ul`
-display:${(props) =>(props.isactive==="style" ? "block" : "none") };
+display:${(props) =>(props.isactive ==="style" ? "block" : "none") };
+
 top: 50px;
 border-radius: 10px;
 padding-left: 20px;
-min-width: 150px;
+min-width: 248px;
 height: fit-content;
 background: #565454;
 position: absolute;
@@ -94,11 +119,4 @@ z-index: 100;
 }  
 `;
 
-// export const styleFilterDot = styled.div`
 
-//   &:focus{
-//     color:red;
-//   }
-
- 
-// `;

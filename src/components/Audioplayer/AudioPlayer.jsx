@@ -4,7 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "../../img/icon/play.svg";
 import * as S from "./PlayerStyles";
-import { getMyTracks, getTracks } from "../../api";
+import { getMyTracks, getTracks, refreshToken } from "../../api";
 import { UserContext } from "../../App"
 import { useNavigate, useParams } from "react-router-dom";
 import { addMyTracks,delMyTracks } from "../../api";
@@ -181,25 +181,21 @@ function renderTracks(){
       setTracks(data);
       dispatch(setTracksRedux(data));
       setContentVisible(true);
-      
-      
-      
+     
     }).then(()=>{getMyTracks().then((data)=>{dispatch(setMyTracksRedux(data))})
   
     .catch((error) => {
-      
+      refreshToken().then(()=>{getMyTracks().then((data)=>{dispatch(setMyTracksRedux(data))})})
       setContentVisible(true);
-      
-      localStorage.removeItem('userName')
-      navigate("/login",{replace:true})
+      // localStorage.removeItem('userName')
+      // navigate("/login",{replace:true})
       
     })
   
   })
     .catch((error) => {
-      // errorText = error.message;
+      alert (error.message)
       setContentVisible(true);
-      // setTracks([]);
       localStorage.removeItem('userName')
       navigate("/login",{replace:true})
       

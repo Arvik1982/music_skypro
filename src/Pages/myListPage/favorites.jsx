@@ -84,7 +84,6 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
         errorText = null;
       
         setContentVisible(true);
-       
         dispatch(setTracksRedux(data))
         dispatch(setMyTracksRedux(data))
         setTracks(data);
@@ -100,10 +99,8 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
             errorText = null;
             setTracks(data);
             setContentVisible(true);
-            
             dispatch(setMyTracksRedux(tracks))
-            // return tracks;
-            setTimeout(()=>navigate("/favorites",{replace:true}),2000)
+            setTimeout(()=>navigate("/favorites",{replace:true}),1000)
           })
 
         })

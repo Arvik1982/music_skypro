@@ -49,7 +49,7 @@ export function Content({status, setStatus, playerOn, setPlayerOn,user, setUser,
 function renderLikes(id){
   addMyTracks(id).then(()=>renderTracks()
   ).catch((err)=>{
-  // localStorage.removeItem('userName');
+  
   setError(err.message);
   setTimeout(()=>navigate("/login",{replace:true}),2000)
   })
@@ -83,17 +83,17 @@ function renderTracks(){
   useEffect(() => {
  renderTracks()
 }, [
-  // dispatch
+  dispatch
 ]);
 
 let newTracks;
-let skeletonTracks=[{ id: "8" }]
+let skeletonTracks=[  { id: "8" },
+{ id: "9" },{ id: "10" },{ id: "11" },{ id: "12" },{ id: "13" },{ id: "14" },{ id: "15" }]
 {contentVisible? newTracks = tracks:newTracks = skeletonTracks}
 
   return (
     <S.CentralBlockContent>
-      
-      {error&&<h2 style={{color:'red',
+    {error&&<h2 style={{color:'red',
     alignSelf:'center'}}>{error} для простановки лайков</h2>}
       <S.CentralBlock_playlistTitle>
         

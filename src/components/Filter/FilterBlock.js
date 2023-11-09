@@ -21,12 +21,29 @@ const categoryListRedux = useSelector(state=>state.track.categoryList)
 const [genre, setGenre]=useState([])
 const [filterTracks, setFilterTracks]=useState([])
 const [filterMyTracks, setFilterMyTracks]=useState([])
+const [unFilterTracks, setUnFilterTracks]=useState([])
 const param = useParams()
 let page = param.id
-
+// console.log(unFilterTracks)
 
 useEffect(()=>{
-getTracks().then((data)=>{setFilterTracks(data)})
+
+getTracks().then((data)=>{
+  // console.log(data)
+  let newNewArr=[]
+  for (let index = 0; index < data.length; index++) {
+  newNewArr.push(data[index].author)
+  }
+  let newNewNewArr = [...new Set(newNewArr)]
+  console.log(newNewNewArr)
+
+  
+// let unData =data.filter((el, index)=>{return data.findIndexOf(el.name) === index}) 
+// data.filter((item,index)=>{indexOf(item) !==index});
+setUnFilterTracks(newNewNewArr)
+
+setFilterTracks(data)})
+
 getMyTracks().then((data)=>{setFilterMyTracks(data)})
 .catch((error) => {refreshToken().then(()=>{getMyTracks().then((data) => {setFilterMyTracks(data)})})})  
 },[])
@@ -41,22 +58,37 @@ function callFilterFunction(track){
 }
 
 function authorFilterAll(track){
-  
-  setTracks(filterTracks.filter((el)=>el.author===track.author))
-  setFilterAuthorNumber(filterTracks.filter((el)=>el.author===track.author).length)
-  dispatch(setTracksRedux({filterTracks}))
+
+  setTracks(filterTracks.filter((el)=>el.author===track
+  // .author
+  ));
+  setFilterAuthorNumber(filterTracks.filter((el)=>el.author===track
+  // .author
+  ).length);
+console.log(filterTracks)
+  dispatch(setTracksRedux(filterTracks))
 };
+
+
 function authorFilterMy(track){
 
-  let resultSearchAll= filterMyTracks.filter((el)=>el.author===track.author)
-  setFilterAuthorNumber(filterMyTracks.filter((el)=>el.author===track.author).length)
+  let resultSearchAll= filterMyTracks.filter((el)=>el.author===track
+  // .author
+  )
+  setFilterAuthorNumber(filterMyTracks.filter((el)=>el.author===track
+  // .author
+  ).length)
   dispatch(setMyTracksRedux(resultSearchAll))
 
 };
 function authorFilterCategory(track){
   
-  let resultSearch= searchBaseRedux.filter((el)=>el.author===track.author)
-  setFilterAuthorNumber(searchBaseRedux.filter((el)=>el.author===track.author).length)
+  let resultSearch= searchBaseRedux.filter((el)=>el.author===track
+  // .author
+  )
+  setFilterAuthorNumber(searchBaseRedux.filter((el)=>el.author===track
+  // .author
+  ).length)
   dispatch(setCategoryResults(resultSearch))
 };
 
@@ -74,12 +106,13 @@ function sortYearGrow(){
 
 function sortYearGrowAll(){
 setFilterSortNumber(filterTracks.length)
-filterTracks.sort (function grow(a,b){
+let newArr =[...filterTracks]
+newArr.sort (function grow(a,b){
 
 return new Date(a.release_date)-new Date(b.release_date)
 })
-console.log(filterTracks)
-setTracks(filterTracks);
+// console.log(filterTracks)
+setTracks(newArr);
 
 }
 
@@ -201,9 +234,8 @@ function categoryTracksGenreFilter(){
 
 
   const dispatch=useDispatch();
-
-
   const [activeFilter, setActiveFilter] = useState("");
+  
 
   return (
     <S.centralBlockFilter className="filter">
@@ -252,13 +284,53 @@ function categoryTracksGenreFilter(){
         
         <div>
           {activeFilter === "author" ? (
-            <S.displayYes>
-              {filterTracks.map((track,index) => {
+            <S.displayYes  
+            
+            // style={{overflowX:'auto',
+            // overflowY:'hidden'}}
+            
+            >
+              {
+              
+              
+              // filterTracks
+              
+              unFilterTracks
+              .map((track,index) => {
           
           return (
-              <li>
-                <S.filterBlockLink key={index} onClick={()=>{dispatch(setFilterAuthor({track}));callFilterFunction(track)}} href="#">{track.author}</S.filterBlockLink>
-              </li>
+              
+                <li >
+                <S.filterBlockLink key={index} onClick={
+                  
+                  
+                  ()=>{
+
+                    
+                    
+                    
+                    // dispatch(setFilterAuthor({track}))
+                    ;callFilterFunction(track)
+                  
+                  
+                  
+                  }
+                
+                
+                
+                
+                } href="#">{
+                
+               
+                
+                
+                
+                track
+                // .author
+                // unFilterTracks
+                }</S.filterBlockLink>
+                </li>
+              
           );
           })}
 
@@ -307,15 +379,15 @@ function categoryTracksGenreFilter(){
         </div>
         <div>
           {activeFilter === "year" ? (
-            <S.displayYes>
-              <li>
+            <S.displayYesYar>
+              <li >
                 <S.filterBlockLink key={'year1'} onClick={()=>{sortYearGrow()}} href="#">Год увеличение</S.filterBlockLink>
               </li>
-              <li>
+              <li >
                 <S.filterBlockLink key={'year2'} onClick={()=>{sortYearDecrease()}} href="#">Год уменьшение</S.filterBlockLink>
               </li>
               
-            </S.displayYes>
+            </S.displayYesYar>
           ) : null}
         </div>
       </S.filterBlockYear>
@@ -368,13 +440,13 @@ console.log(`click`)}} className="_btn-text">жанру</S.centralBlockFilterBut
           <S.styleFilterUl isactive ={ activeFilter === "style"? "style": null }>
 
 
-            <li key={'cl'}>
+            <li style={{marginBottom:'10px'}} key={'cl'}>
               <S.filterBlockLink   onClick={()=>{setGenre(0);genreChoose()}} href="#">Классика</S.filterBlockLink>
             </li>
-            <li key={'in'}>
+            <li style={{marginBottom:'10px'}} key={'in'}>
               <S.filterBlockLink onClick={()=>{setGenre(1);genreChoose()}} href="#">Инди</S.filterBlockLink>
             </li>
-            <li key={'rk'}>
+            <li style={{marginBottom:'10px'}} key={'rk'}>
               <S.filterBlockLink onClick={()=>{setGenre(2);genreChoose()}} href="#">Рок</S.filterBlockLink>
             </li>
             
