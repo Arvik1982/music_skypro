@@ -1,7 +1,8 @@
 
+let allTracksRef='https://skypro-music-api.skyeng.tech/catalog/track/all/'
 let refresh;
 export async function getTracks(){
-const response = await fetch('https://skypro-music-api.skyeng.tech/catalog/track/all/')
+const response = await fetch(allTracksRef)
 
 
 if(!response.ok)   {
@@ -119,7 +120,7 @@ const response = await fetch("https://skypro-music-api.skyeng.tech/catalog/track
   },
 })
  if(response.status===401){
-  refreshToken()
+  refreshToken().catch((err)=>{console.log(err)});
   throw new Error('Нужна авторизация');
  }
 

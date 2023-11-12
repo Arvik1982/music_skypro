@@ -1,45 +1,47 @@
 import { useEffect, useState } from "react";
-// import "../Filter/FilterBlock.css"
 import React from "react";
-import * as S from "./FilterStyles.js";
-import { setTracksRedux,setTrackRedux, setMyTracksRedux,likeTrackRedux,setFilterAuthor, setCategoryResults,setSortYearFavoritesGr,
+import * as S from "./FilterStyles.jsx";
+import { setTracksRedux, setMyTracksRedux, setCategoryResults,setSortYearFavoritesGr,
   setSortYearFavoritesDcr,setSortYearMyTracksGr,setSortYearMyTracksDcr,setFilterState } from "../../store/reducers/playerSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { delMyTracks, getMyTracks, getTracks, refreshToken } from "../../api";
+import { getMyTracks, getTracks, refreshToken } from "../../api";
 import { useParams } from "react-router-dom";
 
-export function Filter({tracks, setTracks}) {
+export function Filter({ setTracks}) {
 
 const[filterAuthorNumber, setFilterAuthorNumber]  =useState('')
 const[filterSortNumber, setFilterSortNumber]  =useState('')
 const[filterCategoryNumber, setFilterCategoryNumber]  =useState('')
 const[filterType, setFilterType] = useState()
 const searchBaseRedux = useSelector(state=>state.track.searchBase)
-const myTracks = useSelector(state=>state.track.myTracks)
+
 const categoryListRedux = useSelector(state=>state.track.categoryList)
 const [genre, setGenre]=useState([])
 const [filterTracks, setFilterTracks]=useState([])
 const [filterMyTracks, setFilterMyTracks]=useState([])
 const [unFilterTracks, setUnFilterTracks]=useState([])
+const [filterOnAuthor, setFilterOnAuthor]=useState([])
+const [filterOnYear, setFilterOnYear]=useState([])
+const [filterOnGenre, setFilterOnGenre]=useState([])
+
 const param = useParams()
 let page = param.id
-// console.log(unFilterTracks)
+
 
 useEffect(()=>{
 
 getTracks().then((data)=>{
-  // console.log(data)
+  
   let newNewArr=[]
   for (let index = 0; index < data.length; index++) {
   newNewArr.push(data[index].author)
   }
   let newNewNewArr = [...new Set(newNewArr)]
-  console.log(newNewNewArr)
+  
 
   
-// let unData =data.filter((el, index)=>{return data.findIndexOf(el.name) === index}) 
-// data.filter((item,index)=>{indexOf(item) !==index});
+
 setUnFilterTracks(newNewNewArr)
 
 setFilterTracks(data)})
@@ -60,23 +62,27 @@ function callFilterFunction(track){
 function authorFilterAll(track){
 
   setTracks(filterTracks.filter((el)=>el.author===track
-  // .author
+  
   ));
   setFilterAuthorNumber(filterTracks.filter((el)=>el.author===track
-  // .author
+  
   ).length);
-console.log(filterTracks)
-  dispatch(setTracksRedux(filterTracks))
+
+  
+  dispatch(setTracksRedux(filterTracks.filter((el)=>el.author===track
+  
+  )))
+ 
 };
 
 
 function authorFilterMy(track){
 
   let resultSearchAll= filterMyTracks.filter((el)=>el.author===track
-  // .author
+  
   )
   setFilterAuthorNumber(filterMyTracks.filter((el)=>el.author===track
-  // .author
+  
   ).length)
   dispatch(setMyTracksRedux(resultSearchAll))
 
@@ -84,10 +90,10 @@ function authorFilterMy(track){
 function authorFilterCategory(track){
   
   let resultSearch= searchBaseRedux.filter((el)=>el.author===track
-  // .author
+  
   )
   setFilterAuthorNumber(searchBaseRedux.filter((el)=>el.author===track
-  // .author
+  
   ).length)
   dispatch(setCategoryResults(resultSearch))
 };
@@ -108,10 +114,8 @@ function sortYearGrowAll(){
 setFilterSortNumber(filterTracks.length)
 let newArr =[...filterTracks]
 newArr.sort (function grow(a,b){
+return new Date(a.release_date)-new Date(b.release_date)})
 
-return new Date(a.release_date)-new Date(b.release_date)
-})
-// console.log(filterTracks)
 setTracks(newArr);
 
 }
@@ -165,11 +169,6 @@ function sortYearDecreaseMy(){
     setFilterSortNumber(categoryListRedux.length)
     dispatch(setSortYearFavoritesDcr(categoryListRedux))
    }
-
-
-
-
-
 //category Fiter
 
 function genreChoose(){
@@ -252,24 +251,14 @@ function categoryTracksGenreFilter(){
         >
         
         
-        <h2 style={{
-        color: 'wite',
-        backgroundColor:'#AD61FF',
-        width:'25px',
-        height:'25px',
-        top:'231px',
-        left:'512px',
-        borderRadius:'25px',
-        fontSize:'20px',
-        fontWeight:'normal',
-        textAlign:'center'
-        
-        
-        
-        }}>{filterAuthorNumber}</h2>
+        <S.styleFilterH2Dot>{filterAuthorNumber}</S.styleFilterH2Dot>
       </div>
           <S.centralBlockFilterButton
+          stylepropsauthor={filterOnAuthor} 
             onClick={() => {
+              setFilterOnAuthor('author')
+              setFilterOnYear('')
+              setFilterOnGenre('')
               activeFilter === "author"
                 ? setActiveFilter("")
                 : setActiveFilter("author");setFilterType("author")
@@ -284,89 +273,66 @@ function categoryTracksGenreFilter(){
         
         <div>
           {activeFilter === "author" ? (
-            <S.displayYes  
-            
-            // style={{overflowX:'auto',
-            // overflowY:'hidden'}}
-            
-            >
+            <S.displayYes>
+            <S.displayYesScroll>  
+              
+
               {
-              
-              
-              // filterTracks
-              
               unFilterTracks
               .map((track,index) => {
           
-          return (
+                return (
               
                 <li >
                 <S.filterBlockLink key={index} onClick={
                   
                   
                   ()=>{
-
                     
-                    
-                    
-                    // dispatch(setFilterAuthor({track}))
                     ;callFilterFunction(track)
                   
-                  
-                  
                   }
-                
-                
-                
-                
+        
                 } href="#">{
                 
-               
-                
-                
-                
                 track
-                // .author
-                // unFilterTracks
+                
                 }</S.filterBlockLink>
                 </li>
               
           );
           })}
 
-              
+</S.displayYesScroll>
             </S.displayYes>
+            
           ) : null}
+
         </div>
       </S.filterBlockPerformer>
 
       <S.filterBlockYear>
 
-      <div
-        style={filterType=== "year"&filterSortNumber!=0 ?{display:'block',position:'absolute', top:'-10px',right:'-10px'}:{display:'none'}}
+      <S.styleDotDiv filterType={filterType}
+  style={filterType=== "year"&filterSortNumber!=0 ?{
+  display:'block',
+  position:'absolute',
+   top:'-10px',
+   right:'-10px'}
+   :{display:'none'}}
         >
         
         
-        <h2 style={{
-        color: 'wite',
-        backgroundColor:'#AD61FF',
-        width:'25px',
-        height:'25px',
-        top:'231px',
-        left:'512px',
-        borderRadius:'25px',
-        fontSize:'20px',
-        fontWeight:'normal',
-        textAlign:'center'
-        
-        
-        
-        }}>{filterSortNumber}</h2>
-      </div>
+        <S.styleFilterH2Dot>{filterSortNumber}</S.styleFilterH2Dot>
+      </S.styleDotDiv>
 
         <div className="filter_performer">
-          <S.centralBlockFilterButton
+          <S.centralBlockFilterButtonYear
+          stylepropsyear={filterOnYear} 
             onClick={() => {
+              setFilterOnYear('year')
+              setFilterOnAuthor('')
+              setFilterOnGenre('')
               activeFilter === "year"
                 ? setActiveFilter("")
                 : setActiveFilter("year");setFilterType("year")
@@ -375,16 +341,16 @@ function categoryTracksGenreFilter(){
             className="_btn-text"
           >
             году выпуска
-          </S.centralBlockFilterButton>
+          </S.centralBlockFilterButtonYear>
         </div>
         <div>
           {activeFilter === "year" ? (
             <S.displayYesYar>
-              <li >
-                <S.filterBlockLink key={'year1'} onClick={()=>{sortYearGrow()}} href="#">Год увеличение</S.filterBlockLink>
+              <li style={{display:'flex', columnGap: '24px'}} >
+                <S.filterBlockLink key={'year1'} onClick={()=>{sortYearGrow()}} href="#">Сначала новые</S.filterBlockLink>
               </li>
               <li >
-                <S.filterBlockLink key={'year2'} onClick={()=>{sortYearDecrease()}} href="#">Год уменьшение</S.filterBlockLink>
+                <S.filterBlockLink key={'year2'} onClick={()=>{sortYearDecrease()}} href="#">Сначала старые</S.filterBlockLink>
               </li>
               
             </S.displayYesYar>
@@ -399,27 +365,17 @@ function categoryTracksGenreFilter(){
         >
         
         
-        <h2 style={{
-        color: 'wite',
-        backgroundColor:'#AD61FF',
-        width:'25px',
-        height:'25px',
-        top:'231px',
-        left:'512px',
-        borderRadius:'25px',
-        fontSize:'20px',
-        fontWeight:'normal',
-        textAlign:'center'
-        
-        
-        
-        }}>{filterCategoryNumber}</h2>
+        <S.styleFilterH2Dot>{filterCategoryNumber}</S.styleFilterH2Dot>
       </div>
 
 
         <div className="filter_style">
-          <S.centralBlockFilterButton
+          <S.centralBlockFilterButtonGenre 
+          stylepropsgenre={filterOnGenre}
             onClick={() => {
+              setFilterOnGenre('genre')
+              setFilterOnAuthor('')
+              setFilterOnYear('')
               activeFilter === "style"
                 ? setActiveFilter("")
                 : setActiveFilter("style");setFilterType("style")
@@ -428,36 +384,33 @@ function categoryTracksGenreFilter(){
             className="_btn-text"
           >
             жанру
-          </S.centralBlockFilterButton>
+          </S.centralBlockFilterButtonGenre>
         </div>
 
-        {/* <div className="filter_style">
-    <S.centralBlockFilterButton onClick={()=>{activeFilter==='style'?setActiveFilter('') :setActiveFilter('style')
-console.log(`click`)}} className="_btn-text">жанру</S.centralBlockFilterButton>
-  </div>  */}
+       
 
         <div>
-          <S.styleFilterUl isactive ={ activeFilter === "style"? "style": null }>
+          <S.styleFilterUl  isactive ={ activeFilter === "style"? "style": null }>
 
 
-            <li style={{marginBottom:'10px'}} key={'cl'}>
+            <li style={{marginBottom:'25px'}} key={'cl'}>
               <S.filterBlockLink   onClick={()=>{setGenre(0);genreChoose()}} href="#">Классика</S.filterBlockLink>
             </li>
-            <li style={{marginBottom:'10px'}} key={'in'}>
+            <li style={{marginBottom:'25px'}} key={'in'}>
               <S.filterBlockLink onClick={()=>{setGenre(1);genreChoose()}} href="#">Инди</S.filterBlockLink>
             </li>
-            <li style={{marginBottom:'10px'}} key={'rk'}>
+            <li style={{marginBottom:'25px'}} key={'rk'}>
               <S.filterBlockLink onClick={()=>{setGenre(2);genreChoose()}} href="#">Рок</S.filterBlockLink>
             </li>
-            
+            <li style={{marginBottom:'25px'}} key={'{hp}'}>
+              <S.filterBlockLink onClick={()=>{setGenre(0);genreChoose()}} href="#">Хипхоп</S.filterBlockLink>
+            </li>
+            <li style={{marginBottom:'25px'}} key={'{hp2}'}>
+              <S.filterBlockLink onClick={()=>{setGenre(1);genreChoose()}} href="#">Хипхоп</S.filterBlockLink>
+            </li>
           </S.styleFilterUl>
 
-          {/* <ul className={activeFilter === 'style' ? 'display_yes':'display_no'} >
-    <li><a className="link"href="#">Жанр муз1</a></li>
-    <li><a className="link"href="#">Жанр муз2</a></li>
-    <li><a className="link"href="#">Жанр муз3</a></li>
-    <li><a className="link"href="#">Жанр муз4</a></li>
-    </ul> */}
+      
         </div>
       </S.filterBlockStyle>
     </S.centralBlockFilter>

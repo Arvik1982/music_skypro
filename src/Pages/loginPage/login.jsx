@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { AppRoutes } from "../../routs";
-import { useState } from "react";
-import { RegPage } from '../loginPage/registration';
-import {App} from'../../App'
-import { Navigate, Outlet } from "react-router-dom"
+
 import { Link } from "react-router-dom";
 export const Text__h1 = styled.h1`
 

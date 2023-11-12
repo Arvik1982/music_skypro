@@ -20,11 +20,10 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
       setPlaceholderPass('заполните поле ввода')
       setPlaceholderUser('заполните поле ввода')}
     else{
-    login(email,password).then((data)=>{console.log(data);
+    login(email,password).then((data)=>{c
       setError(data.detail)
       ;})
-    // alert(`Выполняется вход: ${email} ${password}`);
-    //setError("Неизвестная ошибка входа");
+    
   }
   };
 

@@ -65,6 +65,7 @@ const playerSlice = createSlice({
   name: "player",
 
   initialState: {
+    tempTrackList:[],
     activeTrack: [],
     tracks: [],
     tempTracks: [],
@@ -97,7 +98,13 @@ const playerSlice = createSlice({
 
     setFilterState(state,action){
       state.filterState=true
-      console.log(state.filterState)
+      
+    },
+
+
+    setFilterState(state,action){
+      state.filterState=true
+      
     },
 
     setSortYearFavoritesGr(state, action){
@@ -106,7 +113,7 @@ const playerSlice = createSlice({
        return new Date(a.release_date)-new Date(b.release_date)
         
         })
-console.log(state.categoryList)
+
     },
 
     setSortYearMyTracksGr(state, action){
@@ -115,7 +122,7 @@ console.log(state.categoryList)
          return new Date(a.release_date)-new Date(b.release_date)
           
           })
-  console.log(state.categoryList)
+ 
       },
     setSortYearFavoritesDcr(state, action){
       let temp=[...action.payload]
@@ -123,7 +130,7 @@ console.log(state.categoryList)
          return new Date(b.release_date)-new Date(a.release_date)
           
           })
-  console.log(state.categoryList)
+  
       },
 
       setSortYearMyTracksDcr(state, action){
@@ -132,7 +139,7 @@ console.log(state.categoryList)
            return new Date(b.release_date)-new Date(a.release_date)
             
             })
-    console.log(state.categoryList)
+    
         },
 
     setFilterAuthor(state, action){
@@ -168,7 +175,8 @@ setSearchResults(state, action){
 
     setTrackRedux(state, action) {
       state.activeTrack = action.payload.track;
-      console.log(state.activeTrack)
+      
+
       state.tracks = action.payload.tracks;
       state.tempTracks = action.payload.tracks;
       
@@ -177,22 +185,20 @@ setSearchResults(state, action){
 
     setFilterActiveTrackRedux(state, action) {
       state.activeTrack = action.payload
-      console.log(state.activeTrack)
+      
      
       
    
     },
 
     setTracksRedux(state, action) {
-      
       state.tracks = action.payload
       state.searchBase = action.payload;
-      
-
-     
     },
 
     setNextRedux(state, action) {
+
+    if(!state.filterState){
       let next = state.activeTrack.id - 7;
 
       if (state.tracks.length > 1) {
@@ -207,8 +213,17 @@ setSearchResults(state, action){
       } else {
         state.activeTrack = state.tracks[state.tracks.length - 1];
       }
+    }else{ 
+        let index = state.tracks.findIndex((el)=>el.id===state.activeTrack.id)
+        
+if(index===state.tracks.length-1){state.activeTrack = state.tracks[0];}
+        
+          else{  state.activeTrack = state.tracks[index+1];}
+    }
+
     },
     setPrevRedux(state) {
+      if(!state.filterState){
       let prev = state.activeTrack.id - 9;
       let prevId = state.tracks.length - 1;
       if (state.tracks.length > 1) {
@@ -220,6 +235,14 @@ setSearchResults(state, action){
       } else {
         state.activeTrack = state.tracks[state.tracks.length - 1];
       }
+    }else{ 
+        let index = state.tracks.findIndex((el)=>el.id===state.activeTrack.id)
+        
+    if(index===0){state.activeTrack = state.tracks[state.tracks.length-1];}
+        
+          else{state.activeTrack = state.tracks[index-1];}
+    }
+
     },
     setProgressRedux(state, action) {
       let next = state.activeTrack.id - 7;

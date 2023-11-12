@@ -1,14 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { ErrPage } from './Pages/errPage/notfound';
 import { MainPage } from "./Pages/mainPage/main";
-import { LoginPage } from './Pages/loginPage/login';
-import { RegPage } from './Pages/loginPage/registration';
 import { Favorites} from './Pages/myListPage/favorites';
 import { PlayListPage} from './Pages/playListsPage/category';
 import { Account } from "./Pages/Account/index";
 import { ProtectedRoute } from "./components/protected/index";
 import AuthPage from "./Pages/loginPage/AuthPage";
-import AuthPageReg from "./Pages/loginPage/registration";
+
 
 
 export function AppRoutes ({status, setStatus, user, setUser,playerOn, setPlayerOn, setUserName, setUserPass, isLoginMode,setIsLoginMode, listName, setListName, tracks, setTracks}){

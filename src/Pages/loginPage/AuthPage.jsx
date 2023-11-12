@@ -111,8 +111,7 @@ export default function AuthPage({isLoginMode, setIsLoginMode, setUser}) {
   
   }
     
-    // alert(`Выполняется регистрация: ${email} ${password}`);
-    // setError("Неизвестная ошибка регистрации");
+   
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы

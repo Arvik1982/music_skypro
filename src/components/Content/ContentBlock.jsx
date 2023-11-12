@@ -2,32 +2,33 @@ import sprite from "./sprite.svg";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useContext, useEffect, useState } from "react";
-import * as S from "./ContentStyle.js";
+import * as S from "./ContentStyle";
 import { addMyTracks, delMyTracks, getTracks } from "../../api";
 import { UserContext } from "../../App"
 //redux
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setTrackRedux,setTracksRedux,setIsLiked,setFilterActiveTrackRedux } from "../../store/reducers/playerSlice";
+import { setTrackRedux,setTracksRedux } from "../../store/reducers/playerSlice";
 import { useNavigate } from "react-router-dom";
 
 
 let errorText = null;
-let liked=false;
 
-export function Content({status, setStatus, playerOn, setPlayerOn,user, setUser, tracks, setTracks}) {
+
+export function Content({status, setStatus, setPlayerOn,tracks, setTracks}) {
   const [contentVisible, setContentVisible] = useState(false);
   const [error, setError]=useState(null)
   const userName = useContext(UserContext)
   const navigate=useNavigate()
+  
   
  
 //redux
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
   const dispatch=useDispatch();
-  
-
+  const filterState = useSelector(state=>state.track.filterState)
+  const filterTracks = useSelector(state=>state.track.tracks)
 
   function likes(track){ 
       for (let index_user = 0; index_user < track.stared_user.length; index_user++) {
@@ -65,8 +66,10 @@ function renderTracks(){
    getTracks()
     .then((data) => {
       errorText = null;
-      setTracks(data);
-      dispatch(setTracksRedux(data));
+      // if (!filterState){
+        setTracks(data);
+      // };
+      if (!filterState) {dispatch(setTracksRedux(data)); };
       status?setStatus(false):setStatus(true);
       return tracks;
     })
@@ -81,15 +84,18 @@ function renderTracks(){
 
 
   useEffect(() => {
- renderTracks()
+    
+  renderTracks()
 }, [
-  dispatch
+  dispatch,setTracks
 ]);
 
 let newTracks;
 let skeletonTracks=[  { id: "8" },
 { id: "9" },{ id: "10" },{ id: "11" },{ id: "12" },{ id: "13" },{ id: "14" },{ id: "15" }]
+
 {contentVisible? newTracks = tracks:newTracks = skeletonTracks}
+
 
   return (
     <S.CentralBlockContent>
@@ -127,12 +133,9 @@ let skeletonTracks=[  { id: "8" },
                   
                   e.preventDefault();
                   setPlayerOn('');
-
-                   
+                  e.stopPropagation()
                   dispatch(setTrackRedux({track,tracks}))
-                 
-                  
-                  // dispatch(setTrackRedux({track,tracks}))
+
                 }}
               >
                 <S.Track__title>
@@ -158,9 +161,7 @@ let skeletonTracks=[  { id: "8" },
                   </S.Track__titleImage>
                   <S.Track_titleText>
                     <S.Track__titleLink
-                      onClick={() => {
-                        
-                      }}
+                    
                       className="trackNameLink"
                       href="http://"
                     >
@@ -202,25 +203,27 @@ let skeletonTracks=[  { id: "8" },
                 </S.Track__album>
                 <S.Track_time>
                   {contentVisible ? (
-                    <S.Track__timeSvg  onClick={()=>{
-                      likes(track)!==track.id? renderLikes(track.id):renderDisLikes(track.id);
-                      ;
-                      dispatch(setTrackRedux({track,tracks}))
-                     
-                      }
+                    <S.Track__timeSvg  onClick={(e)=>{
+
                       
+                      e.stopPropagation();
+
+                      likes(track)!==track.id? renderLikes(track.id):renderDisLikes(track.id);
+                      
+
+                      }
                       }  alt="time">            
                     
                                                                                                                        {/* LIKES */}
                                                                                                               
                       <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
-                      <use  href={ 
+                      <use style={{zIndex:'1000'}}  href={ 
                         likes(track)===track.id? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
-                        // likes(track)&&`${sprite}#icon-like-liked`
+                        
                         } />
                     </S.Track__timeSvg>
                   ) : (
-                    // ;`${sprite}#icon-like`
+                    
                     <SkeletonTheme baseColor="#202020" highlightColor="#444">
                       <S.Skeleton_lineMini />
                     </SkeletonTheme>

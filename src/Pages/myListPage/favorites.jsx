@@ -5,8 +5,8 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import React, { useContext, useEffect, useState } from "react";
 import * as S from "./favoritesStyle";
-import { delMyTracks, getMyTracks, getTracks, refreshToken } from "../../api";
-import { Link, useNavigate } from "react-router-dom";
+import { delMyTracks, getMyTracks, refreshToken } from "../../api";
+import { useNavigate } from "react-router-dom";
 import { Nav } from "../../components/Navmenu/NavMenu";
 import { Search } from "../../components/Search/Search";
 import { Tracks } from "../../components/Tracs/tracs";
@@ -19,11 +19,9 @@ import { setTracksRedux,setTrackRedux, setMyTracksRedux,likeTrackRedux } from ".
 
 
 let errorText = null;
-// let href;
 
-export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName,
-  //  tracks, setTracks
-  
+
+export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setListName  
   }) {
   const [contentVisible, setContentVisible] = useState(false);
   const userName = useContext(UserContext)
@@ -46,7 +44,6 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
   const activeTrackRedux = useSelector(state=>state.track.activeTrack)
   const playerOnDot = useSelector(state=>state.track.playerOn)
   const myTracks = useSelector(state=>state.track.myTracks)
-  console. log(myTracks)
   const dispatch=useDispatch();
 
   async function  toggleLike(id){
@@ -87,7 +84,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
         dispatch(setTracksRedux(data))
         dispatch(setMyTracksRedux(data))
         setTracks(data);
-        // return tracks;
+        
       })
       .catch((error) => {
         errorText = error.message;
@@ -101,7 +98,7 @@ export function Favorites({user, setUser, playerOn, setPlayerOn, listName, setLi
             setContentVisible(true);
             dispatch(setMyTracksRedux(tracks))
             setTimeout(()=>navigate("/favorites",{replace:true}),1000)
-          })
+          }).catch((err)=>{navigate("/",{replace:true})})
 
         })
         
@@ -150,11 +147,7 @@ let newTracks;
         {
           
         
-        // myTracks
-        
-        // tracks
-
-        
+               
         newTracks.map((track, index) => {
           return (
             <S.Playlist__item   key={index} >
@@ -243,8 +236,7 @@ let newTracks;
                                              
                                                                                                         {/* FAVORITES */}
                       <use href={
-                        // likes(track)? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
-                        
+                                                
                         `${sprite}#icon-like-liked`
                         
                         } />

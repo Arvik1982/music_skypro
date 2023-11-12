@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { AppRoutes } from "./routs";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { Player } from "./components/Audioplayer/AudioPlayer";
-import { Nav } from "./components/Navmenu/NavMenu";
+
 export const UserContext = React.createContext(null);
 
 
@@ -52,45 +52,12 @@ const GlobalStyle = createGlobalStyle`
 
 
 
-// const ExampleButtonInput = () => {
-//   const refToButton = useRef(null);
-//   useEffect(() => console.log(refToButton));
-
-//   const refToInput = useRef(null);
-
-//   const clickButton = () => {
-//     refToInput.current.focus();
-//   };
-
-//   return (
-//     <div>
-//       <button onClick={clickButton} ref={refToButton}>
-//         push
-//       </button>
-//       <input type="text" ref={refToInput}></input>
-//     </div>
-//   );
-// };
-
-// const TextInput = forwardRef((p, ref) => {
-//   return <input type="text" ref={ref}></input>;
-// });
-
-// const AutoFocusInput = () => {
-//   const inputRef = useRef(null);
-//   useEffect(() => {
-//     inputRef.current.focus();
-//   }, []);
-//   return <TextInput ref={inputRef}></TextInput>;
-// };
-
-
 
 
 export function App() {
   
   
-  // let localUser=localStorage.getItem('user')
+  
   const [status, setStatus] = useState(false);
   const [playerOn, setPlayerOn] = useState("hidden");
   const [user, setUser] = useState(false);
@@ -98,10 +65,7 @@ export function App() {
   const [userPass, setUserPass]=useState(null)
   const [isLoginMode, setIsLoginMode]=useState(true)
   const [listName, setListName]=useState('Tracks')
-  const [tracks, setTracks] =useState([
-  // { id: "8" },
-  // { id: "9" },{ id: "10" },{ id: "11" },{ id: "12" },{ id: "13" },{ id: "14" },{ id: "15" }
-])
+  const [tracks, setTracks] =useState([])
   
   let userLoginName= localStorage.getItem('userName')
   let textName= 'Имя пользователя:'
@@ -118,12 +82,11 @@ export function App() {
        
        listName={listName} setListName={setListName} isLoginMode={isLoginMode}  setIsLoginMode={setIsLoginMode} setUserPass={setUserPass} setUserName={setUserName} user={user} setUser={setUser} playerOn={playerOn}setPlayerOn={setPlayerOn}/>
       <Player playerVisibility = {playerOn} tracks={tracks} setTracks={setTracks}
-      // activeTrack={activeTrack}
+      
       status={status} setStatus={setStatus}
       />
     </UserContext.Provider> 
-      {/* <ExampleButtonInput />
-      <AutoFocusInput /> */}
+      
       <GlobalStyle />
     </div>
   );

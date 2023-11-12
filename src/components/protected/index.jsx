@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { UserContext } from "../../App"
+
 
 
 export const ProtectedRoute =({redirectPath ="/login", isAllowed} )=>{

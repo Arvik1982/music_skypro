@@ -1,13 +1,14 @@
 import sprite from "./sprite.svg";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "../../img/icon/play.svg";
 import * as S from "./PlayerStyles";
 import { getMyTracks, getTracks, refreshToken } from "../../api";
-import { UserContext } from "../../App"
-import { useNavigate, useParams } from "react-router-dom";
+
+import { useNavigate} from "react-router-dom";
 import { addMyTracks,delMyTracks } from "../../api";
+import { PlayerVolume } from "./Volume";
 //redux
 
 import { useSelector } from "react-redux";
@@ -21,40 +22,38 @@ import {
   setOnDotRedux,
   setOffDotRedux,
   setCycleRedux,
-  setTrackRedux,
   setTracksRedux,
   setMyTracksRedux} from "../../store/reducers/playerSlice";
 import { useDispatch } from "react-redux";
-// let tracks=[]
+
 
 
 export function Player({playerVisibility, tracks, setTracks, status, setStatus}) {
   
   const[liked, setLiked] = useState()
-  const param = useParams()
+  
   const realPlayer = useRef(null);
   const [playerOn, setPlayerOn] = useState(false);
   const [loopOn, setLoopOn] = useState(false);
-  const [volumeOn, setVolumeOn] = useState(0.2);
+  
   const [progressOn, setProgressOn] = useState(0);
   const [trackTime, setTrackTime] = useState(0);
   const [mix, setMixOn] = useState(false);
-  const userName = useContext(UserContext)
+  
   const [allTracks,setAllTracks] = useState([])
-  // console.log(allTracks)
+  
   
  
 //redux
-const tracksRedux = useSelector(state=>state.track.tracks)
-const filterAuthor= useSelector(state=>state.track.filterAuthor)
+
 const activeTrackRedux = useSelector(state=>state.track.activeTrack)
-const isLikedRedux = useSelector(state=>state.track.isLiked)
+
 const myTracks = useSelector(state=>state.track.myTracks)
 const filterState = useSelector(state=>state.track.filterState)
 const dispatch=useDispatch()
 let activeTrack = activeTrackRedux 
 const navigate=useNavigate()
-
+const filterTracks = useSelector(state=>state.track.tracks)
 useEffect(() => {
   renderTracks()
   likes()
@@ -104,7 +103,7 @@ function triggerDisLikes(){
     realPlayer?.current.play();
     setPlayerOn(true);
     dispatch(setOnDotRedux())
-    // dispatch(setNextRedux());
+    
   };
   const clickPlayerStop = () => {
     realPlayer?.current.pause();
@@ -121,7 +120,7 @@ function triggerDisLikes(){
     realPlayer.current.loop = false;
     setLoopOn(false);
      dispatch(setCycleRedux())
-    //  console.log(activeTrack)
+    
   };
 
   const clickPlayerShuffleOn = () => {
@@ -157,7 +156,7 @@ function renderLikes(activeTrack){
   
 
   addMyTracks(id).then(()=>{renderTracks()}
-  ).catch((err)=>{console.log(err.message)
+  ).catch((err)=>{
   
   })
 }
@@ -169,17 +168,21 @@ function renderDisLikes(activeTrack){
   
 
   delMyTracks(id).then(()=>renderTracks()
-  ).catch((err)=>{console.log(err.message)
+  ).catch((err)=>{
     
   })
 }
 function renderTracks(){
-
+  
     getTracks()
+    
     .then((data) => {
       setAllTracks(data);
-      setTracks(data);
-      dispatch(setTracksRedux(data));
+    if (!filterState){setTracks(data);}
+    if (!filterState){
+      dispatch(setTracksRedux(data))
+    }else{
+    dispatch(setTracksRedux(filterTracks))}
       setContentVisible(true);
      
     }).then(()=>{getMyTracks().then((data)=>{dispatch(setMyTracksRedux(data))})
@@ -187,8 +190,6 @@ function renderTracks(){
     .catch((error) => {
       refreshToken().then(()=>{getMyTracks().then((data)=>{dispatch(setMyTracksRedux(data))})})
       setContentVisible(true);
-      // localStorage.removeItem('userName')
-      // navigate("/login",{replace:true})
       
     })
   
@@ -287,7 +288,7 @@ setLiked(Boolean(likedTrack))
                   onClick={loopOn ? clickPlayerLoopOff : clickPlayerLoopOn}
                   alt="repeat"
                 >
-                  {/* <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use> */}
+                  
                   <use
                     href={loopOn ? `${sprite}#loopOn` : `${sprite}#icon-repeat`}                              
                                                                                                 // REPEAT
@@ -295,14 +296,14 @@ setLiked(Boolean(likedTrack))
                 </S.playerBtnRepeatSvg>
               </S.playerBtnRepeat>
               <S.playerBtnShuffle  className=" _btn-icon">
-              {/* style={shuffleOn?{backgroundColor:'red'}:{backgroundColor:'yellow'}} */}
+              
                 <S.playerBtnShuffleSvg
                   onClick={  mix ? clickPlayerShuffleOff : clickPlayerShuffleOn }
                   
                                                                                               //SHUFFLE
                   alt="shuffle"
                 >
-                  {/* <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use> */}
+                  
                   <use href={mix?`${sprite}#icon-shuffle-off`: `${sprite}#icon-shuffle`} />
                 </S.playerBtnShuffleSvg>
               </S.playerBtnShuffle>
@@ -348,13 +349,13 @@ setLiked(Boolean(likedTrack))
                 </S.playerTrackPlayAlbum>
               </S.playerTrackPlayContain>
               <S.playerTrackPlayLkeDislike>
-                <S.playerTrackPlayLke onClick={()=>{console.log('like');
+                <S.playerTrackPlayLke onClick={()=>{
                 renderLikes(activeTrack)
-                // renderLikes(activeTrack.id);
+                
                 
                 triggerLikes()
                 
-                // likes()
+                
                 
                 }} className=" _btn-icon">
                   <S.playerTrackPlayLikeSvg alt="like">                                         
@@ -363,15 +364,13 @@ setLiked(Boolean(likedTrack))
                     <use href={
 
 liked? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
-                      
-                      
-                      
+
                       } />
 
 
                   </S.playerTrackPlayLikeSvg>
                 </S.playerTrackPlayLke>
-                <S.playerTrackPlayDisLke onClick={()=>{console.log('disLike');renderDisLikes(activeTrack);triggerDisLikes()}} className="_btn-icon">
+                <S.playerTrackPlayDisLke onClick={()=>{renderDisLikes(activeTrack);triggerDisLikes()}} className="_btn-icon">
                   <S.playerTrackPlayDisLikeSvg alt="dislike">
                     <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
                     <use href={`${sprite}#icon-dislike`} />
@@ -380,29 +379,9 @@ liked? `${sprite}#icon-like-liked`: `${sprite}#icon-like`
               </S.playerTrackPlayLkeDislike>
             </S.playerTrackPlay>
           </S.barPlayer_player>
-          <S.playerBarVolBlock className="volume">
-            <S.playerBarVolContent>
-              <S.playerBarVolImg>
-                <S.playerBarVolSvg alt="volume">
-                  <use xlinkHref="img/icon/sprite.svg#icon-volume"></use>
-                  <use href={`${sprite}#icon-volume`} />
-                </S.playerBarVolSvg>
-              </S.playerBarVolImg>
-              <S.playerBarVolProgress className="_btn">
-                <S.playerBarVolProgressLine
-                  onChange={(e) => {
-                    let volumeRange = e.target.value / 100;
-                    realPlayer.current.volume = volumeRange;
-                    setVolumeOn(volumeRange);
-                    
-                  }}
-                  className="_btn"
-                  type="range"
-                  name="range"
-                />
-              </S.playerBarVolProgress>
-            </S.playerBarVolContent>
-          </S.playerBarVolBlock>
+
+<PlayerVolume playerOn={playerOn} realPlayer={realPlayer} playerVisibility={playerVisibility} tracks={tracks} setTracks={setTracks} status={status} setStatus={setStatus} />
+
         </S.playerBlock>
       </S.barContent>
     </S.bar>

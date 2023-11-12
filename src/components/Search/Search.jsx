@@ -1,19 +1,16 @@
 import sprite from "./sprite.svg";
-
 import "react-loading-skeleton/dist/skeleton.css";
 import * as S from "./SearchStyle";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTracksRedux,setSearchResults, setMyTracksRedux, setCategoryResults } from "../../store/reducers/playerSlice";
+import {setMyTracksRedux, setCategoryResults } from "../../store/reducers/playerSlice";
 import { useParams } from "react-router-dom";
 
 
-export  function Search({tracks,setTracks}) {
+export  function Search({setTracks}) {
 
 
 const tracksRedux = useSelector(state=>state.track.tracks)
-const myTracksRedux = useSelector(state=>state.track.myTracks)
-const categoryListRedux = useSelector(state=>state.track.categoryList)
 const searchBaseRedux = useSelector(state=>state.track.searchBase)
 const [searchText, setSearchText]= useState()
 const dispatch=useDispatch()
@@ -22,12 +19,6 @@ const param = useParams()
 let page = param.id
 
 let resultSearch;
-
-
-
-
-
-
 function filterAllTracks(){ 
   
 let inputCase = String(searchText).toLowerCase()
@@ -40,7 +31,7 @@ function filterMyTracks(){
   
   let inputCase = String(searchText).toLowerCase()
   resultSearch = tracksRedux .filter(el=>String(el.name).toLowerCase().includes(inputCase))
-  // setTracks(resultSearch)
+  
   dispatch(setMyTracksRedux(resultSearch))
   
   }
@@ -56,18 +47,11 @@ function filterMyTracks(){
     dispatch(setCategoryResults(resultSearch))
     }
 
-   
-
-
 useEffect(() => {
+  
 if (page === '1'||page === '2'||page === '3'){filterCategoryTracks()}
 else if (page =='favorites'){filterMyTracks()}
 else  {filterAllTracks()};
-  // if (page === '1'||'2'||'3'){filterCategoryTracks()}
-  // page === 'favorites'? filterMyTracks() : filterAllTracks();
-
-// }
-
 }, [searchText])
 
 
@@ -81,7 +65,7 @@ else  {filterAllTracks()};
       value={searchText}  
       onChange={(event)=>{setSearchText(event.target.value);
       
-      // {page ==='favorites'? filterMyTracks(): filterAllTracks()};
+      
              
       }} 
       
@@ -94,4 +78,3 @@ else  {filterAllTracks()};
 
 
 
-// resultSearch = tracks.filter(el=>String(el.name).toLowerCase().includes(inputCase))

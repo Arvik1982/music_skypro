@@ -246,9 +246,7 @@ function renderLikes(track){
                       </S.Track__titleImage>
                       <S.Track_titleText>
                         <S.Track__titleLink
-                          onClick={() => {
-                           
-                          }}
+                          
                           className="trackNameLink"
                           href="http://"
                         >
@@ -290,7 +288,9 @@ function renderLikes(track){
                     </S.Track__album>
                     <S.Track_time>
                       {contentVisible ? (
-                        <S.Track__timeSvg  onClick={()=>{likes(track)!==track.name? renderLikes(track):renderDisLikes(track)
+                        <S.Track__timeSvg  onClick={(e)=>{
+                          e.stopPropagation();
+                          likes(track)!==track.name? renderLikes(track):renderDisLikes(track)
                           // dispatch(likeTrackRedux(track.id));
                           }}  alt="time">            
                         
