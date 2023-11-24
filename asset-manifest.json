@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/Arvik1982.github.io/music_skypro/public/index.html/static/css/main.4b9d065d.css",
-    "main.js": "/Arvik1982.github.io/music_skypro/public/index.html/static/js/main.6ff70ecb.js",
-    "static/media/playlist01.png": "/Arvik1982.github.io/music_skypro/public/index.html/static/media/playlist01.1f0f03b6028fe76c9c24.png",
-    "static/media/playlist03.png": "/Arvik1982.github.io/music_skypro/public/index.html/static/media/playlist03.09e115ca5326c4224eb5.png",
-    "static/media/playlist02.png": "/Arvik1982.github.io/music_skypro/public/index.html/static/media/playlist02.1ebc1a93e700376dd918.png",
-    "static/media/sprite.svg": "/Arvik1982.github.io/music_skypro/public/index.html/static/media/sprite.12e0bdd3f410ab2e7849491a273a4034.svg",
-    "index.html": "/Arvik1982.github.io/music_skypro/public/index.html/index.html",
-    "static/media/play.svg": "/Arvik1982.github.io/music_skypro/public/index.html/static/media/play.6c8520a0bbe83b0907164be9d1f01518.svg",
-    "main.4b9d065d.css.map": "/Arvik1982.github.io/music_skypro/public/index.html/static/css/main.4b9d065d.css.map",
-    "main.6ff70ecb.js.map": "/Arvik1982.github.io/music_skypro/public/index.html/static/js/main.6ff70ecb.js.map"
+    "main.css": "/Arvik1982.github.io/music_skypro/static/css/main.4b9d065d.css",
+    "main.js": "/Arvik1982.github.io/music_skypro/static/js/main.97d2491b.js",
+    "static/media/playlist01.png": "/Arvik1982.github.io/music_skypro/static/media/playlist01.1f0f03b6028fe76c9c24.png",
+    "static/media/playlist03.png": "/Arvik1982.github.io/music_skypro/static/media/playlist03.09e115ca5326c4224eb5.png",
+    "static/media/playlist02.png": "/Arvik1982.github.io/music_skypro/static/media/playlist02.1ebc1a93e700376dd918.png",
+    "static/media/sprite.svg": "/Arvik1982.github.io/music_skypro/static/media/sprite.12e0bdd3f410ab2e7849491a273a4034.svg",
+    "index.html": "/Arvik1982.github.io/music_skypro/index.html",
+    "static/media/play.svg": "/Arvik1982.github.io/music_skypro/static/media/play.6c8520a0bbe83b0907164be9d1f01518.svg",
+    "main.4b9d065d.css.map": "/Arvik1982.github.io/music_skypro/static/css/main.4b9d065d.css.map",
+    "main.97d2491b.js.map": "/Arvik1982.github.io/music_skypro/static/js/main.97d2491b.js.map"
   },
   "entrypoints": [
     "static/css/main.4b9d065d.css",
-    "static/js/main.6ff70ecb.js"
+    "static/js/main.97d2491b.js"
   ]
 }
