@@ -17,10 +17,64 @@ export const barContent = styled.div`
   -ms-flex-direction: column;
   flex-direction: column;
 `;
-export const progress = styled.div`
+export const progress = styled.input`
+  // width: 100%;
+  // height: 5px;
+  // background: #2e2e2e;;
+  --progress-height: 8px;
+  --progress-color: #b672ff;
+  --progress-color: ${(props) => props.$color ?? "#b672ff"};
+
+  --progress-bg-color: #2e2e2e;
+
+  margin: 0;
   width: 100%;
-  height: 5px;
-  background: #2e2e2e;
+  height: var(--progress-height);
+  -webkit-appearance: none;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+
+  &::-webkit-slider-runnable-track {
+    position: relative;
+    height: var(--progress-height);
+    background: var(--progress-bg-color);
+  }
+  &::-webkit-slider-thumb {
+    --thumb-height: 1px;
+    --thumb-width: 1px;
+    position: relative;
+    -webkit-appearance: none;
+    width: var(--thumb-width, var(--thumb-height));
+    box-shadow: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
+      100vmax var(--progress-color);
+  }
+
+  &::-webkit-slider-runnable-track {
+    background: var(--progress-bg-color);
+  }
+
+  /* FF */
+  &::-moz-range-track {
+    width: 100%;
+    height: var(--progress-height);
+    background: var(--progress-bg-color);
+    border: none;
+    border-radius: 0px;
+  }
+  &::-moz-range-thumb {
+    border: none;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background: transparent;
+  }
+  &::-moz-range-progress {
+    background-color: var(--progress-color);
+    height: var(--progress-height);
+  }
+
 `;
 export const playerBlock = styled(barContent)`
   height: 73px;
@@ -233,8 +287,8 @@ export const playerTrackPlayLke = styled.div`
   padding: 5px;
 `;
 export const playerTrackPlayLikeSvg = styled.svg`
-  width: 14px;
-  height: 12px;
+  width: 16px;
+  height: 14px;
   fill: transparent;
   stroke: #696969;
 `;

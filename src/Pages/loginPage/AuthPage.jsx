@@ -1,78 +1,117 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as S from "./AuthPage.styles";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { login, registration } from "../../api";
 
-export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setUser,user, setIsLoginMode }) {
-  const [error, setError] = useState(null);
-  let responseStatus;
+export default function AuthPage({isLoginMode, setIsLoginMode, setUser}) {
+  const [error, setError]=useState(null)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [placeholderUser, setPlaceholderUser]  =useState('Почта');
-  const [placeholderPass, setPlaceholderPass]  =useState('Пароль');
-  const [placeholderRepeat, setPlaceholderRepeat]  =useState('Повторите пароль')
-  setUserName(email)
-  setUserPass(password)
+  const [placeholderUser, setPlaceholderUser]  = useState('Почта');
+  const [placeholderPass, setPlaceholderPass]  = useState('Пароль');
+  const [placeholderRepeat, setPlaceholderRepeat]  = useState('Повторите пароль')
+  const navigate=useNavigate()
+  const [buttonActive, setButtonActive] = useState(false);
   
+
   const handleLogin = async ({ email, password }) => {
-    if (email===""||password===""){
-      setPlaceholderPass('заполните поле ввода')
-      setPlaceholderUser('заполните поле ввода')}
-    else{
-    login(email,password).then((data)=>{c
-      setError(data.detail)
-      ;})
+    setButtonActive(true)
+
+    let responseOk=false;
     
-  }
+
+    login(email,password).then((response)=>{
+      setButtonActive(false)
+      if (response.ok){
+      let data = response.json()
+      responseOk=true
+      
+      return(data)
+    }
+    else{
+      let data = response.json()
+      
+      return(data)
+    }})
+    .then((data)=>{       
+
+      if (!responseOk){
+
+        setError(data.detail)
+      }else{
+      localStorage.setItem('userName',data.username)
+      
+      if(responseOk===true){
+      setTimeout(
+      setUser(true),1000)}
+      navigate("/",{replace:true})
+      alert(`Выполняется вход: ${email} ${password}`);
+      
+
+    }
+ 
+      
+    })
+ 
+    
+    
   };
 
   const handleRegister = async () => {
+    let responseOk=false;
+    setButtonActive(true)
     if (email===""||password===""||repeatPassword===""){
       setPlaceholderPass('заполните поле ввода')
       setPlaceholderUser('заполните поле ввода')
       setPlaceholderRepeat('заполните поле ввода')
+      setError('не заполнены поля ввода')
+      setButtonActive(false)
       }
     else{
+      if(password!==repeatPassword){
+        setError('пароли не совпадают')
+        setButtonActive(false)
+      }else{
     registration(email,password,email)
+    
     .then((response)=>{
+      setButtonActive(false)
+      if(!response.ok){
+      responseOk=false
+      let data = response.json()
+      return data
+      }
+    responseOk= true;
+    let data = response.json()
+    return data})
 
-    if (response.status!==201){
-    responseStatus=false
-    let data = response.json()
-    
-    return data}
-    else{ 
-    responseStatus=true
-    let data = response.json()
-    
-    return data}})
-    
     .then((data)=>{
-      if(responseStatus===false){
+      
+      if(!responseOk){
       let errArr=[]
       errArr.push(data.username,data.email,data.password)
       let index = errArr.indexOf(undefined)
       errArr.splice(index,1)
       
       let errString = errArr.join(' / ')
-      ;setError(errString);}
-
-      else{
-        localStorage.setItem('user', data.username)
-        setIsLoginMode(true)
+      ;setError(errString); 
+      setError(errString)
+      }else{
+        setTimeout(
+        setUser(true),1000)
         
+        navigate("/",{replace:true})
+        localStorage.setItem('userName',data.username)
       }
+      
+    })}
+   
 
-    })
+  
+  }
     
-    }
-
-    
-    // alert(`Выполняется регистрация: ${email} ${password}`);
-    // setError("Неизвестная ошибка входа");
-    //}
-
+   
   };
 
   // Сбрасываем ошибку если пользователь меняет данные на форме или меняется режим формы
@@ -85,7 +124,7 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
       <S.ModalForm>
         <Link to="/login">
           <S.ModalLogo>
-            <S.ModalLogoImage src="/img/logo_modal.png" alt="logo" />
+            <S.ModalLogoImage src="/logo_modal.png" alt="logo" />
           </S.ModalLogo>
         </Link>
         {isLoginMode ? (
@@ -94,10 +133,10 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
               <S.ModalInput
                 type="text"
                 name="login"
-                placeholder={placeholderUser}
+              placeholder={placeholderUser}
                 value={email}
                 onChange={(event) => {
-                setEmail(event.target.value);
+                  setEmail(event.target.value);
                 }}
               />
               <S.ModalInput
@@ -112,10 +151,13 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton onClick={() => handleLogin({ email, password })}>
-                Войти
+            
+              <S.PrimaryButton  disabled={buttonActive} onClick={() => { handleLogin({ email, password });
+              }}>{buttonActive? 'заходим...':'войти' }
+               
               </S.PrimaryButton>
-              <Link to="/login">
+              
+              <Link onClick={()=>setIsLoginMode(false)} to="/login">
                 <S.SecondaryButton>Зарегистрироваться</S.SecondaryButton>
               </Link>
             </S.Buttons>
@@ -129,7 +171,7 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
                 placeholder={placeholderUser}
                 value={email}
                 onChange={(event) => {
-                setEmail(event.target.value);
+                  setEmail(event.target.value);
                 }}
               />
               <S.ModalInput
@@ -138,7 +180,7 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
                 placeholder={placeholderPass}
                 value={password}
                 onChange={(event) => {
-                setPassword(event.target.value);
+                  setPassword(event.target.value);
                 }}
               />
               <S.ModalInput
@@ -153,9 +195,8 @@ export default function AuthPageReg({ isLoginMode, setUserName, setUserPass,setU
             </S.Inputs>
             {error && <S.Error>{error}</S.Error>}
             <S.Buttons>
-              <S.PrimaryButton  onClick={handleRegister}> 
-              <Link to='/registration'></Link>
-                Зарегистрироваться
+              <S.PrimaryButton disabled={buttonActive} onClick={handleRegister}>
+              {buttonActive? 'Регистрируемся...':'Зарегистрироваться' }
               </S.PrimaryButton>
             </S.Buttons>
           </>

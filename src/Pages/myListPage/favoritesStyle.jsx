@@ -1,6 +1,50 @@
 import styled from "styled-components";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-export const CentralBlockContent = styled.div`
+import {useSelector} from "react-redux";
+
+
+
+//main
+
+
+export const Main=styled.div`
+-webkit-box-flex: 1;
+-ms-flex: 1 1 auto;
+flex: 1 1 auto;
+display: -webkit-box;
+display: -ms-flexbox;
+display: flex;
+-ms-flex-wrap: wrap;
+flex-wrap: wrap;
+-webkit-box-pack: justify;
+-ms-flex-pack: justify;
+justify-content: space-between;
+`
+
+export const MainCenterBlock=styled.div`
+width: auto;
+-webkit-box-flex: 3;
+-ms-flex-positive: 3;
+flex-grow: 3;
+padding: 20px 40px 20px 111px;
+`
+export const Wrapper=styled.div`
+width: 100%;
+min-height: 100%;
+overflow: hidden;
+background-color: #383838;
+`
+export const Container=styled.div`
+max-width: 1920px;
+height: 100vh;
+margin: 0 auto;
+position: relative;
+background-color: #181818;
+`
+//main ands
+
+
+export const FavoritesBlockContent = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8,6 +52,7 @@ export const CentralBlockContent = styled.div`
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+ 
 `;
 export const CentralBlockContentTitle = styled.div`
   display: -webkit-box;
@@ -24,7 +69,9 @@ export const CentralBlockContentTitle = styled.div`
   -ms-flex-pack: justify;
   justify-content: space-between;
   margin-bottom: 24px;
+  
 `;
+
 export const CentralBlock_playlistTitle = styled(
   CentralBlockContentTitle
 )``;
@@ -135,17 +182,74 @@ export const Track__titleLink = styled.a`
   color: #ffffff;
 `;
 export const Playlist__titleSvg = styled.svg`
-  width: 12px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
-`;
+width: 12px;
+height: 12px;
+fill: transparent;
+stroke: #696969;
+`
+;
+
+
 export const Track__titleSvg = styled.svg`
   width: 18px;
   height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
+
+   
+
+
 `;
+
+
+export const Playlist__titleSvg_dot = styled(Track__titleSvg)`
+width: 16px;
+height: 16px;
+background-color: #b672ff;
+border-radius: 8px;
+display: block;
+animation: bubble_out 0.6s ease-in-out infinite both;
+
+@keyframes bubble_out {
+  0%,
+  to {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
+`
+
+
+
+;
+
+
+export const Playlist__titleSvg_dot_Pause = styled(Track__titleSvg)`
+width: 16px;
+height: 16px;
+background-color: #b672ff;
+border-radius: 8px;
+display: block;
+// animation: bubble_out 0.6s ease-in-out infinite both;
+
+// @keyframes bubble_out {
+//   0%,
+//   to {
+//     transform: scale(0.5);
+//   }
+//   50% {
+//     transform: scale(1);
+//   }
+// }
+
+`
+
+
+
+;
 export const Track__author = styled.div`
   width: 321px;
   display: -webkit-box;
@@ -169,8 +273,8 @@ export const Track__albumLink = styled.div`
 export const Track_time = styled.div``;
 
 export const Track__timeSvg = styled.svg`
-  width: 14px;
-  height: 12px;
+  width: 16px;
+  height: 14px;
   margin-right: 17px;
   fill: transparent;
   stroke: #696969;
